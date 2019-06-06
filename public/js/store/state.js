@@ -2,21 +2,8 @@
 export default {
   answerValid: false,
   formStep: 0,
-  formAnswers: {
-    firstName: '',
-    lastName: '',
-    phoneNumber: '',
-    email: '',
-    id: '',
-    otherAnswers: {
-
-    }
-  },
+  formAnswers: [],
   formIntro: true,
   formQuestions: false,
-  formThanks: false,
-  formIneligible: false,
-  selectedProgram: '',
-  selectedProgramID: '',
-  userDisqualified: false,
+  formResults: false,
 };

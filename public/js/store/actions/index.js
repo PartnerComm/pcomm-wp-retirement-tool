@@ -9,10 +9,6 @@ const actions = {
     // const payload = ;
     context.commit('MUTATE_FORM_STEP', payload);
   },
-  SUBMIT_REGISTRATION_INFO: (context, value) => {
-    // const payload = ;
-    context.commit('MUTATE_REGISTRATION_INFO');
-  },
   SELECT_PROGRAM: (context, value) => {
     const payload = value;
     context.commit('MUTATE_SELECTED_PROGRAM', payload);
@@ -84,14 +80,6 @@ const actions = {
     } else {
       context.commit('MUTATE_FORM_STEP', payload);
     }
-  },
-  DISQUALIFY_USER: (context) => {
-    const payload = true;
-    context.commit('MUTATE_DISQUALIFY_USER', payload);
-  },
-  QUALIFY_USER: (context) => {
-    const payload = false;
-    context.commit('MUTATE_DISQUALIFY_USER', payload);
   },
   UPDATE_VALIDATION: (context, value) => {
     const payload = value;
