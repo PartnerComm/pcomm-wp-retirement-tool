@@ -1,0 +1,35 @@
+{
+  "name": "pcomm-wp-retirement-tool",
+  "version": "1.0.0",
+  "description": "The official leave of absence tool for PartnerComm WordPress sites.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "hot": "NODE_ENV=development webpack-dev-server --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "production": "NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PartnerComm/pcomm-wp-retirement-tool.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "fs": "^0.0.1-security",
+    "laravel-mix": "^4.0.14",
+    "sass-loader": "7.*",
+    "vue-template-compiler": "^2.6.3"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "foundation-sites": "^6.5.3",
+    "lodash.debounce": "^4.0.8",
+    "node-sass": "^4.11.0",
+    "sass": "^1.17.0",
+    "vue": "^2.6.3",
+    "vue-axios": "^2.1.4",
+    "vuedraggable": "^2.17.0",
+    "vuex": "^3.1.0"
+  }
+}
