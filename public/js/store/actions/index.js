@@ -1,14 +1,6 @@
 import axios from 'axios';
 
 const actions = {
-  INCREMENT_FORM_STEP: (context) => {
-    // const payload = ;
-    context.commit('MUTATE_FORM_STEP', payload);
-  },
-  DECREMENT_FORM_STEP: (context) => {
-    // const payload = ;
-    context.commit('MUTATE_FORM_STEP', payload);
-  },
   SELECT_PROGRAM: (context, value) => {
     const payload = value;
     context.commit('MUTATE_SELECTED_PROGRAM', payload);
@@ -17,52 +9,28 @@ const actions = {
     const payload = value;
     context.commit('MUTATE_SELECTED_PROGRAM_ID', payload);
   },
-  DISABLE_FORM_INTRO: (context) => {
-    const payload = false;
+  UPDATE_FORM_INTRO: (context, value) => {
+    const payload = value;
     context.commit('MUTATE_FORM_INTRO', payload);
   },
-  ENABLE_FORM_QUESTIONS: (context) => {
-    const payload = true;
+  UPDATE_FORM_QUESTIONS: (context, value) => {
+    const payload = value;
     context.commit('MUTATE_FORM_QUESTIONS', payload);
-    window.scrollTo(0,0);
+    if (payload === true) {
+      window.scrollTo(0,0);
+    }
+  },
+  UPDATE_FORM_RESULTS: (context, value) => {
+    const payload = value;
+    context.commit('MUTATE_FORM_RESULTS', payload);
   },
   SUBMIT_COMPLETED_FORM: async (context, value) => {
-    let formAnswers = context.getters.GET_FORM_ANSWERS;
-    let finalData = new FormData;
-    finalData.append('action', 'pcomm_wp_secure_signup_save_entry');
-    finalData.append('security', window.anthem_ajax.nonce);
-    finalData.append('pilot_ID', formAnswers.id);
-    finalData.append('firstName', formAnswers.firstName);
-    finalData.append('lastName', formAnswers.lastName);
-    finalData.append('email', formAnswers.email);
-    finalData.append('phoneNumber', formAnswers.phoneNumber);
-    finalData.append('otherAnswers', JSON.stringify(formAnswers.otherAnswers));
-    finalData.append('answers', JSON.stringify(formAnswers));
-    const response =  await axios.post(window.anthem_ajax.ajaxurl, finalData);
-    if (response.status === 200) {
-      let data = new FormData;
-      data.append('action', 'decrement_spots_left');
-      data.append('security', window.anthem_ajax.nonce);
-      data.append('id', context.getters.GET_SELECTED_PROGRAM_ID);
-      axios.post(window.anthem_ajax.ajaxurl, data).then(response => {
-        console.log(response);
-      }).catch(function (error) {
-        console.log(error);
-      });
-    }
+    context.dispatch('COMMIT_CURRENT_SELECTION');
     context.commit('MUTATE_FORM_QUESTIONS', false);
-    context.commit('MUTATE_FORM_THANKS', true);
+    context.commit('MUTATE_FORM_RESULTS', true);
     window.scrollTo(0,0);
   },
-  UPDATE_REGISTRATION_VALUE: (context, {key, value}) => {
-    const formAnswers = context.getters.GET_FORM_ANSWERS;
-    formAnswers[key] = value;
-    context.commit('MUTATE_FORM_ANSWERS_KEY', {key: key, value: value});
-  },
-  UPDATE_OTHER_ANSWERS: (context, {key, value}) => {
-    context.commit('MUTATE_OTHER_ANSWERS', {key: key, value: value});
-  },
-  NAVIGATE_FORM: (context, value) => {
+  NAVIGATE_STEPS: (context, value) => {
     const currentStep = context.getters.GET_FORM_STEP;
     let newStep = ''
     if (value === 'plus') {
@@ -72,30 +40,38 @@ const actions = {
       context.commit('MUTATE_ANSWER_VALID', true)
     }
     const payload = newStep;
-    const disqualified = context.getters.GET_USER_ELIGIBILITY;
-    if (disqualified === true) {
-      context.commit('MUTATE_FORM_QUESTIONS', false);
-      context.commit('MUTATE_FORM_INELIGIBLE', true);
-      window.scrollTo(0,0);
-    } else {
-      context.commit('MUTATE_FORM_STEP', payload);
-    }
-  },
-  UPDATE_VALIDATION: (context, value) => {
-    const payload = value;
-    context.commit('MUTATE_ANSWER_VALID', payload);
+    context.commit('MUTATE_FORM_STEP', payload);
   },
   RESET_FORM_DEFAULTS: (context) => {
-    const payload = { };
-    payload.firstName = ''; 
-    payload.lastName = '';
-    payload.phoneNumber = ''; 
-    payload.email = '' 
-    payload.otherAnswers = {};
-    context.commit('MUTATE_FORM_STATE', payload);
+    context.commit('MUTATE_KEY', {key: 'formAnswers', value: []});
   },
   SET_FORM_DEFAULT_STATE: (context, dispatch) => {
     context.dispatch('RESET_FORM_DEFAULTS');
+  },
+  GET_FORM_INTRO_PATHS: async (context) => {
+    const response = await axios.get('/wp-json/wp/v2/retirement_tool_question?parent=0&per_page=100');
+    if (response.status === 200) {
+      const payload = response.data;
+      context.commit('MUTATE_KEY', {key: 'formIntroPaths', value: payload});
+    }
+  }, 
+  SET_ACTIVE_PATH: (context, value) => {
+    const payload = value;
+    context.commit('MUTATE_KEY', {key: 'activePath', value: payload});
+    context.commit('ADD_ANSWER', payload);
+    context.dispatch('SET_CURRENT_SELECTION', '');
+  },
+  SET_CURRENT_SELECTION: (context, value) => {
+    const payload = value;
+    context.commit('MUTATE_KEY', {key: 'currentSelection', value: payload})
+  },
+  COMMIT_CURRENT_SELECTION: (context) => {
+    const payload = context.getters.GET_FORM_STATUS('currentSelection');
+    context.commit('ADD_ANSWER', payload);
+    context.dispatch('SET_CURRENT_SELECTION', '');
+  },
+  REMOVE_LAST_SELECTION: (context, value) => {
+    context.commit('REMOVE_ANSWER');
   }
 }
 

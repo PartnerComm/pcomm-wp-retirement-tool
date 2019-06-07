@@ -14,25 +14,20 @@ export default {
   MUTATE_FORM_QUESTIONS: (state, value) => {
     state.formQuestions = value;
   },
-  MUTATE_FORM_THANKS: (state, value) => {
-    state.formThanks = value;
-  },
-  MUTATE_FORM_INELIGIBLE: (state, value) => {
-    state.formIneligible = value;
-  },
-  MUTATE_FORM_ANSWERS_KEY: (state, {key, value}) => {
-    state.formAnswers[key] = value;
-  },
-  MUTATE_OTHER_ANSWERS: (state, {key, value}) => {
-    state.formAnswers.otherAnswers[key] = value;
-  },
-  MUTATE_DISQUALIFY_USER: (state, value) => {
-    state.userDisqualified = value;
-  },
-  MUTATE_FORM_STATE: (state, value) => {
-    state.formAnswers = value;
+  MUTATE_FORM_RESULTS: (state, value) => {
+    state.formResults = value;
   },
   MUTATE_ANSWER_VALID: (state, value) => {
     state.answerValid = value;
+  },
+  MUTATE_KEY: (state, {key, value}) => {
+    state[key] = value;
+  },
+  ADD_ANSWER: (state, value) => {
+    const payload = value;
+    state.formAnswers.push(payload);
+  },
+  REMOVE_ANSWER: (state, value) => {
+    state.formAnswers.pop();
   }
 };

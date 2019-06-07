@@ -1,18 +1,15 @@
 <template>
-  <div class="form-buttons-outer" :class="{single: (formStep === 0 && numberOfSteps != formStep) || (formStep === numberOfSteps && numberOfSteps === 0) }">
-    <div v-if="formStep === 0 && numberOfSteps != formStep">
-      <a href="#" class="btn btn-orange arrow" @click.prevent="navigateFormForward">Next</a>
+  <div class="form-buttons">
+    <div class="form-buttons-intro" v-if="formIntro">
+      <button class="form-buttons-next nav-button" @click="activateQuestions">{{buttonText}}</button>
     </div>
-    <div class="form-buttons" v-if="formStep > 0 && formStep<numberOfSteps">
-        <a href="#" class="btn btn-gray arrow" @click.prevent="navigateFormBackward">Back</a>
-        <a href="#" class="btn btn-orange arrow" @click.prevent="navigateFormForward">Next</a>
+    <div class="form-buttons-steps" v-if="formQuestions && formStep < lastStep">
+      <button class="form-buttons-next nav-button" @click="navigateBackward">Back</button>
+      <button class="form-buttons-next nav-button" @click="navigateForward">Next</button>
     </div>
-    <div class="form-buttons" v-if="formStep === numberOfSteps && numberOfSteps != 0">
-      <a href="#" class="btn btn-gray arrow" @click.prevent="navigateFormBackward">Back</a>
-      <a href="#" class="btn btn-orange arrow" @click.prevent="submitForm">Submit</a>
-    </div>
-    <div v-if="formStep === numberOfSteps && numberOfSteps === 0">
-      <a href="#" class="btn btn-orange" @click.prevent="submitForm">Submit</a>
+    <div class="form-buttons-final" v-if="formQuestions && formStep === lastStep">
+      <button class="form-buttons-next nav-button" @click="navigateBackward">Back</button>
+      <button class="form-buttons-submit nav-button" @click="submitForm">Submit</button>
     </div>
   </div>
 </template>
@@ -27,13 +24,51 @@ export default {
     }
   },
   methods: {
+    activateQuestions() {
+      this.$emit('navigate-forward');
+    },
+    navigateForward() {
+      this.$store.dispatch('COMMIT_CURRENT_SELECTION');
+      this.$store.dispatch('NAVIGATE_STEPS', 'plus');
+    },
+    navigateBackward() {
+      this.$store.dispatch('REMOVE_LAST_SELECTION');
+      if (this.formStep === 0) {
+        this.$store.dispatch('UPDATE_FORM_QUESTIONS', false);
+        this.$store.dispatch('UPDATE_FORM_INTRO', true);
+      } else {
+        this.$store.dispatch('NAVIGATE_STEPS', 'minus');
+      }
+    },
     submitForm() {
-      console.log('form submitted');
-
-    }
+      this.$store.dispatch('SUBMIT_COMPLETED_FORM');
+    },
   },
   computed: {
-  
+    formIntro() {
+      return this.$store.getters.GET_FORM_STATUS('formIntro');
+    },
+    formQuestions() {
+      return this.$store.getters.GET_FORM_STATUS('formQuestions');
+    },
+    formResults() {
+      return this.$store.getters.GET_FORM_STATUS('formResults');
+    },
+    formStep() {
+      return this.$store.getters.GET_FORM_STEP;
+    },
+    lastStep() {
+      return this.$store.getters.GET_LAST_STEP;
+    },
+    buttonText() {
+      if (this.selectedAnswer && this.selectedAnswer.questions.length === 0) {
+        return 'Submit';
+      }
+      return 'Next'
+    },
+    selectedAnswer() {
+      return this.$store.getters.GET_FORM_STATUS('currentSelection');
+    },
   },
   created() {
 

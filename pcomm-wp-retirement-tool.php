@@ -55,6 +55,8 @@ function deactivate_pcomm_wp_retirement_tool() {
 	Pcomm_Wp_Retirement_Tool_Deactivator::deactivate();
 }
 
+
+
 register_activation_hook( __FILE__, 'activate_pcomm_wp_retirement_tool' );
 register_deactivation_hook( __FILE__, 'deactivate_pcomm_wp_retirement_tool' );
 
