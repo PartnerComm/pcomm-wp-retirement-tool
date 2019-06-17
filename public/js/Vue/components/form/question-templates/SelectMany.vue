@@ -2,16 +2,17 @@
   <div class="question multiple-choice-question">
     <div class="question-title">{{question.name}}</div>
     <div class="answers">
-        <div class="answer-choice" v-for="(answer,index) in question.answers" :key="index" @click="selectAnswer(answer)">
-          <div class="checkmark-icon"><checkmark :color="(selectedAnswers.indexOf(answer.slug) > -1) ? '#FF9900' : '#C6C6C6'" :fill="(selectedAnswers.indexOf(answer.slug) > -1) ? '#FF9900' : '#FFFFFF'"/></div>
-          <div class="answer-output">{{answer.name}} <span v-if="answer.disqualifier === 'yes'"><a :href="answer.description" target="_blank">(Go here to determine your BMI.)</a></span></div>
+        <div class="answer-choice" v-for="(answer,index) in this.question.answers" :key="index" @click="selectAnswer(answer)">
+          <form-answer :question="question" :data="answer" :active="(selectedAnswers.length > 0 && selectedAnswers.indexOf(answer) > -1) ? true : false"/>
         </div>
     </div>
   </div>
 </template>
 
 <script>
-import Checkmark from '../../icons/checkmark-icon';
+import Checkmark from '../../icons/Checkmark';
+import FormAnswer from './FormAnswer';
+
 export default {
   props: ['question'],
   data() {
@@ -21,37 +22,31 @@ export default {
   },
   components: {
     Checkmark,
+    FormAnswer
   },
   methods: {
     selectAnswer(answer) {
       if (answer.slug === "none-of-the-above") {
         this.selectedAnswers = [];
-        this.selectedAnswers.push(answer.slug);
-        this.$store.dispatch('DISQUALIFY_USER');
-        this.$store.dispatch('UPDATE_VALIDATION', true);
+        this.selectedAnswers.push(answer);
       } else {
-        if (this.selectedAnswers.indexOf(answer.slug) > -1) {
-        const index = this.selectedAnswers.indexOf(answer.slug);
+        if (this.selectedAnswers.indexOf(answer) > -1) {
+        const index = this.selectedAnswers.indexOf(answer);
         this.selectedAnswers.splice(index, 1);
         if (this.selectedAnswers.length === 0) {
-          this.$store.dispatch('UPDATE_VALIDATION', false);
+          // this.$store.dispatch('UPDATE_VALIDATION', false);
         }
       } else {
         if (this.selectedAnswers.indexOf('none-of-the-above') > -1) {
           this.selectedAnswers = [];
         }
-        this.selectedAnswers.push(answer.slug);
-        this.$store.dispatch('UPDATE_VALIDATION', true);
-        }
-        if (this.question.minimumAnswers != '' && this.selectedAnswers.length < parseInt(this.question.minimumAnswers)) {
-          this.$store.dispatch('DISQUALIFY_USER');
-        } else {
-          this.$store.dispatch('QUALIFY_USER');
+        this.selectedAnswers.push(answer);
+        // this.$store.dispatch('UPDATE_VALIDATION', true);
         }
       }
       
-      const payload = {key: this.question.slug, value: this.selectedAnswers};
-      this.$store.dispatch('UPDATE_OTHER_ANSWERS', payload);
+      const payload = this.selectedAnswers;
+      this.$store.dispatch('SET_CURRENT_SELECTION', payload);
     },
     newWindow(url) {
       url = new DOMParser().parseFromString(url, "text/xml");

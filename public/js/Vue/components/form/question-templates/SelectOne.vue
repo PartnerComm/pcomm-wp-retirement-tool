@@ -3,14 +3,13 @@
     <div class="question-title">{{question.name}}</div>
     <div class="answers">
       <div class="answer-choice" v-for="(answer,index) in this.question.answers" :key="index" @click="selectAnswer(answer)">
-        <form-answer :data="answer" :active="(selectedAnswer && selectedAnswer === answer) ? true : false"/>
+        <form-answer :question="question" :data="answer" :active="(selectedAnswer && selectedAnswer === answer) ? true : false"/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Checkmark from '../../icons/Checkmark';
 import FormAnswer from './FormAnswer';
 export default {
   props: ['question'],
@@ -19,7 +18,6 @@ export default {
     }
   },
   components: {
-    Checkmark,
     FormAnswer
   },
   methods: {

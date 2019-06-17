@@ -1,7 +1,9 @@
 <template>
   <div class="form-questions">
     <div class="form-questions-question" v-for="(question, index) in activeQuestions">
-      <select-one :question="question" v-if="formStep === index" />
+      <select-one :question="question" v-if="formStep === index && (question.question_type === 'select-one' || question.question_type === '')" />
+      <select-many :question="question" v-if="formStep === index && question.question_type === 'select-many'" />
+      <date :question="question" v-if="formStep === index && question.question_type === 'date'" />
     </div>
     <form-buttons />
 
@@ -10,6 +12,8 @@
 
 <script>
 import SelectOne from '../question-templates/SelectOne';
+import SelectMany from '../question-templates/SelectMany';
+import Date from '../question-templates/DatePicker';
 import FormButtons from '../form-elements/FormButtons';
 
 export default {
@@ -21,7 +25,9 @@ export default {
   },
   components: {
     SelectOne,
-    FormButtons
+    SelectMany,
+    FormButtons,
+    Date
   },
   methods: {
   

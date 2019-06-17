@@ -1,7 +1,10 @@
 <template>
   <div class="form-intro">
     <div class="form-option" v-for="(path, index) in paths" @click="selectPath(path)">
-      <form-answer :data="path" :active="(selectedPath && selectedPath.id === path.id) ? true : false"/>
+      <div class="form-answer" :active="(selectedPath && selectedPath.id === path.id) ? true : false" :class="{active: selectedPath && selectedPath.id === path.id}">
+        <radio :color="(selectedPath && selectedPath.id === path.id) ? '#00A69A':'#C6C6C6' " :fill="(selectedPath && selectedPath.id === path.id) ? '#00A69A' : '#FFFFFF'" />
+          {{path.name}}
+      </div>
     </div>
     <form-buttons @navigate-forward="setActivePath"/>
   </div>
@@ -10,6 +13,8 @@
 <script>
 import FormAnswer from '../question-templates/FormAnswer';
 import FormButtons from '../form-elements/FormButtons';
+import Radio from '../../icons/Radio';
+
 export default {
   props: {},
   data() {
@@ -19,7 +24,8 @@ export default {
   },
   components: {
     FormAnswer,
-    FormButtons
+    FormButtons,
+    Radio
   },
   methods: {
     selectPath(path) {

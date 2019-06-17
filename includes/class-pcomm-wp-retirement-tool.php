@@ -121,6 +121,13 @@ class Pcomm_Wp_Retirement_Tool {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-pcomm-wp-retirement-tool-taxonomies.php';
 
+
+		/**
+		 * The class responsible for defining all custom taxonomy term meta.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-pcomm-wp-retirement-tool-termmeta.php';
+
+
 		/**
 		 * The class responsible for defining all custom API endpoints.
 		 */

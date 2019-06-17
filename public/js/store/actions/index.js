@@ -72,6 +72,10 @@ const actions = {
   },
   REMOVE_LAST_SELECTION: (context, value) => {
     context.commit('REMOVE_ANSWER');
+  },
+  SET_DATE: (context, value) => {
+    const payload = {key: 'date', value: value};
+    context.commit('MUTATE_KEY', payload);
   }
 }
 

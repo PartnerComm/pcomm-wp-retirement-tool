@@ -22,6 +22,9 @@ export default {
   computed: {
     selectedAnswers() {
       return this.$store.getters.GET_FORM_STATUS('formAnswers');
+    },
+    date() {
+      return this.$store.getters.GET_FORM_STATUS('date');
     }
   },
   created() {

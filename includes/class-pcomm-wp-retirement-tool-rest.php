@@ -55,7 +55,7 @@ class Pcomm_Wp_Retirement_Tool_Rest
         $children = get_term_children($post_id, 'retirement_tool_question');
         $returnable_children = array_map(function ($elem) {
             $child_term = get_term_by('id', $elem, 'retirement_tool_question');
-            $child_term->minimumAnswers = get_term_meta($child_term->term_id, 'retirement_tool_question_answer_minimum', true);
+            $child_term->question_type = get_term_meta($child_term->term_id, 'question_type', true);
             $child_term->answers = get_term_children($child_term->term_id, 'retirement_tool_question');
             $child_term->answers = array_map(function ($elem) {
                 $answer_term = get_term_by('id', $elem, 'retirement_tool_question');
