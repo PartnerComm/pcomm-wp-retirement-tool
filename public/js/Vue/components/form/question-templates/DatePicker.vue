@@ -20,7 +20,8 @@ export default {
   methods: {
     setDate(event) {
       const payload = event;
-      this.$store.dispatch('SET_DATE',payload)
+      this.$store.dispatch('SET_DATE',payload);
+      this.$store.dispatch('SET_CURRENT_SELECTION', payload);
     }
   },
   computed: {
