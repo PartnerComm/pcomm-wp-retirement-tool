@@ -30,11 +30,17 @@ export default {
     Date
   },
   methods: {
-  
+    sortTerms(a,b) {
+        if (parseInt(a.term_order) < parseInt(b.term_order))
+          return -1;
+        if (parseInt(a.term_order) > parseInt(b.term_order))
+          return 1;
+        return 0;
+    }
   },
   computed: {
     activeQuestions() {
-      return this.$store.getters.ACTIVE_QUESTIONS;
+      return this.$store.getters.ACTIVE_QUESTIONS.sort(this.sortTerms);
     },
     formStep() {
       return this.$store.getters.GET_FORM_STEP;
