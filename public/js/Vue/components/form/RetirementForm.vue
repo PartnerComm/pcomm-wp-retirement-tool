@@ -1,18 +1,39 @@
 <template>
-  <div class="retirement-form">
-    <form-intro v-if="formIntro"></form-intro>
-    <form-questions v-if="formQuestions"></form-questions>
-    <form-results v-if="formResults"></form-results>
-  </div>
+  <section class="retirement-tool-wrapper">
+    <questions-header :title="formtitle" v-if="formIntro || formQuestions" />
+    <results-header v-if="formResults" />
+    <div class="container">
+      <div class="retirement-form">
+        <form-intro :title="introtitle" :subtitle="introsubtitle" v-if="formIntro"></form-intro>
+        <form-questions v-if="formQuestions"></form-questions>
+        <form-results v-if="formResults"></form-results>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
 import FormIntro from './form-steps/FormIntro';
 import FormQuestions from './form-steps/FormQuestions';
 import FormResults from './form-steps/FormResults';
+import QuestionsHeader from './form-elements/QuestionsHeader';
+import ResultsHeader from './form-elements/ResultsHeader';
 
 export default {
-  props: {},
+  props: {
+    formtitle: {
+      type: String,
+      required: false
+    },
+    introtitle: {
+      type: String,
+      required: false
+    },
+    introsubtitle: {
+      type: String,
+      required: false
+    }
+  },
   data() {
     return {
   
@@ -21,7 +42,9 @@ export default {
   components: {
     FormIntro,
     FormQuestions,
-    FormResults
+    FormResults,
+    QuestionsHeader,
+    ResultsHeader
   },
   methods: {
   
