@@ -1,6 +1,8 @@
 <template>
   <div class="form-intro">
-    <div class="form-option" v-for="(path, index) in paths" @click="selectPath(path)">
+    <div class="question-title" v-html="title"></div>
+    <div class="question-subtitle" v-html="subtitle"></div>
+    <div class="form-option" v-for="(path, index) in paths" @click="selectPath(path)" :class="{'form-option-last': index === paths.length-1}">
       <div class="form-answer" :active="(selectedPath && selectedPath.id === path.id) ? true : false" :class="{active: selectedPath && selectedPath.id === path.id}">
         <radio :color="(selectedPath && selectedPath.id === path.id) ? '#00A69A':'#C6C6C6' " :fill="(selectedPath && selectedPath.id === path.id) ? '#00A69A' : '#FFFFFF'" />
           {{path.name}}
@@ -16,7 +18,16 @@ import FormButtons from '../form-elements/FormButtons';
 import Radio from '../../icons/Radio';
 
 export default {
-  props: {},
+  props: {
+    title: {
+      type: String,
+      required: false
+    },
+    subtitle: {
+      type: String,
+      required: false
+    }
+  },
   data() {
     return {
       selectedPath: ''

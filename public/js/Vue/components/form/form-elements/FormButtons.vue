@@ -4,11 +4,11 @@
       <button class="form-buttons-next nav-button" @click="activateQuestions">{{buttonText}}</button>
     </div>
     <div class="form-buttons-steps" v-if="formQuestions && formStep < lastStep">
-      <button class="form-buttons-next nav-button" @click="navigateBackward">Back</button>
+      <button class="form-buttons-previous nav-button" @click="navigateBackward">Back</button>
       <button class="form-buttons-next nav-button" @click="navigateForward">Next</button>
     </div>
     <div class="form-buttons-final" v-if="formQuestions && formStep === lastStep">
-      <button class="form-buttons-next nav-button" @click="navigateBackward">Back</button>
+      <button class="form-buttons-previous nav-button" @click="navigateBackward">Back</button>
       <button class="form-buttons-submit nav-button" @click="submitForm">Submit</button>
     </div>
   </div>

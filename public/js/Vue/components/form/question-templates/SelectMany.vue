@@ -1,8 +1,10 @@
 <template>
   <div class="question multiple-choice-question">
     <div class="question-title">{{question.name}}</div>
+    <div class="question-subtitle">{Check all that apply}</div>
+    <div class="question-description" v-if="question.description" v-html="question.description"></div> 
     <div class="answers">
-        <div class="answer-choice" v-for="(answer,index) in this.question.answers" :key="index" @click="selectAnswer(answer)">
+        <div class="form-option" v-for="(answer,index) in this.question.answers" :key="index" @click="selectAnswer(answer)">
           <form-answer :question="question" :data="answer" :active="(selectedAnswers.length > 0 && selectedAnswers.indexOf(answer) > -1) ? true : false"/>
         </div>
     </div>
@@ -37,7 +39,10 @@ export default {
           // this.$store.dispatch('UPDATE_VALIDATION', false);
         }
       } else {
-        if (this.selectedAnswers.indexOf('none-of-the-above') > -1) {
+        // if (this.selectedAnswers.indexOf('none-of-the-above') > -1) {
+        //   this.selectedAnswers = [];
+        // }
+        if (this.selectedAnswers.map(e => e.slug).indexOf('none-of-the-above') > -1) {
           this.selectedAnswers = [];
         }
         this.selectedAnswers.push(answer);
