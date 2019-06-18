@@ -2029,6 +2029,7 @@ __webpack_require__.r(__webpack_exports__);
     setDate: function setDate(event) {
       var payload = event;
       this.$store.dispatch('SET_DATE', payload);
+      this.$store.dispatch('SET_CURRENT_SELECTION', payload);
     }
   },
   computed: {},
