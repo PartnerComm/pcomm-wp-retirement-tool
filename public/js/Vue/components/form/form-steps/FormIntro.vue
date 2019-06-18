@@ -2,10 +2,11 @@
   <div class="form-intro">
     <div class="question-title" v-html="title"></div>
     <div class="question-subtitle" v-html="subtitle"></div>
-    <div class="form-option" v-for="(path, index) in paths" @click="selectPath(path)" :class="{'form-option-last': index === paths.length-1}">
-      <div class="form-answer" :active="(selectedPath && selectedPath.id === path.id) ? true : false" :class="{active: selectedPath && selectedPath.id === path.id}">
-        <radio :color="(selectedPath && selectedPath.id === path.id) ? '#00A69A':'#C6C6C6' " :fill="(selectedPath && selectedPath.id === path.id) ? '#00A69A' : '#FFFFFF'" />
-          {{path.name}}
+    <loader v-if="paths.length === 0" />
+    <div class="form-option" v-for="(path, index) in paths" @click="selectPath(path)" :class="{'form-option-last': index === paths.length-1}" v-if="paths.length > 0">
+      <div class="form-answer" :active="(selectedPath && selectedPath.id === path.id) ? true : false" :class="{active: selectedPath && selectedPath.id === path.id, inactive: selectedPath && selectedPath.id !== path.id}">
+        <radio :color="((selectedPath && selectedPath.id === path.id) || !selectedPath) ? '#00A69A':'#C6C6C6' " :fill="(selectedPath && selectedPath.id === path.id) ? '#00A69A' : '#FFFFFF'" />
+        <span>{{path.name}}</span>
       </div>
     </div>
     <form-buttons @navigate-forward="setActivePath"/>
@@ -16,7 +17,7 @@
 import FormAnswer from '../question-templates/FormAnswer';
 import FormButtons from '../form-elements/FormButtons';
 import Radio from '../../icons/Radio';
-
+import Loader from '../form-elements/Loader'
 export default {
   props: {
     title: {
@@ -36,7 +37,8 @@ export default {
   components: {
     FormAnswer,
     FormButtons,
-    Radio
+    Radio,
+    Loader
   },
   methods: {
     selectPath(path) {
@@ -51,11 +53,18 @@ export default {
       } else {
         this.$store.dispatch('UPDATE_FORM_RESULTS', true);
       }
+    },
+    sortTerms(a,b) {
+        if (parseInt(a.term_order) < parseInt(b.term_order))
+          return -1;
+        if (parseInt(a.term_order) > parseInt(b.term_order))
+          return 1;
+        return 0;
     }
   },
   computed: {
     paths() {
-      return this.$store.getters.GET_FORM_STATUS('formIntroPaths');
+      return this.$store.getters.GET_FORM_STATUS('formIntroPaths').sort(this.sortTerms);
     },
     activeQuestions() {
       return this.$store.getters.ACTIVE_QUESTIONS;

@@ -4,7 +4,7 @@
     <div class="question-subtitle">(Please select one)</div>
     <div class="answers">
       <div class="form-option" v-for="(answer,index) in this.question.answers" :key="index" @click="selectAnswer(answer)">
-        <form-answer :question="question" :data="answer" :active="(selectedAnswer && selectedAnswer === answer) ? true : false"/>
+        <form-answer :question="question" :data="answer" :active="(selectedAnswer && selectedAnswer === answer) ? true : false" :inactive="(selectedAnswer && selectedAnswer !== answer) ? true : false"/>
       </div>
     </div>
   </div>

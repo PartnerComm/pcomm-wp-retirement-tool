@@ -1,6 +1,8 @@
 <template>
   <div class="form-datepicker">
-    <datepicker :inline="true" v-model="selectedDate" @selected="setDate($event)" />
+    <div class="question-title">{{question.name}}</div>
+    <div class="question-description" v-if="question.description" v-html="question.description"></div> 
+    <datepicker wrapper-class="calendar-wrap" :disabledDates="{to: currentCalendarDate}" :inline="true" v-model="selectedDate" @selected="setDate($event)" />
   </div>
 </template>
 
@@ -8,7 +10,12 @@
 import Datepicker from 'vuejs-datepicker';
 
 export default {
-  props: {},
+  props: {
+    question: {
+      type: Object,
+      required: true
+    }
+  },
   data() {
     return {
       selectedDate: new Date()
@@ -25,7 +32,12 @@ export default {
     }
   },
   computed: {
-  
+    currentCalendarDate() {
+      var date = new Date();
+      date.setDate(date.getDate() - 1);
+
+      return date;
+    }
   },
   created() {
 

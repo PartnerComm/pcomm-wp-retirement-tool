@@ -1,15 +1,15 @@
 <template>
   <div class="form-buttons">
     <div class="form-buttons-intro" v-if="formIntro">
-      <button class="form-buttons-next nav-button" @click="activateQuestions">{{buttonText}}</button>
+      <button class="form-buttons-next nav-button" @click="activateQuestions" :class="{disabled: !selectedAnswer}" :disabled="!selectedAnswer">{{buttonText}}</button>
     </div>
     <div class="form-buttons-steps" v-if="formQuestions && formStep < lastStep">
       <button class="form-buttons-previous nav-button" @click="navigateBackward">Back</button>
-      <button class="form-buttons-next nav-button" @click="navigateForward">Next</button>
+      <button class="form-buttons-next nav-button" @click="navigateForward"  :class="{disabled: !selectedAnswer}" :disabled="!selectedAnswer">Next</button>
     </div>
     <div class="form-buttons-final" v-if="formQuestions && formStep === lastStep">
       <button class="form-buttons-previous nav-button" @click="navigateBackward">Back</button>
-      <button class="form-buttons-submit nav-button" @click="submitForm">Submit</button>
+      <button class="form-buttons-submit nav-button" @click="submitForm" :class="{disabled: !selectedAnswer}" :disabled="!selectedAnswer">Submit</button>
     </div>
   </div>
 </template>
