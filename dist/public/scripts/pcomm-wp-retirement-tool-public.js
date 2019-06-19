@@ -2006,6 +2006,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {},
   mounted: function mounted() {
     this.$store.dispatch('GET_FORM_INTRO_PATHS');
+    this.$store.dispatch('GET_RETIREMENT_TOOL_POSTS');
   }
 });
 
@@ -21170,16 +21171,36 @@ var actions = {
     var _SUBMIT_COMPLETED_FORM = _asyncToGenerator(
     /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(context, value) {
+      var selectedAnswers, monthNames;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               context.dispatch('COMMIT_CURRENT_SELECTION');
+              selectedAnswers = context.getters.GET_FORM_STATUS('formAnswers');
+              console.log(selectedAnswers);
+              monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+              selectedAnswers.forEach(function (el) {
+                console.log(el);
+
+                if (el instanceof Date) {
+                  var day = el.getDate();
+                  var monthIndex = el.getMonth();
+                  var year = el.getFullYear();
+                  context.commit('ADD_SUMMARY_ANSWER', monthNames[monthIndex] + ' ' + day + ', ' + year);
+                } else if (Object.prototype.toString.call(el) == '[object Array]') {
+                  el.forEach(function (arrayEl) {
+                    context.commit('ADD_SUMMARY_ANSWER', arrayEl.name);
+                  });
+                } else {
+                  context.commit('ADD_SUMMARY_ANSWER', el.name);
+                }
+              });
               context.commit('MUTATE_FORM_QUESTIONS', false);
               context.commit('MUTATE_FORM_RESULTS', true);
               window.scrollTo(0, 0);
 
-            case 4:
+            case 8:
             case "end":
               return _context.stop();
           }
@@ -21252,6 +21273,43 @@ var actions = {
     }
 
     return GET_FORM_INTRO_PATHS;
+  }(),
+  GET_RETIREMENT_TOOL_POSTS: function () {
+    var _GET_RETIREMENT_TOOL_POSTS = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(context) {
+      var response, payload;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/wp-json/wp/v2/retirement_tool_post?per_page=100');
+
+            case 2:
+              response = _context3.sent;
+
+              if (response.status === 200) {
+                payload = response.data;
+                context.commit('MUTATE_KEY', {
+                  key: 'allPosts',
+                  value: payload
+                });
+              }
+
+            case 4:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }));
+
+    function GET_RETIREMENT_TOOL_POSTS(_x4) {
+      return _GET_RETIREMENT_TOOL_POSTS.apply(this, arguments);
+    }
+
+    return GET_RETIREMENT_TOOL_POSTS;
   }(),
   SET_ACTIVE_PATH: function SET_ACTIVE_PATH(context, value) {
     var payload = value;
@@ -21367,6 +21425,10 @@ __webpack_require__.r(__webpack_exports__);
     var payload = value;
     state.formAnswers.push(payload);
   },
+  ADD_SUMMARY_ANSWER: function ADD_SUMMARY_ANSWER(state, value) {
+    var payload = value;
+    state.selectionSummary.push(payload);
+  },
   REMOVE_ANSWER: function REMOVE_ANSWER(state, value) {
     state.formAnswers.pop();
   }
@@ -21385,6 +21447,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   activePath: '',
+  allPosts: [],
   answerValid: false,
   currentSelection: '',
   formStep: 0,
@@ -21392,7 +21455,8 @@ __webpack_require__.r(__webpack_exports__);
   formIntro: true,
   formQuestions: false,
   formResults: false,
-  formIntroPaths: []
+  formIntroPaths: [],
+  selectionSummary: []
 });
 
 /***/ }),
@@ -21436,7 +21500,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/cbonade/Dev/pcomm-wp-retirement-tool/public/js/pcomm-wp-retirement-tool-public.js */"./public/js/pcomm-wp-retirement-tool-public.js");
+module.exports = __webpack_require__(/*! /Users/cbonade/Dev/msk-mskqf-713-082/webdocs/content/p/pcomm-wp-retirement-tool/public/js/pcomm-wp-retirement-tool-public.js */"./public/js/pcomm-wp-retirement-tool-public.js");
 
 
 /***/ })

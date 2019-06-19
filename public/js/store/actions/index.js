@@ -26,6 +26,26 @@ const actions = {
   },
   SUBMIT_COMPLETED_FORM: async (context, value) => {
     context.dispatch('COMMIT_CURRENT_SELECTION');
+    const selectedAnswers = context.getters.GET_FORM_STATUS('formAnswers');
+    console.log(selectedAnswers);
+    const monthNames = ["January", "February", "March","April", "May", "June", "July","August", "September", "October","November", "December"];
+    selectedAnswers.forEach((el) => {
+      console.log(el);
+      if (el instanceof Date) {
+        const day = el.getDate();
+        const monthIndex = el.getMonth();
+        const year = el.getFullYear();
+        context.commit('ADD_SUMMARY_ANSWER',monthNames[monthIndex] + ' ' + day + ', ' + year)
+      }
+      else if (Object.prototype.toString.call(el) == '[object Array]') {
+        el.forEach((arrayEl) => {
+          context.commit('ADD_SUMMARY_ANSWER', arrayEl.name);
+        })
+      }
+      else {
+        context.commit('ADD_SUMMARY_ANSWER', el.name);
+      }
+    })
     context.commit('MUTATE_FORM_QUESTIONS', false);
     context.commit('MUTATE_FORM_RESULTS', true);
     window.scrollTo(0,0);
@@ -55,6 +75,13 @@ const actions = {
       context.commit('MUTATE_KEY', {key: 'formIntroPaths', value: payload});
     }
   }, 
+  GET_RETIREMENT_TOOL_POSTS: async (context) => {
+    const response = await axios.get('/wp-json/wp/v2/retirement_tool_post?per_page=100');
+    if (response.status === 200) {
+      const payload = response.data;
+      context.commit('MUTATE_KEY', {key: 'allPosts', value: payload});
+    }
+  },
   SET_ACTIVE_PATH: (context, value) => {
     const payload = value;
     context.commit('MUTATE_KEY', {key: 'activePath', value: payload});

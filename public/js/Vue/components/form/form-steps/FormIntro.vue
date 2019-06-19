@@ -75,6 +75,8 @@ export default {
   },
   mounted() {
     this.$store.dispatch('GET_FORM_INTRO_PATHS');
+    this.$store.dispatch('GET_RETIREMENT_TOOL_POSTS');
+
   }
   
   }

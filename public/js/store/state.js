@@ -1,6 +1,7 @@
 
 export default {
   activePath: '',
+  allPosts: [],
   answerValid: false,
   currentSelection: '',
   formStep: 0,
@@ -9,4 +10,5 @@ export default {
   formQuestions: false,
   formResults: false,
   formIntroPaths: [],
+  selectionSummary: [],
 };
