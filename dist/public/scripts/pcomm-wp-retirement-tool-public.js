@@ -2157,7 +2157,9 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {},
-  mounted: function mounted() {}
+  mounted: function mounted() {
+    this.setDate(this.selectedDate);
+  }
 });
 
 /***/ }),
@@ -4646,8 +4648,12 @@ var render = function() {
           ? _c(
               "div",
               {
+                key: index,
                 staticClass: "form-option",
-                class: { "form-option-last": index === _vm.paths.length - 1 },
+                class: {
+                  "form-option-last": index === _vm.paths.length - 1,
+                  "form-option-first": index === 0
+                },
                 on: {
                   click: function($event) {
                     return _vm.selectPath(path)
@@ -4980,7 +4986,10 @@ var render = function() {
           {
             key: index,
             staticClass: "form-option",
-            class: { "form-option-last": answer.slug === "none-of-the-above" },
+            class: {
+              "form-option-last": answer.slug === "none-of-the-above",
+              "form-option-first": index === 0
+            },
             on: {
               click: function($event) {
                 return _vm.selectAnswer(answer)
@@ -5056,6 +5065,7 @@ var render = function() {
           {
             key: index,
             staticClass: "form-option",
+            class: { "form-option-first": index === 0 },
             on: {
               click: function($event) {
                 return _vm.selectAnswer(answer)
@@ -20618,15 +20628,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!*************************************************************************!*\
   !*** ./public/js/Vue/components/form/question-templates/DatePicker.vue ***!
   \*************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _DatePicker_vue_vue_type_template_id_b307d780___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DatePicker.vue?vue&type=template&id=b307d780& */ "./public/js/Vue/components/form/question-templates/DatePicker.vue?vue&type=template&id=b307d780&");
 /* harmony import */ var _DatePicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DatePicker.vue?vue&type=script&lang=js& */ "./public/js/Vue/components/form/question-templates/DatePicker.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _DatePicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _DatePicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -20656,7 +20665,7 @@ component.options.__file = "public/js/Vue/components/form/question-templates/Dat
 /*!**************************************************************************************************!*\
   !*** ./public/js/Vue/components/form/question-templates/DatePicker.vue?vue&type=script&lang=js& ***!
   \**************************************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -21427,7 +21436,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/cbonade/Dev/msk-mskqf-713-082/webdocs/content/p/pcomm-wp-retirement-tool/public/js/pcomm-wp-retirement-tool-public.js */"./public/js/pcomm-wp-retirement-tool-public.js");
+module.exports = __webpack_require__(/*! /Users/cbonade/Dev/pcomm-wp-retirement-tool/public/js/pcomm-wp-retirement-tool-public.js */"./public/js/pcomm-wp-retirement-tool-public.js");
 
 
 /***/ })
