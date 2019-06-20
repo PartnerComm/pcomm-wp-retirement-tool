@@ -2423,7 +2423,7 @@ var tabs = [{
   label: 'before retirement'
 }, {
   id: '6',
-  title: 'During retirement'
+  title: 'During<br />retirement'
 }];
 
 
@@ -2494,6 +2494,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ResultsTimelineTabsContent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ResultsTimelineTabsContent */ "./public/js/Vue/components/form/results-templates/ResultsTimelineTabsContent.vue");
 /* harmony import */ var _icons_Tabs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../icons/Tabs */ "./public/js/Vue/components/icons/Tabs.vue");
+//
+//
 //
 //
 //
@@ -5609,17 +5611,10 @@ var render = function() {
             },
             [
               _c("div", { staticClass: "results-timeline-tabs-nav-content" }, [
-                _c(
-                  "div",
-                  { staticClass: "results-timeline-tabs-nav-content-title" },
-                  [
-                    _vm._v(
-                      "\n                      " +
-                        _vm._s(tab.title) +
-                        "\n                  "
-                    )
-                  ]
-                ),
+                _c("div", {
+                  staticClass: "results-timeline-tabs-nav-content-title",
+                  domProps: { innerHTML: _vm._s(tab.title) }
+                }),
                 _vm._v(" "),
                 _c(
                   "div",
@@ -6249,11 +6244,12 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "tabs-icon" }, [
     !_vm.active
       ? _c(
           "svg",
           {
+            staticClass: "svg-inactive",
             attrs: {
               width: "31px",
               height: "31px",

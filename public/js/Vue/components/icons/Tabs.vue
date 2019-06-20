@@ -1,6 +1,6 @@
 <template>
-<div>
-<svg v-if="!active" width="31px" height="31px" viewBox="0 0 31 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<div class="tabs-icon">
+<svg class="svg-inactive" v-if="!active" width="31px" height="31px" viewBox="0 0 31 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="Tab-Item" transform="translate(-60.000000, -70.000000)" fill="#FFFFFF" stroke="#3777BC" stroke-width="3">
             <g transform="translate(0.000000, 17.000000)" id="Timeline-Stop-Empty">
