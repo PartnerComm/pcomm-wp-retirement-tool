@@ -2493,8 +2493,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ResultsTimelineTabsContent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ResultsTimelineTabsContent */ "./public/js/Vue/components/form/results-templates/ResultsTimelineTabsContent.vue");
-//
-//
+/* harmony import */ var _icons_Tabs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../icons/Tabs */ "./public/js/Vue/components/icons/Tabs.vue");
 //
 //
 //
@@ -2517,6 +2516,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     tabs: {
@@ -2525,12 +2525,19 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   data: function data() {
-    return {};
+    return {
+      currentTab: 0
+    };
   },
   components: {
-    ResultsTimelineTabsContent: _ResultsTimelineTabsContent__WEBPACK_IMPORTED_MODULE_0__["default"]
+    ResultsTimelineTabsContent: _ResultsTimelineTabsContent__WEBPACK_IMPORTED_MODULE_0__["default"],
+    TabsIcon: _icons_Tabs__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  methods: {},
+  methods: {
+    selectTab: function selectTab(tab) {
+      this.currentTab = tab;
+    }
+  },
   computed: {},
   created: function created() {},
   mounted: function mounted() {}
@@ -2830,6 +2837,60 @@ __webpack_require__.r(__webpack_exports__);
       type: String,
       required: false,
       "default": '#C6C6C6'
+    }
+  },
+  data: function data() {
+    return {};
+  },
+  methods: {},
+  computed: {},
+  created: function created() {},
+  mounted: function mounted() {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./public/js/Vue/components/icons/Tabs.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./public/js/Vue/components/icons/Tabs.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    active: {
+      type: Boolean,
+      required: true
     }
   },
   data: function data() {
@@ -5535,35 +5596,56 @@ var render = function() {
         "div",
         { staticClass: "results-timeline-tabs-nav" },
         _vm._l(_vm.tabs, function(tab, i) {
-          return _c("div", { key: i, attrs: { value: tab.id } }, [
-            _c("div", { staticClass: "results-timeline-tabs-nav-content" }, [
-              _c(
-                "div",
-                { staticClass: "results-timeline-tabs-nav-content-title" },
-                [
-                  _vm._v(
-                    "\n                      " +
-                      _vm._s(tab.title) +
-                      "\n                  "
-                  )
-                ]
-              ),
+          return _c(
+            "div",
+            {
+              key: i,
+              attrs: { value: tab.id },
+              on: {
+                click: function($event) {
+                  return _vm.selectTab(i)
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "results-timeline-tabs-nav-content" }, [
+                _c(
+                  "div",
+                  { staticClass: "results-timeline-tabs-nav-content-title" },
+                  [
+                    _vm._v(
+                      "\n                      " +
+                        _vm._s(tab.title) +
+                        "\n                  "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "results-timeline-tabs-nav-content-label" },
+                  [
+                    _vm._v(
+                      "\n                      " +
+                        _vm._s(tab.label) +
+                        "\n                  "
+                    )
+                  ]
+                )
+              ]),
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "results-timeline-tabs-nav-content-label" },
+                { staticClass: "results-timeline-tabs-nav-button" },
                 [
-                  _vm._v(
-                    "\n                      " +
-                      _vm._s(tab.label) +
-                      "\n                  "
-                  )
-                ]
+                  _c("tabs-icon", {
+                    attrs: { active: _vm.currentTab >= i ? true : false }
+                  })
+                ],
+                1
               )
-            ]),
-            _vm._v(" "),
-            _vm._m(0, true)
-          ])
+            ]
+          )
         }),
         0
       ),
@@ -5573,16 +5655,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "results-timeline-tabs-nav-button" }, [
-      _c("button")
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -6153,6 +6226,180 @@ var render = function() {
       )
     ]
   )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./public/js/Vue/components/icons/Tabs.vue?vue&type=template&id=f15421b6&":
+/*!**************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./public/js/Vue/components/icons/Tabs.vue?vue&type=template&id=f15421b6& ***!
+  \**************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    !_vm.active
+      ? _c(
+          "svg",
+          {
+            attrs: {
+              width: "31px",
+              height: "31px",
+              viewBox: "0 0 31 31",
+              version: "1.1",
+              xmlns: "http://www.w3.org/2000/svg",
+              "xmlns:xlink": "http://www.w3.org/1999/xlink"
+            }
+          },
+          [
+            _c(
+              "g",
+              {
+                attrs: {
+                  id: "Symbols",
+                  stroke: "none",
+                  "stroke-width": "1",
+                  fill: "none",
+                  "fill-rule": "evenodd"
+                }
+              },
+              [
+                _c(
+                  "g",
+                  {
+                    attrs: {
+                      id: "Tab-Item",
+                      transform: "translate(-60.000000, -70.000000)",
+                      fill: "#FFFFFF",
+                      stroke: "#3777BC",
+                      "stroke-width": "3"
+                    }
+                  },
+                  [
+                    _c(
+                      "g",
+                      {
+                        attrs: {
+                          transform: "translate(0.000000, 17.000000)",
+                          id: "Timeline-Stop-Empty"
+                        }
+                      },
+                      [
+                        _c(
+                          "g",
+                          {
+                            attrs: {
+                              transform: "translate(62.000000, 55.000000)"
+                            }
+                          },
+                          [
+                            _c("circle", {
+                              attrs: {
+                                id: "Oval",
+                                cx: "13.5",
+                                cy: "13.5",
+                                r: "13.5"
+                              }
+                            })
+                          ]
+                        )
+                      ]
+                    )
+                  ]
+                )
+              ]
+            )
+          ]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.active
+      ? _c(
+          "svg",
+          {
+            attrs: {
+              width: "43px",
+              height: "43px",
+              viewBox: "0 0 43 43",
+              version: "1.1",
+              xmlns: "http://www.w3.org/2000/svg",
+              "xmlns:xlink": "http://www.w3.org/1999/xlink"
+            }
+          },
+          [
+            _c(
+              "g",
+              {
+                attrs: {
+                  id: "Symbols",
+                  stroke: "none",
+                  "stroke-width": "1",
+                  fill: "none",
+                  "fill-rule": "evenodd"
+                }
+              },
+              [
+                _c(
+                  "g",
+                  {
+                    attrs: {
+                      id: "Tab-Item-Selected",
+                      transform: "translate(-54.000000, -64.000000)"
+                    }
+                  },
+                  [
+                    _c(
+                      "g",
+                      {
+                        attrs: {
+                          id: "Timeline-Selected",
+                          transform: "translate(56.000000, 66.000000)"
+                        }
+                      },
+                      [
+                        _c("circle", {
+                          attrs: {
+                            id: "Oval",
+                            stroke: "#3777BC",
+                            "stroke-width": "3",
+                            fill: "#FFFFFF",
+                            cx: "19.5",
+                            cy: "19.5",
+                            r: "19.5"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("circle", {
+                          attrs: {
+                            id: "Oval",
+                            fill: "#3777BC",
+                            cx: "19.5",
+                            cy: "19.5",
+                            r: "13.5"
+                          }
+                        })
+                      ]
+                    )
+                  ]
+                )
+              ]
+            )
+          ]
+        )
+      : _vm._e()
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -22279,6 +22526,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./public/js/Vue/components/icons/Tabs.vue":
+/*!*************************************************!*\
+  !*** ./public/js/Vue/components/icons/Tabs.vue ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Tabs_vue_vue_type_template_id_f15421b6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Tabs.vue?vue&type=template&id=f15421b6& */ "./public/js/Vue/components/icons/Tabs.vue?vue&type=template&id=f15421b6&");
+/* harmony import */ var _Tabs_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Tabs.vue?vue&type=script&lang=js& */ "./public/js/Vue/components/icons/Tabs.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Tabs_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Tabs_vue_vue_type_template_id_f15421b6___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Tabs_vue_vue_type_template_id_f15421b6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "public/js/Vue/components/icons/Tabs.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./public/js/Vue/components/icons/Tabs.vue?vue&type=script&lang=js&":
+/*!**************************************************************************!*\
+  !*** ./public/js/Vue/components/icons/Tabs.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Tabs_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Tabs.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./public/js/Vue/components/icons/Tabs.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Tabs_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./public/js/Vue/components/icons/Tabs.vue?vue&type=template&id=f15421b6&":
+/*!********************************************************************************!*\
+  !*** ./public/js/Vue/components/icons/Tabs.vue?vue&type=template&id=f15421b6& ***!
+  \********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Tabs_vue_vue_type_template_id_f15421b6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Tabs.vue?vue&type=template&id=f15421b6& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./public/js/Vue/components/icons/Tabs.vue?vue&type=template&id=f15421b6&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Tabs_vue_vue_type_template_id_f15421b6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Tabs_vue_vue_type_template_id_f15421b6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./public/js/pcomm-wp-retirement-tool-public.js":
 /*!******************************************************!*\
   !*** ./public/js/pcomm-wp-retirement-tool-public.js ***!
@@ -22671,7 +22987,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/cbonade/Dev/msk-mskqf-713-082/webdocs/content/p/pcomm-wp-retirement-tool/public/js/pcomm-wp-retirement-tool-public.js */"./public/js/pcomm-wp-retirement-tool-public.js");
+module.exports = __webpack_require__(/*! /Users/scoronado2/Documents/partnercomm/github/msk/msk-mskqf-713-082/webdocs/content/p/pcomm-wp-retirement-tool/public/js/pcomm-wp-retirement-tool-public.js */"./public/js/pcomm-wp-retirement-tool-public.js");
 
 
 /***/ })
