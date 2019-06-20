@@ -4,7 +4,7 @@
             <div v-for="(tab, i) in tabs" :key="i" class="" :value="tab.id" @click="selectTab(i)">
                 <div class="results-timeline-tabs-nav-content">
                     <div class="results-timeline-tabs-nav-content-title" v-html="tab.title">
-                       
+
                     </div>
                     <div class="results-timeline-tabs-nav-content-label">
                         {{tab.label}}
