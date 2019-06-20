@@ -1,11 +1,13 @@
 <template>
   <div class="form-results">
-    <h1 class="form-results-title">I'm the form results!</h1>
+    <results-user-selections />
+    <results-timeline />
   </div>
 </template>
 
 <script>
-
+import ResultsUserSelections from '../results-templates/ResultsUserSelections';
+import ResultsTimeline from '../results-templates/ResultsTimeline';
 export default {
   props: {},
   data() {
@@ -14,7 +16,8 @@ export default {
     }
   },
   components: {
-
+    ResultsUserSelections,
+    ResultsTimeline
   },
   methods: {
   
