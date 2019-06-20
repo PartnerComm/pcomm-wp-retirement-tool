@@ -1,11 +1,15 @@
 <template>
+  <div class="results-header">
 
+  </div>
 </template>
 
 <script>
 
 export default {
-  props: [],
+  props: {
+
+  },
   data() {
     return {
   
