@@ -10,7 +10,7 @@
             </svg>
         </div>
         <div class="form-button">
-            <button class="print-button" >Print</button>
+            <button class="print-button mr-1" > <print /> Print</button>
             <button class="nav-button start-over" >Start Over</button>
         </div>
     </div>
@@ -26,6 +26,7 @@
 <script>
 import Radio from '../../icons/Radio';
 import Checkmark from '../../icons/Checkmark';
+import Print from '../../icons/Print';
 export default {
   props: {
 
@@ -37,7 +38,8 @@ export default {
   },
   components: {
     Radio,
-    Checkmark
+    Checkmark,
+    Print
   },
   methods: {
     handleClick() {

@@ -3,8 +3,8 @@
     <div class="results-timeline-tabs-content-header-title">
         Dynamic title should go here
     </div>
-    <div class="results-timeline-tabs-content-header-button">
-            <button>Date</button>
+    <div class="results-timeline-tabs-content-header-pill">
+            <div class="pill">Date</div>
     </div>
     <results-timeline-tabs-content-container />
     <results-timeline-tabs-content-container />

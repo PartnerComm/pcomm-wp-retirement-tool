@@ -4,7 +4,7 @@
             <span class="italics">Your Retirement</span> <span class="strong">Timeline</span>
         </div>
         <div class="results-timeline-content-strong">
-            You have <span>4</span> months to go!
+            <div class="pill">You have about 4 months to go!</div>
         </div>
         <div class="results-timeline-content-text">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sed nulla elit. In ut erat at felis tincidunt condimentum. Nam non urna sed turpis ullamcorper i mperdiet.

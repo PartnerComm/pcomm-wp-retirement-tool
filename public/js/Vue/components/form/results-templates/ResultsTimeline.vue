@@ -31,7 +31,7 @@ const tabs = [{
     label: 'before retirement',
 }, {
      id: '6',
-     title: 'During retirement',
+     title: 'During<br />retirement',
 }];
 import ResultsTimelineContent from './ResultsTimelineContent';
 import ResultsTimelineTabs from './ResultsTimelineTabs';
