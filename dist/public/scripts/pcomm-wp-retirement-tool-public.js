@@ -1815,11 +1815,13 @@ __webpack_require__.r(__webpack_exports__);
       this.$store.dispatch('NAVIGATE_STEPS', 'plus');
     },
     navigateBackward: function navigateBackward() {
+      this.$store.dispatch('SET_CURRENT_SELECTION', this.formAnswers[this.formAnswers.length - 1]);
       this.$store.dispatch('REMOVE_LAST_SELECTION');
 
       if (this.formStep === 0) {
         this.$store.dispatch('UPDATE_FORM_QUESTIONS', false);
         this.$store.dispatch('UPDATE_FORM_INTRO', true);
+        window.scrollTo(0, 0);
       } else {
         this.$store.dispatch('NAVIGATE_STEPS', 'minus');
       }
@@ -1853,6 +1855,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     selectedAnswer: function selectedAnswer() {
       return this.$store.getters.GET_FORM_STATUS('currentSelection');
+    },
+    formAnswers: function formAnswers() {
+      return this.$store.getters.GET_FORM_ANSWERS;
     }
   },
   created: function created() {},
@@ -1982,7 +1987,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$store.dispatch('SET_CURRENT_SELECTION', path);
     },
     setActivePath: function setActivePath() {
-      this.$store.dispatch('SET_ACTIVE_PATH', this.selectedPath);
+      this.$store.dispatch('SET_ACTIVE_PATH', this.currentSelection);
       this.$store.dispatch('UPDATE_FORM_INTRO', false);
 
       if (this.activeQuestions.length > 0) {
@@ -2003,6 +2008,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     activeQuestions: function activeQuestions() {
       return this.$store.getters.ACTIVE_QUESTIONS;
+    },
+    currentSelection: function currentSelection() {
+      return this.$store.getters.GET_FORM_STATUS('currentSelection');
     }
   },
   created: function created() {},
@@ -2147,7 +2155,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      selectedDate: new Date()
+      selectedDate: ''
     };
   },
   components: {
@@ -2326,7 +2334,11 @@ __webpack_require__.r(__webpack_exports__);
       return url.firstChild;
     }
   },
-  computed: {},
+  computed: {
+    currentSelection: function currentSelection() {
+      return this.$store.getters.GET_FORM_STATUS('currentSelection');
+    }
+  },
   created: function created() {},
   mounted: function mounted() {}
 });
@@ -5115,13 +5127,16 @@ var render = function() {
                     staticClass: "form-answer",
                     class: {
                       active:
-                        _vm.selectedPath && _vm.selectedPath.id === path.id,
+                        _vm.currentSelection &&
+                        _vm.currentSelection.id === path.id,
                       inactive:
-                        _vm.selectedPath && _vm.selectedPath.id !== path.id
+                        _vm.currentSelection &&
+                        _vm.currentSelection.id !== path.id
                     },
                     attrs: {
                       active:
-                        _vm.selectedPath && _vm.selectedPath.id === path.id
+                        _vm.currentSelection &&
+                        _vm.currentSelection.id === path.id
                           ? true
                           : false
                     }
@@ -5130,13 +5145,14 @@ var render = function() {
                     _c("radio", {
                       attrs: {
                         color:
-                          (_vm.selectedPath &&
-                            _vm.selectedPath.id === path.id) ||
-                          !_vm.selectedPath
+                          (_vm.currentSelection &&
+                            _vm.currentSelection.id === path.id) ||
+                          !_vm.currentSelection
                             ? "#00A69A"
                             : "#C6C6C6",
                         fill:
-                          _vm.selectedPath && _vm.selectedPath.id === path.id
+                          _vm.currentSelection &&
+                          _vm.currentSelection.id === path.id
                             ? "#00A69A"
                             : "#FFFFFF"
                       }
@@ -5444,16 +5460,16 @@ var render = function() {
                 question: _vm.question,
                 data: answer,
                 active:
-                  _vm.selectedAnswers.length > 0 &&
-                  _vm.selectedAnswers.indexOf(answer) > -1
+                  _vm.currentSelection.length > 0 &&
+                  _vm.currentSelection.indexOf(answer) > -1
                     ? true
                     : false,
                 inactive:
-                  (_vm.selectedAnswers[0] &&
-                    _vm.selectedAnswers[0].slug === "none-of-the-above" &&
+                  (_vm.currentSelection[0] &&
+                    _vm.currentSelection[0].slug === "none-of-the-above" &&
                     answer.slug != "none-of-the-above") ||
-                  (_vm.selectedAnswers[0] &&
-                    _vm.selectedAnswers[0].slug !== "none-of-the-above" &&
+                  (_vm.currentSelection[0] &&
+                    _vm.currentSelection[0].slug !== "none-of-the-above" &&
                     answer.slug === "none-of-the-above")
                     ? true
                     : false
@@ -22994,6 +23010,7 @@ var actions = {
 
     var payload = newStep;
     context.commit('MUTATE_FORM_STEP', payload);
+    window.scrollTo(0, 0);
   },
   RESET_FORM_DEFAULTS: function RESET_FORM_DEFAULTS(context) {
     context.commit('MUTATE_KEY', {
@@ -23267,7 +23284,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/scoronado2/Documents/partnercomm/github/msk/msk-mskqf-713-082/webdocs/content/p/pcomm-wp-retirement-tool/public/js/pcomm-wp-retirement-tool-public.js */"./public/js/pcomm-wp-retirement-tool-public.js");
+module.exports = __webpack_require__(/*! /Users/cbonade/Dev/msk-mskqf-713-082/webdocs/content/p/pcomm-wp-retirement-tool/public/js/pcomm-wp-retirement-tool-public.js */"./public/js/pcomm-wp-retirement-tool-public.js");
 
 
 /***/ })

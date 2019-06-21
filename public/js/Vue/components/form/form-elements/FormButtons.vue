@@ -32,10 +32,12 @@ export default {
       this.$store.dispatch('NAVIGATE_STEPS', 'plus');
     },
     navigateBackward() {
+      this.$store.dispatch('SET_CURRENT_SELECTION', this.formAnswers[this.formAnswers.length-1] )
       this.$store.dispatch('REMOVE_LAST_SELECTION');
       if (this.formStep === 0) {
         this.$store.dispatch('UPDATE_FORM_QUESTIONS', false);
         this.$store.dispatch('UPDATE_FORM_INTRO', true);
+        window.scrollTo(0,0);
       } else {
         this.$store.dispatch('NAVIGATE_STEPS', 'minus');
       }
@@ -69,6 +71,9 @@ export default {
     selectedAnswer() {
       return this.$store.getters.GET_FORM_STATUS('currentSelection');
     },
+    formAnswers() {
+      return this.$store.getters.GET_FORM_ANSWERS;
+    }
   },
   created() {
 
