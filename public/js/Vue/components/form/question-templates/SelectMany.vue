@@ -8,8 +8,8 @@
           <form-answer 
           :question="question" 
           :data="answer" 
-          :active="(selectedAnswers.length > 0 && selectedAnswers.indexOf(answer) > -1) ? true : false"
-          :inactive="((selectedAnswers[0] && selectedAnswers[0].slug === 'none-of-the-above' && answer.slug != 'none-of-the-above') || (selectedAnswers[0] && selectedAnswers[0].slug !== 'none-of-the-above' && answer.slug === 'none-of-the-above')) ? true : false" />
+          :active="(currentSelection.length > 0 && currentSelection.indexOf(answer) > -1) ? true : false"
+          :inactive="((currentSelection[0] && currentSelection[0].slug === 'none-of-the-above' && answer.slug != 'none-of-the-above') || (currentSelection[0] && currentSelection[0].slug !== 'none-of-the-above' && answer.slug === 'none-of-the-above')) ? true : false" />
         </div>
     </div>
   </div>
@@ -61,10 +61,13 @@ export default {
       console.log(url);
       console.log(url.firstChild);
       return url.firstChild;
-    }
+    },
+    
   },
   computed: {
-
+    currentSelection() {
+      return this.$store.getters.GET_FORM_STATUS('currentSelection');
+    }
   },
   created() {
 

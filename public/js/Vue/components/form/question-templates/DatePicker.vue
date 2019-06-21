@@ -18,7 +18,7 @@ export default {
   },
   data() {
     return {
-      selectedDate: new Date()
+      selectedDate: ''
     }
   },
   components: {

@@ -4,8 +4,8 @@
     <div class="question-subtitle" v-html="subtitle"></div>
     <loader v-if="paths.length === 0" />
     <div class="form-option" v-for="(path, index) in paths" :key="index" @click="selectPath(path)" :class="{'form-option-last': index === paths.length-1, 'form-option-first': index === 0}" v-if="paths.length > 0">
-      <div class="form-answer" :active="(selectedPath && selectedPath.id === path.id) ? true : false" :class="{active: selectedPath && selectedPath.id === path.id, inactive: selectedPath && selectedPath.id !== path.id}">
-        <radio :color="((selectedPath && selectedPath.id === path.id) || !selectedPath) ? '#00A69A':'#C6C6C6' " :fill="(selectedPath && selectedPath.id === path.id) ? '#00A69A' : '#FFFFFF'" />
+      <div class="form-answer" :active="(currentSelection && currentSelection.id === path.id) ? true : false" :class="{active: currentSelection && currentSelection.id === path.id, inactive: currentSelection && currentSelection.id !== path.id}">
+        <radio :color="((currentSelection && currentSelection.id === path.id) || !currentSelection) ? '#00A69A':'#C6C6C6' " :fill="(currentSelection && currentSelection.id === path.id) ? '#00A69A' : '#FFFFFF'" />
         <span>{{path.name}}</span>
       </div>
     </div>
@@ -46,7 +46,7 @@ export default {
       this.$store.dispatch('SET_CURRENT_SELECTION', path);
     },
     setActivePath() {
-      this.$store.dispatch('SET_ACTIVE_PATH', this.selectedPath);
+      this.$store.dispatch('SET_ACTIVE_PATH', this.currentSelection);
       this.$store.dispatch('UPDATE_FORM_INTRO', false);
       if (this.activeQuestions.length>0) {
         this.$store.dispatch('UPDATE_FORM_QUESTIONS', true);
@@ -69,6 +69,9 @@ export default {
     activeQuestions() {
       return this.$store.getters.ACTIVE_QUESTIONS;
     },
+    currentSelection() {
+      return this.$store.getters.GET_FORM_STATUS('currentSelection');
+    }
   },
   created() {
 

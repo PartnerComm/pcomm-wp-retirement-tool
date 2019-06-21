@@ -57,10 +57,11 @@ const actions = {
       newStep = parseInt(currentStep) + 1;
     } else {
       newStep = parseInt(currentStep) - 1;
-      context.commit('MUTATE_ANSWER_VALID', true)
+      context.commit('MUTATE_ANSWER_VALID', true);
     }
     const payload = newStep;
     context.commit('MUTATE_FORM_STEP', payload);
+    window.scrollTo(0,0);
   },
   RESET_FORM_DEFAULTS: (context) => {
     context.commit('MUTATE_KEY', {key: 'formAnswers', value: []});
