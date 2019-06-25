@@ -14,11 +14,13 @@
  {
      public function __construct()
      {
-         add_action('init', [$this, 'create_questions_taxonomy'], 10);
+         add_action('init', [$this, 'create_retirement_questions_taxonomy'], 10);
+         add_action('init', [$this, 'create_retirement_timeframe_taxonomy'], 10);
+         add_action('init', [$this, 'create_retirement_category_taxonomy'], 10);
      }
-     public function create_questions_taxonomy()
+     public function create_retirement_questions_taxonomy()
      {
-        $labels = array(
+         $labels = array(
         'name' => _x('Retirement Tool Questions', 'taxonomy general name'),
         'singular_name' => _x('Retirement Tool Question', 'taxonomy singular name'),
         'search_items' =>  __('Retirement Tool Questions'),
@@ -32,14 +34,65 @@
         'menu_name' => __('Retirement Tool Questions'),
       );
   
-    register_taxonomy('retirement_tool_question', array('retirement_tool_post'), array(
-      'hierarchical' => true,
-      'labels' => $labels,
-      'show_ui' => true,
-      'query_var' => true,
-      'show_in_rest' => true,
-      'rewrite' => array( 'slug' => 'retirement-tool-question' ),
-    ));
+         register_taxonomy('retirement_tool_question', array('retirement_tool_post'), array(
+        'hierarchical' => true,
+        'labels' => $labels,
+        'show_ui' => true,
+        'query_var' => true,
+        'show_in_rest' => true,
+        'rewrite' => array( 'slug' => 'retirement-tool-question' ),
+      ));
+     }
+     public function create_retirement_timeframe_taxonomy()
+     {
+         $labels = array(
+        'name' => _x('Retirement Tool Timeframes', 'taxonomy general name'),
+        'singular_name' => _x('Retirement Tool Timeframe', 'taxonomy singular name'),
+        'search_items' =>  __('Retirement Tool Timeframes'),
+        'all_items' => __('Retirement Tool Timeframes'),
+        'parent_item' => __('Parent Retirement Tool Timeframe'),
+        'parent_item_colon' => __('Parent Retirement Tool Timeframe:'),
+        'edit_item' => __('Retirement Tool Timeframe'),
+        'update_item' => __('Retirement Tool Timeframe'),
+        'add_new_item' => __('Retirement Tool Timeframe'),
+        'new_item_name' => __('Retirement Tool Timeframe'),
+        'menu_name' => __('Retirement Tool Timeframes'),
+      );
+  
+         register_taxonomy('retirement_tool_timeframe', array('retirement_tool_post'), array(
+        'hierarchical' => true,
+        'labels' => $labels,
+        'show_ui' => true,
+        'query_var' => true,
+        'show_in_rest' => true,
+        'rewrite' => array( 'slug' => 'retirement-tool-timeframe' ),
+      ));
+     }
+     
+     public function create_retirement_category_taxonomy()
+     {
+         $labels = array(
+        'name' => _x('Retirement Tool Categories', 'taxonomy general name'),
+        'singular_name' => _x('Retirement Tool Category', 'taxonomy singular name'),
+        'search_items' =>  __('Retirement Tool Categories'),
+        'all_items' => __('Retirement Tool Categories'),
+        'parent_item' => __('Parent Retirement Tool Category'),
+        'parent_item_colon' => __('Parent Retirement Tool Category:'),
+        'edit_item' => __('Retirement Tool Category'),
+        'update_item' => __('Retirement Tool Category'),
+        'add_new_item' => __('Retirement Tool Category'),
+        'new_item_name' => __('Retirement Tool Category'),
+        'menu_name' => __('Retirement Tool Categories'),
+      );
+  
+         register_taxonomy('retirement_tool_category', array('retirement_tool_post'), array(
+        'hierarchical' => true,
+        'labels' => $labels,
+        'show_ui' => true,
+        'query_var' => true,
+        'show_in_rest' => true,
+        'rewrite' => array( 'slug' => 'retirement-tool-category' ),
+      ));
      }
  }
 

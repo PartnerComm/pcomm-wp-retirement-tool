@@ -28,7 +28,7 @@
 				'singular_name' => _x('Retirement Tool Post', 'post type singular name'),
 				'add_new' => _x('Add New', 'retirement-tool-post'),
 				'add_new_item' => __('Add New Retirement Tool Post'),
-				'edit_item' => __('Edit Retirement Tool Postt'),
+				'edit_item' => __('Edit Retirement Tool Post'),
 				'new_item' => __('New Retirement Tool Post'),
 				'all_items' => __('All Retirement Tool Posts'),
 				'view_item' => __('View Retirement Tool Post'),
