@@ -2173,12 +2173,18 @@ __webpack_require__.r(__webpack_exports__);
       var date = new Date();
       date.setDate(date.getDate() - 1);
       return date;
+    },
+    twoYearsAhead: function twoYearsAhead() {
+      var date = new Date();
+      date.setFullYear(date.getFullYear() + 2);
+      return date;
+    },
+    currentSelection: function currentSelection() {
+      return this.$store.getters.GET_FORM_STATUS('currentSelection');
     }
   },
   created: function created() {},
-  mounted: function mounted() {
-    this.setDate(this.selectedDate);
-  }
+  mounted: function mounted() {}
 });
 
 /***/ }),
@@ -5295,20 +5301,18 @@ var render = function() {
       _c("datepicker", {
         attrs: {
           "wrapper-class": "calendar-wrap",
-          disabledDates: { to: _vm.currentCalendarDate },
-          inline: true
+          "calendar-class": "calendar-inner",
+          disabledDates: {
+            to: _vm.currentCalendarDate,
+            from: _vm.twoYearsAhead
+          },
+          inline: true,
+          value: _vm.currentSelection
         },
         on: {
           selected: function($event) {
             return _vm.setDate($event)
           }
-        },
-        model: {
-          value: _vm.selectedDate,
-          callback: function($$v) {
-            _vm.selectedDate = $$v
-          },
-          expression: "selectedDate"
         }
       })
     ],

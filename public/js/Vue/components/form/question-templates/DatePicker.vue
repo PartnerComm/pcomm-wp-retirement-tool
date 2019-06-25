@@ -2,7 +2,7 @@
   <div class="form-datepicker">
     <div class="question-title">{{question.name}}</div>
     <div class="question-description" v-if="question.description" v-html="question.description"></div> 
-    <datepicker wrapper-class="calendar-wrap" :disabledDates="{to: currentCalendarDate}" :inline="true" v-model="selectedDate" @selected="setDate($event)" />
+    <datepicker wrapper-class="calendar-wrap" calendar-class="calendar-inner" :disabledDates="{to: currentCalendarDate, from: twoYearsAhead}" :inline="true" :value="currentSelection" @selected="setDate($event)" />
   </div>
 </template>
 
@@ -35,15 +35,21 @@ export default {
     currentCalendarDate() {
       var date = new Date();
       date.setDate(date.getDate() - 1);
-
       return date;
+    },
+    twoYearsAhead() {
+      var date = new Date();
+      date.setFullYear(date.getFullYear() + 2);
+      return date;
+    },
+    currentSelection() {
+      return this.$store.getters.GET_FORM_STATUS('currentSelection');
     }
   },
   created() {
 
   },
   mounted() {
-    this.setDate(this.selectedDate);
   }
   
   }

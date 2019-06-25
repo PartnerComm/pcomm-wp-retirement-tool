@@ -29,5 +29,10 @@ Activate the plugin in the Wordpress Admin.
 
 << insert api routes here >>
 
+## Resources
+
+[Datepicker docs](https://www.npmjs.com/package/vuejs-datepicker)
+
+
 ## Changelog
 0.0.1 - Initialize git repo, scaffold plugin skeleton.
