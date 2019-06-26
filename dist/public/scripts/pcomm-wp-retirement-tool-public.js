@@ -2494,7 +2494,28 @@ __webpack_require__.r(__webpack_exports__);
   },
   components: {},
   methods: {},
-  computed: {},
+  computed: {
+    retirementDate: function retirementDate() {
+      return this.$store.getters.GET_FORM_STATUS('date');
+    },
+    currentDate: function currentDate() {
+      return new Date();
+    },
+    differenceDates: function differenceDates() {
+      var date1 = this.currentDate;
+      var date2 = this.retirementDate;
+      var diffTime = Math.abs(date2.getTime() - date1.getTime());
+      var diffMonths = Math.round(diffTime / (1000 * 60 * 60 * 24) / 30);
+      return diffMonths;
+    },
+    monthsLeft: function monthsLeft() {
+      if (this.differenceDates <= 1) {
+        return '1 month';
+      }
+
+      return this.differenceDates + ' months';
+    }
+  },
   created: function created() {},
   mounted: function mounted() {}
 });
@@ -5612,31 +5633,31 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "results-timeline-content" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "results-timeline-content-strong" }, [
+      _c("div", { staticClass: "pill" }, [
+        _vm._v("You have about " + _vm._s(_vm.monthsLeft) + " to go!")
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "results-timeline-content-text" }, [
+      _vm._v(
+        "\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sed nulla elit. In ut erat at felis tincidunt condimentum. Nam non urna sed turpis ullamcorper i mperdiet.\n    "
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "results-timeline-content" }, [
-      _c("div", { staticClass: "results-timeline-content-title" }, [
-        _c("span", { staticClass: "italics" }, [_vm._v("Your Retirement")]),
-        _vm._v(" "),
-        _c("span", { staticClass: "strong" }, [_vm._v("Timeline")])
-      ]),
+    return _c("div", { staticClass: "results-timeline-content-title" }, [
+      _c("span", { staticClass: "italics" }, [_vm._v("Your Retirement")]),
       _vm._v(" "),
-      _c("div", { staticClass: "results-timeline-content-strong" }, [
-        _c("div", { staticClass: "pill" }, [
-          _vm._v("You have about 4 months to go!")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "results-timeline-content-text" }, [
-        _vm._v(
-          "\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sed nulla elit. In ut erat at felis tincidunt condimentum. Nam non urna sed turpis ullamcorper i mperdiet.\n    "
-        )
-      ])
+      _c("span", { staticClass: "strong" }, [_vm._v("Timeline")])
     ])
   }
 ]
