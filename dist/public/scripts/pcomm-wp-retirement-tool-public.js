@@ -23776,9 +23776,9 @@ __webpack_require__.r(__webpack_exports__);
   currentSelection: '',
   formStep: 0,
   formAnswers: [],
-  formIntro: false,
+  formIntro: true,
   formQuestions: false,
-  formResults: true,
+  formResults: false,
   formIntroPaths: [],
   selectionSummary: []
 });
