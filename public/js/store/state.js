@@ -6,9 +6,9 @@ export default {
   currentSelection: '',
   formStep: 0,
   formAnswers: [],
-  formIntro: true,
+  formIntro: false,
   formQuestions: false,
-  formResults: false,
+  formResults: true,
   formIntroPaths: [],
   selectionSummary: [],
 };

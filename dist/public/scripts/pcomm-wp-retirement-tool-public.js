@@ -2826,6 +2826,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: [],
   data: function data() {
@@ -6154,7 +6161,7 @@ var render = function() {
           _vm._l(_vm.userSelections, function(selection, index) {
             return _c(
               "div",
-              {},
+              { staticClass: "results-user-selections-item" },
               [
                 _c("check-no-circle"),
                 _vm._v("\n            " + _vm._s(selection) + "\n          ")
@@ -6189,16 +6196,67 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("svg", { attrs: { width: "31px", height: "31px" } }, [
-    _c("polygon", {
+  return _c(
+    "svg",
+    {
       attrs: {
-        id: "Path",
-        fill: "#00A69A",
-        points:
-          "16.8794319 10.125 12.5864101 14.3813903 10.9643181 12.7731162 9.28125 14.4418129 10.9033588 16.0501037 12.5864101 17.71875 14.2694275 16.0501037 18.5625 11.7936631"
+        width: "16px",
+        height: "13px",
+        viewBox: "0 0 16 13",
+        version: "1.1",
+        xmlns: "http://www.w3.org/2000/svg",
+        "xmlns:xlink": "http://www.w3.org/1999/xlink"
       }
-    })
-  ])
+    },
+    [
+      _c("title", [_vm._v("Arrow-Icon")]),
+      _vm._v(" "),
+      _c(
+        "g",
+        {
+          attrs: {
+            id: "Desktop",
+            stroke: "none",
+            "stroke-width": "1",
+            fill: "none",
+            "fill-rule": "evenodd"
+          }
+        },
+        [
+          _c(
+            "g",
+            {
+              attrs: {
+                id: "MSK-RetirementTool-06",
+                transform: "translate(-285.000000, -491.000000)",
+                fill: "#00A69A"
+              }
+            },
+            [
+              _c(
+                "g",
+                {
+                  attrs: {
+                    id: "Selections",
+                    transform: "translate(195.000000, 378.000000)"
+                  }
+                },
+                [
+                  _c("polygon", {
+                    attrs: {
+                      id: "Arrow-Icon",
+                      points:
+                        "103.098549 113 95.6977844 120.28666 92.9014508 117.533401 90 120.390099 92.7963627 123.143387 95.6977844 126 98.5991477 123.143387 106 115.856641"
+                    }
+                  })
+                ]
+              )
+            ]
+          )
+        ]
+      )
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -23718,9 +23776,9 @@ __webpack_require__.r(__webpack_exports__);
   currentSelection: '',
   formStep: 0,
   formAnswers: [],
-  formIntro: true,
+  formIntro: false,
   formQuestions: false,
-  formResults: false,
+  formResults: true,
   formIntroPaths: [],
   selectionSummary: []
 });

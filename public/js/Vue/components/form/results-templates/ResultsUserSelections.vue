@@ -13,7 +13,7 @@
         </div>
     </div>
     <div v-if="showSelection" class="results-user-selections-bottom">
-            <div class="" v-for="(selection, index) in userSelections">
+            <div class="results-user-selections-item" v-for="(selection, index) in userSelections">
               <check-no-circle />
               {{selection}}
             </div>
