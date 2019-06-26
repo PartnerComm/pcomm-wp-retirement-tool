@@ -5,6 +5,7 @@
               :tabs="tabs"
 
         />
+        <results-resources />
     </div>
 </template>
 
@@ -35,6 +36,7 @@ const tabs = [{
 }];
 import ResultsTimelineContent from './ResultsTimelineContent';
 import ResultsTimelineTabs from './ResultsTimelineTabs';
+import ResultsResources from './ResultsResources';
 export default {
   props: {},
   data() {
@@ -44,7 +46,8 @@ export default {
   },
   components: {
     ResultsTimelineContent,
-    ResultsTimelineTabs
+    ResultsTimelineTabs,
+    ResultsResources
   },
   methods: {
 
