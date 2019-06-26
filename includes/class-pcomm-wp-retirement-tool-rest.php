@@ -14,41 +14,42 @@ class Pcomm_Wp_Retirement_Tool_Rest
 {
     public function __construct()
     {
-        add_action('rest_api_init', array($this, 'create_api_questions_meta_field'));
+        add_action('rest_api_init', array($this, 'modify_cpt_rest'));
         add_action('rest_api_init', array($this, 'create_api_answers_meta_field'));
+        add_action('rest_api_init', array($this, 'add_timeframe_meta'));
+
     }
 
-    public function create_api_questions_meta_field()
-    {
-        register_rest_field('retirement_tool_post', 'questions', array(
-            'get_callback' => array($this, 'get_questions_for_api'),
-   ));
+    public function modify_cpt_rest()
+    {   
+        $additional_rest_fields = ['retirement_tool_question', 'retirement_tool_timeframe', 'retirement_tool_category'];
+        foreach($additional_rest_fields as $field) {
+            register_rest_field('retirement_tool_post', $field, array(
+                'get_callback' => array($this, 'get_questions_for_api'),
+            ));
+        }
     }
-
-    public function get_questions_for_api($object)
+    public function get_questions_for_api($object, $field_name)
     {
-        die($object);
         $post_id = $object['id'];
-        if (get_the_terms($post_id, 'retirement_tool_question')) {
-            $questions = get_the_terms($post_id, 'retirement_tool_question');
-            $returnable_questions = array_filter($questions, function ($elem) {
-                if ($elem->parent === $post_id) {
-                    return true;
-                }
-            });
+        if (get_the_terms($post_id, $field_name)) {
+            $questions = get_the_terms($post_id, $field_name);
+            $returnable_questions = array_map(function ($elem) {
+                return $elem->slug;
+            }, $questions);
             $returnable_questions = array_values($returnable_questions);
             return $returnable_questions;
         } else {
             return [];
         }
     }
+    
     public function create_api_answers_meta_field()
     {
         register_rest_field('retirement_tool_question', 'questions', array(
        'get_callback'    => array($this, 'get_answers_for_api'),
      ));
     }
-
     public function get_answers_for_api($object)
     {
         $post_id = $object['id'];
@@ -66,6 +67,26 @@ class Pcomm_Wp_Retirement_Tool_Rest
         }, $children);
         return $returnable_children;
     }
+    public function add_timeframe_meta()
+    {
+        $additional_meta_fields = ['numeric_value'];
+        foreach($additional_meta_fields as $field) {
+            register_rest_field('retirement_tool_timeframe', $field, array(
+                'get_callback' => array($this, 'get_timeframe_meta_value'),
+            ));
+        }
+    }
+    public function get_timeframe_meta_value($object, $field_name) 
+    {
+        $post_id = $object['id'];
+        if (get_term_meta($post_id, $field_name, true)) {
+            $meta = get_term_meta($post_id, $field_name, true);
+            return $meta;
+        } else {
+            return [];
+        }
+    }
+    
 }
 
 

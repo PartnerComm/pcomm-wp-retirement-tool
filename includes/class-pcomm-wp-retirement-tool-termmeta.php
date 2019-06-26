@@ -18,6 +18,11 @@
          add_action('retirement_tool_question_edit_form_fields', [$this, 'edit_question_type_meta_field'], 10, 2);
          add_action('edited_retirement_tool_question', [$this,'save_question_type_meta_field']);
          add_action('create_retirement_tool_question', [$this,'save_question_type_meta_field']);
+
+          add_action("retirement_tool_timeframe_add_form_fields", [$this, 'add_numeric_value_meta_field'], 10, 2);
+          add_action('retirement_tool_timeframe_edit_form_fields', [$this, 'edit_numeric_value_meta_field'], 10, 2);
+          add_action('edited_retirement_tool_timeframe', [$this,'save_numeric_value_meta_field']);
+          add_action('create_retirement_tool_timeframe', [$this,'save_numeric_value_meta_field']);
      }
 
      public static function add_question_type_meta_field($term)
@@ -64,6 +69,45 @@
              }
          }
      }
+
+
+     public static function add_numeric_value_meta_field($term)
+     {
+         ?>
+      <div class="form-field">
+        <label for="numeric_value"><?php _e('Numeric Value'); ?></label>
+        <input name="numeric_value" id="numeric_value" value="" />
+        <p class="description"><?php _e('Enter a number that corresponds to the title'); ?></p>
+      </div>
+    <?php
+     }
+
+     public static function edit_numeric_value_meta_field($term)
+     {
+      $id = $term->term_id;
+     
+      $term_value = esc_attr(get_term_meta($id, 'numeric_value', true)); ?>
+      <tr class="form-field">
+        <th><label for="numeric_value"><?php _e('Numeric Value'); ?></label></th>
+        <td>	 
+          <input name="numeric_value" id="numeric_value" value="<?php echo ($term_value) ? $term_value : ''; ?>" />
+        </td>
+      </tr>
+    <?php
+     }
+    
+     public static function save_numeric_value_meta_field($term_id)
+     {
+         if (isset($_POST['numeric_value'])) {
+             $term_value = sanitize_text_field($_POST['numeric_value']);
+             if ($term_value) {
+                 update_term_meta($term_id, 'numeric_value', $term_value);
+             }
+         }
+     }
+     
  }
+
+  
 
  new Pcomm_Wp_Retirement_Tool_Term_Meta();
