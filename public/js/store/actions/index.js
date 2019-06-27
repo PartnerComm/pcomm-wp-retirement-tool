@@ -30,7 +30,6 @@ const actions = {
     console.log(selectedAnswers);
     const monthNames = ["January", "February", "March","April", "May", "June", "July","August", "September", "October","November", "December"];
     selectedAnswers.forEach((el) => {
-      console.log(el);
       if (el instanceof Date) {
         const day = el.getDate();
         const monthIndex = el.getMonth();
@@ -40,10 +39,12 @@ const actions = {
       else if (Object.prototype.toString.call(el) == '[object Array]') {
         el.forEach((arrayEl) => {
           context.commit('ADD_SUMMARY_ANSWER', arrayEl.name);
+          context.commit('ADD_FILTER_ANSWER', arrayEl.slug);
         })
       }
       else {
         context.commit('ADD_SUMMARY_ANSWER', el.name);
+        context.commit('ADD_FILTER_ANSWER', el.slug);
       }
     })
     context.commit('MUTATE_FORM_QUESTIONS', false);
@@ -76,6 +77,21 @@ const actions = {
       context.commit('MUTATE_KEY', {key: 'formIntroPaths', value: payload});
     }
   }, 
+  GET_TAB_LABELS: async (context) => {
+    const response = await axios.get('/wp-json/wp/v2/retirement_tool_timeframe?per_page=100');
+    if (response.status === 200) {
+      const payload = response.data;
+      context.commit('MUTATE_KEY', {key: 'tabs', value: payload});
+      context.dispatch('SET_CURRENT_TAB', payload[0]);
+    }
+  }, 
+  GET_RETIREMENT_TOOL_RESULTS_SECTIONS: async (context) => {
+    const response = await axios.get('/wp-json/wp/v2/retirement_tool_category?per_page=100');
+    if (response.status === 200) {
+      const payload = response.data;
+      context.commit('MUTATE_KEY', {key: 'resultsSections', value: payload});
+    }
+  }, 
   GET_RETIREMENT_TOOL_POSTS: async (context) => {
     const response = await axios.get('/wp-json/wp/v2/retirement_tool_post?per_page=100');
     if (response.status === 200) {
@@ -104,6 +120,10 @@ const actions = {
   SET_DATE: (context, value) => {
     const payload = {key: 'date', value: value};
     context.commit('MUTATE_KEY', payload);
+  },
+  SET_CURRENT_TAB: (context, value) => {
+    const payload = {key: 'currentTab', value: value};
+    context.commit('MUTATE_KEY', payload)
   }
 }
 

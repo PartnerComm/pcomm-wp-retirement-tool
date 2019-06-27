@@ -31,6 +31,10 @@ export default {
     const payload = value;
     state.selectionSummary.push(payload);
   },
+  ADD_FILTER_ANSWER: (state, value) => {
+    const payload = value;
+    state.filterAnswers.push(payload);
+  },
   REMOVE_ANSWER: (state, value) => {
     state.formAnswers.pop();
   }

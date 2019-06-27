@@ -4,7 +4,7 @@
             <span class="italics">Your Retirement</span> <span class="strong">Timeline</span>
         </div>
         <div class="results-timeline-content-strong">
-            <div class="pill">You have about {{monthsLeft}} to go!</div>
+            <div class="pill">You have {{monthsLeft}} to go!</div>
         </div>
         <div class="results-timeline-content-text">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sed nulla elit. In ut erat at felis tincidunt condimentum. Nam non urna sed turpis ullamcorper i mperdiet.
@@ -42,10 +42,13 @@ export default {
         return diffMonths;
       },
       monthsLeft() {
-          if (this.differenceDates <= 1) {
-              return '1 month';
+          if (this.differenceDates === 1) {
+              return 'about 1 month';
           }
-          return this.differenceDates + ' months'
+          if (this.differenceDates === 0) {
+              return 'less than a month'
+          }
+          return 'about ' + this.differenceDates + ' months'
       }
   },
   created() {

@@ -1,18 +1,17 @@
 <template>
   <div class="results-timeline-tabs">
-        <div class="results-timeline-tabs-nav">
-            <div v-for="(tab, i) in tabs" :key="i" class="" :value="tab.id" @click="selectTab(i)">
+        <div class="results-timeline-tabs-nav" v-if="tabs">
+            <div v-for="(tab, index) in tabs" :key="index" class="" :value="tab.id" @click="selectTab(tab)">
                 <div class="results-timeline-tabs-nav-content">
-                    <div class="results-timeline-tabs-nav-content-title" v-html="tab.title">
+                    <div class="results-timeline-tabs-nav-content-title" v-html="tab.name">
 
                     </div>
-                    <div class="results-timeline-tabs-nav-content-label">
+                    <!-- <div class="results-timeline-tabs-nav-content-label">
                         {{tab.label}}
-                    </div>
+                    </div> -->
                 </div>
                 <div class="results-timeline-tabs-nav-button">
-                    <tabs-icon :active="(currentTab  >= i) ? true : false" />
-
+                    <tabs-icon :active="(index <= tabs.indexOf(currentTab))" />
                 </div>
             </div>
         </div>
@@ -26,14 +25,13 @@ import ResultsTimelineTabsContent from './ResultsTimelineTabsContent';
 import TabsIcon from '../../icons/Tabs';
 export default {
   props: {
-    tabs: {
-        type: Array,
-        required: true,
-    },
+    // tabs: {
+    //     type: Array,
+    //     required: true,
+    // },
   },
   data() {
     return {
-        currentTab: 0
     }
   },
   components: {
@@ -42,11 +40,33 @@ export default {
   },
   methods: {
     selectTab(tab) {
-        this.currentTab = tab
+        this.$store.dispatch('SET_CURRENT_TAB', tab)
     },
+    findClosestNumber() {
+      const counts = this.numericValues,
+      goal = thos.currentTab.numeric_value;
+
+      let closest = counts.reduce(function(prev, curr) {
+        return (Math.abs(curr - goal) < Math.abs(prev - goal) ? curr : prev);
+      });
+      return closest;
+    }
   },
   computed: {
-
+    tabs() {
+      return this.$store.getters.GET_FORM_STATUS('tabs');
+    },
+    currentTab() {
+      return this.$store.getters.GET_FORM_STATUS('currentTab')
+    },
+    closest() {
+      return this.findClosestNumber;
+    },
+    numericValues() {
+      return this.tabs.map(e => {
+        return e.numeric_value;
+      })
+    }
   },
   created() {
 

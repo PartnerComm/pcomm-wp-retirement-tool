@@ -64,7 +64,7 @@ export default {
 
   },
   mounted() {
-
+    this.$store.dispatch('GET_RETIREMENT_TOOL_POSTS');
   }
   
   }

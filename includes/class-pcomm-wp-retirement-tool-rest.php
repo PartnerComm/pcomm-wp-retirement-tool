@@ -22,7 +22,7 @@ class Pcomm_Wp_Retirement_Tool_Rest
 
     public function modify_cpt_rest()
     {   
-        $additional_rest_fields = ['retirement_tool_question', 'retirement_tool_timeframe', 'retirement_tool_category'];
+        $additional_rest_fields = ['retirement_tool_question', 'retirement_tool_timeframe', 'retirement_tool_category', 'post_tag'];
         foreach($additional_rest_fields as $field) {
             register_rest_field('retirement_tool_post', $field, array(
                 'get_callback' => array($this, 'get_questions_for_api'),

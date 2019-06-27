@@ -28,12 +28,14 @@ export default {
     },
     date() {
       return this.$store.getters.GET_FORM_STATUS('date');
-    }
+    },
   },
   created() {
 
   },
   mounted() {
+    this.$store.dispatch('GET_RETIREMENT_TOOL_RESULTS_SECTIONS');
+    this.$store.dispatch('GET_TAB_LABELS');
 
   }
   
