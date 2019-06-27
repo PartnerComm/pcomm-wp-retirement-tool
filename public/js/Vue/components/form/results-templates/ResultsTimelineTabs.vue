@@ -6,9 +6,9 @@
                     <div class="results-timeline-tabs-nav-content-title" v-html="tab.name">
 
                     </div>
-                    <!-- <div class="results-timeline-tabs-nav-content-label">
-                        {{tab.label}}
-                    </div> -->
+                    <div class="results-timeline-tabs-nav-content-label" v-if="tab.secondary_title != ''">
+                        {{tab.secondary_title}}
+                    </div>
                 </div>
                 <div class="results-timeline-tabs-nav-button">
                     <tabs-icon :active="(index <= tabs.indexOf(currentTab))" />

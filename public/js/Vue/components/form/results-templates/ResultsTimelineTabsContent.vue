@@ -1,6 +1,7 @@
 <template>
   <div class="results-timeline-tabs-content" v-if="currentTab">
-    <div class="results-timeline-tabs-content-header-title" v-html="currentTab.name">
+    <div class="results-timeline-tabs-content-header-title">
+      {{currentTab.name}} <span v-if="currentTab.secondary_title != ''">{{currentTab.secondary_title}}</span>
     </div>
     <div class="results-timeline-tabs-content-header-pill">
             <div class="pill" v-if="currentTab.numeric_value != 1">{{adjustedDate}}</div>

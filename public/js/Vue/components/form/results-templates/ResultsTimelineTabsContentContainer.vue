@@ -1,6 +1,7 @@
 <template>
   <div class="results-timeline-tabs-content-container" :class="section.slug" v-if="filteredPosts.length > 0">
-        <div class="results-timeline-tabs-content-container-header-title" v-html="section.name">
+        <div class="results-timeline-tabs-content-container-header-title">
+          <span class="italics">{{section.secondary_title}} </span><span class="strong">{{section.name}}</span>
         </div>
         <div class="instruction-block" v-for="(post, index) in filteredPosts" :key="index">
             <div class="pr-2">

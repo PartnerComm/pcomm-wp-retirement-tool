@@ -17,6 +17,8 @@ class Pcomm_Wp_Retirement_Tool_Rest
         add_action('rest_api_init', array($this, 'modify_cpt_rest'));
         add_action('rest_api_init', array($this, 'create_api_answers_meta_field'));
         add_action('rest_api_init', array($this, 'add_timeframe_meta'));
+        add_action('rest_api_init', array($this, 'add_category_meta'));
+
 
     }
 
@@ -69,7 +71,7 @@ class Pcomm_Wp_Retirement_Tool_Rest
     }
     public function add_timeframe_meta()
     {
-        $additional_meta_fields = ['numeric_value'];
+        $additional_meta_fields = ['numeric_value', 'secondary_title'];
         foreach($additional_meta_fields as $field) {
             register_rest_field('retirement_tool_timeframe', $field, array(
                 'get_callback' => array($this, 'get_timeframe_meta_value'),
@@ -77,6 +79,25 @@ class Pcomm_Wp_Retirement_Tool_Rest
         }
     }
     public function get_timeframe_meta_value($object, $field_name) 
+    {
+        $post_id = $object['id'];
+        if (get_term_meta($post_id, $field_name, true)) {
+            $meta = get_term_meta($post_id, $field_name, true);
+            return $meta;
+        } else {
+            return [];
+        }
+    }
+    public function add_category_meta()
+    {
+        $additional_meta_fields = ['secondary_title'];
+        foreach($additional_meta_fields as $field) {
+            register_rest_field('retirement_tool_category', $field, array(
+                'get_callback' => array($this, 'get_category_meta_value'),
+            ));
+        }
+    }
+    public function get_category_meta_value($object, $field_name) 
     {
         $post_id = $object['id'];
         if (get_term_meta($post_id, $field_name, true)) {

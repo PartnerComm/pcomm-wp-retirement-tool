@@ -2687,6 +2687,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2763,6 +2764,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _icons_Checkmark__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../icons/Checkmark */ "./public/js/Vue/components/icons/Checkmark.vue");
+//
 //
 //
 //
@@ -23553,7 +23555,24 @@ var render = function() {
                       _c("div", {
                         staticClass: "results-timeline-tabs-nav-content-title",
                         domProps: { innerHTML: _vm._s(tab.name) }
-                      })
+                      }),
+                      _vm._v(" "),
+                      tab.secondary_title != ""
+                        ? _c(
+                            "div",
+                            {
+                              staticClass:
+                                "results-timeline-tabs-nav-content-label"
+                            },
+                            [
+                              _vm._v(
+                                "\n                      " +
+                                  _vm._s(tab.secondary_title) +
+                                  "\n                  "
+                              )
+                            ]
+                          )
+                        : _vm._e()
                     ]
                   ),
                   _vm._v(" "),
@@ -23608,10 +23627,16 @@ var render = function() {
         "div",
         { staticClass: "results-timeline-tabs-content" },
         [
-          _c("div", {
-            staticClass: "results-timeline-tabs-content-header-title",
-            domProps: { innerHTML: _vm._s(_vm.currentTab.name) }
-          }),
+          _c(
+            "div",
+            { staticClass: "results-timeline-tabs-content-header-title" },
+            [
+              _vm._v("\n    " + _vm._s(_vm.currentTab.name) + " "),
+              _vm.currentTab.secondary_title != ""
+                ? _c("span", [_vm._v(_vm._s(_vm.currentTab.secondary_title))])
+                : _vm._e()
+            ]
+          ),
           _vm._v(" "),
           _c(
             "div",
@@ -23690,10 +23715,21 @@ var render = function() {
           class: _vm.section.slug
         },
         [
-          _c("div", {
-            staticClass: "results-timeline-tabs-content-container-header-title",
-            domProps: { innerHTML: _vm._s(_vm.section.name) }
-          }),
+          _c(
+            "div",
+            {
+              staticClass:
+                "results-timeline-tabs-content-container-header-title"
+            },
+            [
+              _c("span", { staticClass: "italics" }, [
+                _vm._v(_vm._s(_vm.section.secondary_title) + " ")
+              ]),
+              _c("span", { staticClass: "strong" }, [
+                _vm._v(_vm._s(_vm.section.name))
+              ])
+            ]
+          ),
           _vm._v(" "),
           _vm._l(_vm.filteredPosts, function(post, index) {
             return _c("div", { key: index, staticClass: "instruction-block" }, [
@@ -40408,15 +40444,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!****************************************************************************************!*\
   !*** ./public/js/Vue/components/form/results-templates/ResultsTimelineTabsContent.vue ***!
   \****************************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ResultsTimelineTabsContent_vue_vue_type_template_id_7264eacc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ResultsTimelineTabsContent.vue?vue&type=template&id=7264eacc& */ "./public/js/Vue/components/form/results-templates/ResultsTimelineTabsContent.vue?vue&type=template&id=7264eacc&");
 /* harmony import */ var _ResultsTimelineTabsContent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ResultsTimelineTabsContent.vue?vue&type=script&lang=js& */ "./public/js/Vue/components/form/results-templates/ResultsTimelineTabsContent.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _ResultsTimelineTabsContent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _ResultsTimelineTabsContent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -40446,7 +40481,7 @@ component.options.__file = "public/js/Vue/components/form/results-templates/Resu
 /*!*****************************************************************************************************************!*\
   !*** ./public/js/Vue/components/form/results-templates/ResultsTimelineTabsContent.vue?vue&type=script&lang=js& ***!
   \*****************************************************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -41545,9 +41580,9 @@ __webpack_require__.r(__webpack_exports__);
   filterAnswers: [],
   formStep: 0,
   formAnswers: [],
-  formIntro: true,
+  formIntro: false,
   formQuestions: false,
-  formResults: false,
+  formResults: true,
   formIntroPaths: [],
   resultsSections: [],
   selectionSummary: [],

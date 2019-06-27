@@ -23,6 +23,15 @@
           add_action('retirement_tool_timeframe_edit_form_fields', [$this, 'edit_numeric_value_meta_field'], 10, 2);
           add_action('edited_retirement_tool_timeframe', [$this,'save_numeric_value_meta_field']);
           add_action('create_retirement_tool_timeframe', [$this,'save_numeric_value_meta_field']);
+
+          $fields_needing_alternate_title = ['category', 'timeframe'];
+          foreach($fields_needing_alternate_title as $field) {
+            add_action("retirement_tool_".$field."_add_form_fields", [$this, 'add_secondary_title_meta_field'], 10, 2);
+            add_action("retirement_tool_".$field."_edit_form_fields", [$this, 'edit_secondary_title_meta_field'], 10, 2);
+            add_action("edited_retirement_tool_".$field, [$this,'save_secondary_title_meta_field']);
+            add_action("create_retirement_tool_".$field, [$this,'save_secondary_title_meta_field']);
+          }
+          
      }
 
      public static function add_question_type_meta_field($term)
@@ -102,6 +111,41 @@
              $term_value = sanitize_text_field($_POST['numeric_value']);
              if ($term_value) {
                  update_term_meta($term_id, 'numeric_value', $term_value);
+             }
+         }
+     }
+
+     public static function add_secondary_title_meta_field($term)
+     {
+         ?>
+      <div class="form-field">
+        <label for="secondary_title"><?php _e('Secondary Title'); ?></label>
+        <input name="secondary_title" id="secondary_title" value="" />
+        <p class="description"><?php _e('Enter a number that corresponds to the title'); ?></p>
+      </div>
+    <?php
+     }
+
+     public static function edit_secondary_title_meta_field($term)
+     {
+      $id = $term->term_id;
+     
+      $term_value = esc_attr(get_term_meta($id, 'secondary_title', true)); ?>
+      <tr class="form-field">
+        <th><label for="secondary_title"><?php _e('Secondary Title'); ?></label></th>
+        <td>	 
+          <input name="secondary_title" id="secondary_title" value="<?php echo ($term_value) ? $term_value : ''; ?>" />
+        </td>
+      </tr>
+    <?php
+     }
+    
+     public static function save_secondary_title_meta_field($term_id)
+     {
+         if (isset($_POST['secondary_title'])) {
+             $term_value = sanitize_text_field($_POST['secondary_title']);
+             if ($term_value) {
+                 update_term_meta($term_id, 'secondary_title', $term_value);
              }
          }
      }
