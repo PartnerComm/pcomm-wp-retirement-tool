@@ -2,12 +2,16 @@
   <div class="form-results">
     <results-user-selections />
     <results-timeline />
+    <feedback-button />
+    <feedback-modal />
   </div>
 </template>
 
 <script>
 import ResultsUserSelections from '../results-templates/ResultsUserSelections';
 import ResultsTimeline from '../results-templates/ResultsTimeline';
+import FeedbackButton from '../form-elements/FeedbackButton';
+import FeedbackModal from '../form-elements/FeedbackModal';
 export default {
   props: {},
   data() {
@@ -17,7 +21,9 @@ export default {
   },
   components: {
     ResultsUserSelections,
-    ResultsTimeline
+    ResultsTimeline,
+    FeedbackButton,
+    FeedbackModal
   },
   methods: {
   

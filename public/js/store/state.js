@@ -8,11 +8,13 @@ export default {
   filterAnswers: [],
   formStep: 0,
   formAnswers: [],
-  formIntro: true,
+  formIntro: false,
   formQuestions: false,
-  formResults: false,
+  formResults: true,
   formIntroPaths: [],
   resultsSections: [],
   selectionSummary: [],
+  showFeedbackButton: false,
+  showFeedbackForm: false,
   tabs: []
 };

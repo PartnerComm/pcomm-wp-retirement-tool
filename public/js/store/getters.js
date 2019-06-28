@@ -22,7 +22,7 @@ export default {
   },
   POSTS_FILTERED_BY_ANSWERS: (state) => {
     return state.allPosts.filter(e => {
-      return state.filterAnswers.every(elem => e.retirement_tool_question.indexOf(elem) > -1 && e.post_tag.indexOf('intro-text') === -1);
+      return state.filterAnswers.every(elem => e.retirement_tool_question.indexOf(elem) > -1 && e.post_tag.indexOf('intro-text') === -1 && e.post_tag.indexOf('feedback-additional-content') === -1);
     })
   },
   HELPFUL_RESOURCES: (state) => {
@@ -31,6 +31,11 @@ export default {
   INTRO_POSTS: (state) => {
     return state.allPosts.filter(e => {
       return e.retirement_tool_question.indexOf(state.filterAnswers[0]) > -1 && e.post_tag.indexOf('intro-text') > -1;
+    })
+  },
+  ADDITIONAL_CONTENT: (state) => {
+    return state.allPosts.filter(e => {
+      return e.post_tag.indexOf('feedback-additional-content') > -1;
     })
   }
 

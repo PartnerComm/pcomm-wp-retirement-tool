@@ -124,7 +124,15 @@ const actions = {
   },
   SET_CURRENT_TAB: (context, value) => {
     const payload = {key: 'currentTab', value: value};
-    context.commit('MUTATE_KEY', payload)
+    context.commit('MUTATE_KEY', payload);
+  },
+  UPDATE_FEEDBACK_BUTTON: (context, value) => {
+    const payload = {key: 'showFeedbackButton', value: value};
+    context.commit('MUTATE_KEY', payload);
+  },
+  UPDATE_FEEDBACK_FORM: (context, value) => {
+    const payload = {key: 'showFeedbackForm', value: value};
+    context.commit('MUTATE_KEY', payload);
   }
 }
 

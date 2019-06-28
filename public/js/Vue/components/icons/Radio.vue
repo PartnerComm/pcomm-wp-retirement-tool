@@ -5,7 +5,7 @@
         <g id="MSK-RetirementTool-05" transform="translate(-367.000000, -884.000000)">
             <g id="SingleSelection" transform="translate(368.000000, 885.000000)">
                 <circle id="Oval" :stroke="color" stroke-width="2" :fill="fill" cx="13.5" cy="13.5" r="13.5"></circle>
-                <circle id="Oval" fill="#FFFFFF" cx="13.5" cy="13.5" r="7.5"></circle>
+                <circle id="Oval" :fill="background" cx="13.5" cy="13.5" r="7.5"></circle>
             </g>
         </g>
     </g>
@@ -26,6 +26,11 @@ export default {
       required: false,
       default: '#C6C6C6'
     },
+    background: {
+      type: String,
+      required: false,
+      default: '#FFFFFF'
+    }
   },
   data() {
     return {

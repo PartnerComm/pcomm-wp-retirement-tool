@@ -2,10 +2,10 @@
   <section class="qf-view helpful-resources-view">
       <div class="container">
           <div class="qf-view-content qf-view-helpful-resources">
-          <h2 v-html="resourcesPost.title.rendered"></h2>
+          <h2 v-if="resourcesPost" v-html="resourcesPost.title.rendered"></h2>
 
         <div class="callout-content">
-          <div class="text col-sm-12 retirement-tool-resources" v-html="resourcesPost.content.rendered">
+          <div class="text col-sm-12 retirement-tool-resources" v-if="resourcesPost" v-html="resourcesPost.content.rendered">
            
           </div>
         </div>

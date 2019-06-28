@@ -6,7 +6,7 @@
         <div class="results-timeline-content-strong" v-if="retirementDate">
             <div class="pill">You have {{monthsLeft}} to go!</div>
         </div>
-        <div class="results-timeline-content-text" v-html="introPost.content.rendered">
+        <div class="results-timeline-content-text" v-if="introPost" v-html="introPost.content.rendered">
         </div>
     </div>
 </template>
