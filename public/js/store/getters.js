@@ -30,7 +30,7 @@ export default {
   },
   INTRO_POSTS: (state) => {
     return state.allPosts.filter(e => {
-      return e.retirement_tool_question.indexOf(filterAnswers[0]) > -1 && e.retirement_tool_category.indexOf('intro-text') > -1;
+      return e.retirement_tool_question.indexOf(state.filterAnswers[0]) > -1 && e.post_tag.indexOf('intro-text') > -1;
     })
   }
 

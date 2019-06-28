@@ -1993,9 +1993,11 @@ __webpack_require__.r(__webpack_exports__);
       this.$store.dispatch('UPDATE_FORM_INTRO', false);
 
       if (this.activeQuestions.length > 0) {
+        this.$store.dispatch('COMMIT_CURRENT_SELECTION');
+        this.$store.dispatch('SET_CURRENT_SELECTION', '');
         this.$store.dispatch('UPDATE_FORM_QUESTIONS', true);
       } else {
-        this.$store.dispatch('UPDATE_FORM_RESULTS', true);
+        this.$store.dispatch('SUBMIT_COMPLETED_FORM');
       }
     },
     sortTerms: function sortTerms(a, b) {
@@ -2536,7 +2538,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {},
   data: function data() {
@@ -2568,6 +2569,9 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return 'about ' + this.differenceDates + ' months';
+    },
+    introPost: function introPost() {
+      return this.$store.getters.INTRO_POSTS[0];
     }
   },
   created: function created() {},
@@ -23481,17 +23485,18 @@ var render = function() {
   return _c("div", { staticClass: "results-timeline-content" }, [
     _vm._m(0),
     _vm._v(" "),
-    _c("div", { staticClass: "results-timeline-content-strong" }, [
-      _c("div", { staticClass: "pill" }, [
-        _vm._v("You have " + _vm._s(_vm.monthsLeft) + " to go!")
-      ])
-    ]),
+    _vm.retirementDate
+      ? _c("div", { staticClass: "results-timeline-content-strong" }, [
+          _c("div", { staticClass: "pill" }, [
+            _vm._v("You have " + _vm._s(_vm.monthsLeft) + " to go!")
+          ])
+        ])
+      : _vm._e(),
     _vm._v(" "),
-    _c("div", { staticClass: "results-timeline-content-text" }, [
-      _vm._v(
-        "\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sed nulla elit. In ut erat at felis tincidunt condimentum. Nam non urna sed turpis ullamcorper i mperdiet.\n    "
-      )
-    ])
+    _c("div", {
+      staticClass: "results-timeline-content-text",
+      domProps: { innerHTML: _vm._s(_vm.introPost.content.rendered) }
+    })
   ])
 }
 var staticRenderFns = [
@@ -41200,20 +41205,24 @@ var actions = {
             case 0:
               context.dispatch('COMMIT_CURRENT_SELECTION');
               selectedAnswers = context.getters.GET_FORM_STATUS('formAnswers');
-              console.log(selectedAnswers);
               monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
               selectedAnswers.forEach(function (el) {
+                console.log(el);
+
                 if (el instanceof Date) {
+                  console.log('date');
                   var day = el.getDate();
                   var monthIndex = el.getMonth();
                   var year = el.getFullYear();
                   context.commit('ADD_SUMMARY_ANSWER', monthNames[monthIndex] + ' ' + day + ', ' + year);
                 } else if (Object.prototype.toString.call(el) == '[object Array]') {
+                  console.log('array');
                   el.forEach(function (arrayEl) {
                     context.commit('ADD_SUMMARY_ANSWER', arrayEl.name);
                     context.commit('ADD_FILTER_ANSWER', arrayEl.slug);
                   });
                 } else {
+                  console.log('other');
                   context.commit('ADD_SUMMARY_ANSWER', el.name);
                   context.commit('ADD_FILTER_ANSWER', el.slug);
                 }
@@ -41222,7 +41231,7 @@ var actions = {
               context.commit('MUTATE_FORM_RESULTS', true);
               window.scrollTo(0, 0);
 
-            case 8:
+            case 7:
             case "end":
               return _context.stop();
           }
@@ -41415,8 +41424,6 @@ var actions = {
       key: 'activePath',
       value: payload
     });
-    context.commit('ADD_ANSWER', payload);
-    context.dispatch('SET_CURRENT_SELECTION', '');
   },
   SET_CURRENT_SELECTION: function SET_CURRENT_SELECTION(context, value) {
     var payload = value;
@@ -41494,13 +41501,18 @@ __webpack_require__.r(__webpack_exports__);
   POSTS_FILTERED_BY_ANSWERS: function POSTS_FILTERED_BY_ANSWERS(state) {
     return state.allPosts.filter(function (e) {
       return state.filterAnswers.every(function (elem) {
-        return e.retirement_tool_question.indexOf(elem) > -1;
+        return e.retirement_tool_question.indexOf(elem) > -1 && e.retirement_tool_category.indexOf('intro-text') === -1;
       });
     });
   },
   HELPFUL_RESOURCES: function HELPFUL_RESOURCES(state) {
     return state.allPosts.filter(function (e) {
       return e.post_tag.indexOf('helpful-resources') > -1;
+    });
+  },
+  INTRO_POSTS: function INTRO_POSTS(state) {
+    return state.allPosts.filter(function (e) {
+      return e.retirement_tool_question.indexOf(state.filterAnswers[0]) > -1 && e.post_tag.indexOf('intro-text') > -1;
     });
   }
 });
@@ -41630,7 +41642,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/cbonade/Dev/pcomm-wp-retirement-tool/public/js/pcomm-wp-retirement-tool-public.js */"./public/js/pcomm-wp-retirement-tool-public.js");
+module.exports = __webpack_require__(/*! /Users/cbonade/Dev/msk-mskqf-713-082/webdocs/content/p/pcomm-wp-retirement-tool/public/js/pcomm-wp-retirement-tool-public.js */"./public/js/pcomm-wp-retirement-tool-public.js");
 
 
 /***/ })

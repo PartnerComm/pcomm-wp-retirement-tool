@@ -3,11 +3,10 @@
         <div class="results-timeline-content-title">
             <span class="italics">Your Retirement</span> <span class="strong">Timeline</span>
         </div>
-        <div class="results-timeline-content-strong">
+        <div class="results-timeline-content-strong" v-if="retirementDate">
             <div class="pill">You have {{monthsLeft}} to go!</div>
         </div>
-        <div class="results-timeline-content-text">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sed nulla elit. In ut erat at felis tincidunt condimentum. Nam non urna sed turpis ullamcorper i mperdiet.
+        <div class="results-timeline-content-text" v-html="introPost.content.rendered">
         </div>
     </div>
 </template>
@@ -49,6 +48,9 @@ export default {
               return 'less than a month'
           }
           return 'about ' + this.differenceDates + ' months'
+      },
+      introPost() {
+          return this.$store.getters.INTRO_POSTS[0];
       }
   },
   created() {

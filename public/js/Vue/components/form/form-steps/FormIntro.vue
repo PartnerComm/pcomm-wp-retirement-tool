@@ -49,9 +49,11 @@ export default {
       this.$store.dispatch('SET_ACTIVE_PATH', this.currentSelection);
       this.$store.dispatch('UPDATE_FORM_INTRO', false);
       if (this.activeQuestions.length>0) {
+        this.$store.dispatch('COMMIT_CURRENT_SELECTION');
+        this.$store.dispatch('SET_CURRENT_SELECTION', '');
         this.$store.dispatch('UPDATE_FORM_QUESTIONS', true);
       } else {
-        this.$store.dispatch('UPDATE_FORM_RESULTS', true);
+        this.$store.dispatch('SUBMIT_COMPLETED_FORM');
       }
     },
     sortTerms(a,b) {
