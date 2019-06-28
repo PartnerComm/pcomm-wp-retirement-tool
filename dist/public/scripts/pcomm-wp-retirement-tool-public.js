@@ -41501,7 +41501,7 @@ __webpack_require__.r(__webpack_exports__);
   POSTS_FILTERED_BY_ANSWERS: function POSTS_FILTERED_BY_ANSWERS(state) {
     return state.allPosts.filter(function (e) {
       return state.filterAnswers.every(function (elem) {
-        return e.retirement_tool_question.indexOf(elem) > -1 && e.retirement_tool_category.indexOf('intro-text') === -1;
+        return e.retirement_tool_question.indexOf(elem) > -1 && e.post_tag.indexOf('intro-text') === -1;
       });
     });
   },
