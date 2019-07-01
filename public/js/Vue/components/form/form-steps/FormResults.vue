@@ -4,6 +4,7 @@
     <results-timeline />
     <feedback-button />
     <feedback-modal />
+    <feedback-success />
   </div>
 </template>
 
@@ -12,6 +13,8 @@ import ResultsUserSelections from '../results-templates/ResultsUserSelections';
 import ResultsTimeline from '../results-templates/ResultsTimeline';
 import FeedbackButton from '../form-elements/FeedbackButton';
 import FeedbackModal from '../form-elements/FeedbackModal';
+import FeedbackSuccess from '../form-elements/FeedbackSuccessModal';
+
 export default {
   props: {},
   data() {
@@ -23,7 +26,8 @@ export default {
     ResultsUserSelections,
     ResultsTimeline,
     FeedbackButton,
-    FeedbackModal
+    FeedbackModal,
+    FeedbackSuccess
   },
   methods: {
   

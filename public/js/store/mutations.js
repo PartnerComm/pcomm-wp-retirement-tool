@@ -37,5 +37,8 @@ export default {
   },
   REMOVE_ANSWER: (state, value) => {
     state.formAnswers.pop();
-  }
+  },
+  MUTATE_FEEDBACK_KEY: (state, value) => {
+    state.feedbackPost = value;
+  },
 };

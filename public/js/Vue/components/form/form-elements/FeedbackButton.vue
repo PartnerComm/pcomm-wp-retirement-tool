@@ -39,7 +39,7 @@ export default {
   },
   mounted() {
     setTimeout(this.showFeedbackButton, 60000);
-    // this.showFeedbackButton();
+    // this.showFeedbackButton(); // Use for debug to avoid the minute wait
   }
   
   }

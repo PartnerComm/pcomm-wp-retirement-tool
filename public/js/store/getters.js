@@ -37,6 +37,9 @@ export default {
     return state.allPosts.filter(e => {
       return e.post_tag.indexOf('feedback-additional-content') > -1;
     })
+  },
+  FEEDBACK_NEW_POST: (state) => {
+    return state.feedbackPost;
   }
 
 }

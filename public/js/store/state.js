@@ -5,6 +5,7 @@ export default {
   answerValid: false,
   currentTab: {},
   currentSelection: '',
+  feedbackPost: {},
   filterAnswers: [],
   formStep: 0,
   formAnswers: [],
@@ -16,5 +17,6 @@ export default {
   selectionSummary: [],
   showFeedbackButton: false,
   showFeedbackForm: false,
+  showFeedbackSuccess: false,
   tabs: []
 };

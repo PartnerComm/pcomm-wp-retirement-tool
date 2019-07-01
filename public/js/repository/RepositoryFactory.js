@@ -1,9 +1,9 @@
 import TaxonomyRepository from './taxonomyRepository';
-import WordpressAjax from './wordpressAjax';
+import PostRepository from './postRepository';
 
 const repositories = {
   taxonomy: TaxonomyRepository,
-  wp: WordpressAjax
+  post: PostRepository,
 }
 
 export const RepositoryFactory = {

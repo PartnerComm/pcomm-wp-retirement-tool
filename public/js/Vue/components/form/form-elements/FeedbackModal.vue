@@ -20,10 +20,10 @@
         <div class="feedback-form-additional-content-content" v-html="additionalContent.content.rendered"></div>
       </div>
       <div class="feedback-form-feedback">
-        <textarea name="feedback" v-model="feedback" />
+        <textarea name="feedback" v-model="feedback" @input="setFeedbackContent"/>
       </div>
       <div class="form-button feedback-form-submit">
-        <button class="next nav-button">Submit</button>
+        <button class="next nav-button" @click="submitFeedback">Submit</button>
       </div>
     </div>
   </div>
@@ -49,10 +49,22 @@ export default {
       } else {
         this.formRating = a;
       }
+      this.setFeedbackRating(this.formRating);
     },
     closeForm() {
       this.$store.dispatch('UPDATE_FEEDBACK_BUTTON', true);
       this.$store.dispatch('UPDATE_FEEDBACK_FORM', false);
+    },
+    setFeedbackRating(value) {
+        const payload = {key: 'rating', value};
+        this.$store.dispatch('UPDATE_FEEDBACK_VALUE', payload);
+    },
+    setFeedbackContent() {
+        const payload = {key: 'feedback', value: this.feedback};
+        this.$store.dispatch('UPDATE_FEEDBACK_VALUE', payload);
+    },
+    submitFeedback() {
+      this.$store.dispatch('SUBMIT_FEEDBACK');
     }
   },
   computed: {

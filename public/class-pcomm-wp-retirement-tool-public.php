@@ -111,5 +111,8 @@ class Pcomm_Wp_Retirement_Tool_Public
         } else {
             wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . '../dist/public/scripts/pcomm-wp-retirement-tool-public.js', array( ), $this->version, true);
         }
+        wp_localize_script( $this->plugin_name, 'wpApiSettings', array(
+            'nonce' => wp_create_nonce( 'wp_rest' ),
+        ));
     }
 }

@@ -1,5 +1,8 @@
+import {RepositoryFactory} from '../../repository/RepositoryFactory.js';
 import axios from 'axios';
+import moment from 'moment';
 
+const PostRepository = RepositoryFactory.get('post');
 const actions = {
   SELECT_PROGRAM: (context, value) => {
     const payload = value;
@@ -133,6 +136,25 @@ const actions = {
   UPDATE_FEEDBACK_FORM: (context, value) => {
     const payload = {key: 'showFeedbackForm', value: value};
     context.commit('MUTATE_KEY', payload);
+  },
+  UPDATE_FEEDBACK_SUCCESS: (context, value) => {
+    const payload = {key: 'showFeedbackSuccess', value: value};
+    context.commit('MUTATE_KEY', payload);
+  },
+  SUBMIT_FEEDBACK: async (context) => {
+    const post = context.getters.FEEDBACK_NEW_POST;
+    post.title = moment().format('LL hh:mma');
+    post.content = 'Rating: ' + post.rating + '.  Feedback: ' + post.feedback;
+    const response = await PostRepository.post(post);
+    if (response && response.status === 201) {
+      context.dispatch('UPDATE_FEEDBACK_FORM', false);
+      context.dispatch('UPDATE_FEEDBACK_SUCCESS', true);
+    }
+  },
+  UPDATE_FEEDBACK_VALUE: (context, {key, value}) => {
+    const feedbackPost = context.getters.FEEDBACK_NEW_POST;
+    feedbackPost[key] = value;
+    context.commit('MUTATE_FEEDBACK_KEY', feedbackPost);
   }
 }
 
