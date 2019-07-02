@@ -1,7 +1,7 @@
 <template>
   <section class="retirement-tool-wrapper">
     <questions-header :title="formtitle" v-if="formIntro || formQuestions" />
-    <results-header v-if="formResults" />
+    <results-header v-if="formResults && !printing" />
     <div class="container">
       <div class="retirement-form">
         <form-intro :title="introtitle" :subtitle="introsubtitle" v-if="formIntro"></form-intro>
@@ -58,6 +58,9 @@ export default {
     },
     formResults() {
       return this.$store.getters.GET_FORM_STATUS('formResults');
+    },
+    printing() {
+      return this.$store.getters.GET_FORM_STATUS('printingResults');
     }
   },
   created() {

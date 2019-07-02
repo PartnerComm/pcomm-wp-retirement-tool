@@ -36,9 +36,12 @@ export default {
 
   },
   computed: {
-      filteredPosts() {
-          return this.$store.getters.POSTS_FILTERED_BY_MONTH.filter(e => e.retirement_tool_category.indexOf(this.section.slug) >-1 )
-      }
+    filteredPosts() {
+        return this.$store.getters.POSTS_FILTERED_BY_MONTH.filter(e => e.retirement_tool_category.indexOf(this.section.slug) >-1 )
+    },
+    resultsSections() {
+      return this.$store.getters.GET_FORM_STATUS('resultsSections');
+    },
   },
   created() {
 

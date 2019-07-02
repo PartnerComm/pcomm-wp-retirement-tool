@@ -7,7 +7,7 @@
               <circled-plus :showSelection="showSelection"/>
             </span>
         </div>
-        <div class="form-button">
+        <div class="form-button" @click="activatePrinting">
             <button class="print-button mr-1" > <print /> Print</button>
             <button class="nav-button start-over" >Start Over</button>
         </div>
@@ -47,7 +47,9 @@ export default {
     handleClick() {
        this.showSelection = !this.showSelection;
     },
-  
+    activatePrinting() {
+      this.$store.dispatch('UPDATE_PRINT_RESULTS', true);
+    }
   },
   computed: {
     userSelections() {

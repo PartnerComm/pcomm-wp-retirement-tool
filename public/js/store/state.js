@@ -13,6 +13,7 @@ export default {
   formQuestions: false,
   formResults: false,
   formIntroPaths: [],
+  printingResults: false,
   resultsSections: [],
   selectionSummary: [],
   showFeedbackButton: false,

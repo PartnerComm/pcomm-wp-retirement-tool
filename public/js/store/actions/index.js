@@ -27,28 +27,28 @@ const actions = {
     const payload = value;
     context.commit('MUTATE_FORM_RESULTS', payload);
   },
+  UPDATE_PRINT_RESULTS: (context, value) => {
+    const payload = value;
+    context.commit('MUTATE_PRINT_RESULTS', payload);
+  },
   SUBMIT_COMPLETED_FORM: async (context, value) => {
     context.dispatch('COMMIT_CURRENT_SELECTION');
     const selectedAnswers = context.getters.GET_FORM_STATUS('formAnswers');
     const monthNames = ["January", "February", "March","April", "May", "June", "July","August", "September", "October","November", "December"];
     selectedAnswers.forEach((el) => {
-      console.log(el);
       if (el instanceof Date) {
-        console.log('date');
         const day = el.getDate();
         const monthIndex = el.getMonth();
         const year = el.getFullYear();
         context.commit('ADD_SUMMARY_ANSWER',monthNames[monthIndex] + ' ' + day + ', ' + year)
       }
       else if (Object.prototype.toString.call(el) == '[object Array]') {
-        console.log('array')
         el.forEach((arrayEl) => {
           context.commit('ADD_SUMMARY_ANSWER', arrayEl.name);
           context.commit('ADD_FILTER_ANSWER', arrayEl.slug);
         })
       }
       else {
-        console.log('other');
         context.commit('ADD_SUMMARY_ANSWER', el.name);
         context.commit('ADD_FILTER_ANSWER', el.slug);
       }
@@ -155,7 +155,7 @@ const actions = {
     const feedbackPost = context.getters.FEEDBACK_NEW_POST;
     feedbackPost[key] = value;
     context.commit('MUTATE_FEEDBACK_KEY', feedbackPost);
-  }
+  },
 }
 
 export default actions;

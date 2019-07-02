@@ -42,15 +42,7 @@ export default {
     selectTab(tab) {
         this.$store.dispatch('SET_CURRENT_TAB', tab)
     },
-    findClosestNumber() {
-      const counts = this.numericValues,
-      goal = thos.currentTab.numeric_value;
-
-      let closest = counts.reduce(function(prev, curr) {
-        return (Math.abs(curr - goal) < Math.abs(prev - goal) ? curr : prev);
-      });
-      return closest;
-    }
+    
   },
   computed: {
     tabs() {
@@ -58,9 +50,6 @@ export default {
     },
     currentTab() {
       return this.$store.getters.GET_FORM_STATUS('currentTab')
-    },
-    closest() {
-      return this.findClosestNumber;
     },
     numericValues() {
       return this.tabs.map(e => {

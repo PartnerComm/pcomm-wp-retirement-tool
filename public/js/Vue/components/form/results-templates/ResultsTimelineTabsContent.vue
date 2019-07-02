@@ -4,8 +4,7 @@
       {{currentTab.name}} <span v-if="currentTab.secondary_title != ''">{{currentTab.secondary_title}}</span>
     </div>
     <div class="results-timeline-tabs-content-header-pill">
-            <div class="pill" v-if="currentTab.numeric_value != 1">{{adjustedDate}}</div>
-
+      <div class="pill" v-if="currentTab.numeric_value != 1">{{adjustedDate}}</div>
     </div>
     <results-timeline-tabs-content-container v-for="(section, index) in resultsSections" :key="index" :section="section"/>
     <div class="form-button text-center">
@@ -67,7 +66,6 @@ export default {
         return date;
       } 
       if (parseInt(this.currentTab.numeric_value) === -1) {
-        console.log('here');
         const date = this.adjustDays(1);
         return date;
       } 

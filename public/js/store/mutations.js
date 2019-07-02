@@ -17,6 +17,9 @@ export default {
   MUTATE_FORM_RESULTS: (state, value) => {
     state.formResults = value;
   },
+  MUTATE_PRINT_RESULTS: (state, value) => {
+    state.printingResults = value;
+  },
   MUTATE_ANSWER_VALID: (state, value) => {
     state.answerValid = value;
   },
