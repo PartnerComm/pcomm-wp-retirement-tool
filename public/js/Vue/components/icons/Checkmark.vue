@@ -5,8 +5,8 @@
         <g id="Anthem-PilotProgams-Form" transform="translate(-393.000000, -548.000000)">
             <g id="Form" transform="translate(285.000000, 154.000000)">
                 <g id="Select-Icon" transform="translate(110.000000, 396.000000)">
-                    <circle id="Oval" :stroke="color" stroke-width="2.55" :fill="fill" cx="13.5" cy="13.5" r="13.5"></circle>
-                    <polygon id="Path" fill="#FFFFFF" points="16.8794319 10.125 12.5864101 14.3813903 10.9643181 12.7731162 9.28125 14.4418129 10.9033588 16.0501037 12.5864101 17.71875 14.2694275 16.0501037 18.5625 11.7936631"></polygon>
+                    <circle class="circle" id="Oval" :stroke="color" stroke-width="2.55" :fill="fill" cx="13.5" cy="13.5" r="13.5"></circle>
+                    <polygon class="checkmark" id="Path" fill="#FFFFFF" points="16.8794319 10.125 12.5864101 14.3813903 10.9643181 12.7731162 9.28125 14.4418129 10.9033588 16.0501037 12.5864101 17.71875 14.2694275 16.0501037 18.5625 11.7936631"></polygon>
                 </g>
             </g>
         </g>

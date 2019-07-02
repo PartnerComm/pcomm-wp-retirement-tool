@@ -2650,6 +2650,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -2663,7 +2664,11 @@ __webpack_require__.r(__webpack_exports__);
     FormPrintableResultsContent: _FormPrintableResultsContent__WEBPACK_IMPORTED_MODULE_1__["default"],
     ResultsTimelineContent: _results_templates_ResultsTimelineContent__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
-  methods: {},
+  methods: {
+    closePrintResults: function closePrintResults() {
+      this.$store.dispatch('UPDATE_PRINT_RESULTS', false);
+    }
+  },
   computed: {
     tabs: function tabs() {
       return this.$store.getters.GET_FORM_STATUS('tabs');
@@ -24116,6 +24121,15 @@ var render = function() {
     "div",
     { staticClass: "form-print-results" },
     [
+      _c(
+        "button",
+        {
+          staticClass: "form-buttons-previous nav-button",
+          on: { click: _vm.closePrintResults }
+        },
+        [_vm._v("Back to Results")]
+      ),
+      _vm._v(" "),
       _c("results-timeline-content"),
       _vm._v(" "),
       _vm.tabs
@@ -24239,6 +24253,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { class: _vm.category.slug },
     [
       _vm.filteredPosts.length > 0
         ? _c(
@@ -24248,7 +24263,7 @@ var render = function() {
                 "results-timeline-tabs-content-container-header-title printable"
             },
             [
-              _vm.category.secondary_title
+              _vm.category.secondary_title.length > 0
                 ? _c("span", { staticClass: "italics" }, [
                     _vm._v(_vm._s(_vm.category.secondary_title) + " ")
                   ])
@@ -24635,9 +24650,11 @@ var render = function() {
                 "results-timeline-tabs-content-container-header-title"
             },
             [
-              _c("span", { staticClass: "italics" }, [
-                _vm._v(_vm._s(_vm.section.secondary_title) + " ")
-              ]),
+              _vm.section.secondary_title.length > 0
+                ? _c("span", { staticClass: "italics" }, [
+                    _vm._v(_vm._s(_vm.section.secondary_title) + " ")
+                  ])
+                : _vm._e(),
               _c("span", { staticClass: "strong" }, [
                 _vm._v(_vm._s(_vm.section.name))
               ])
@@ -24651,6 +24668,7 @@ var render = function() {
                 { staticClass: "pr-2" },
                 [
                   _c("checkmark", {
+                    staticClass: "results-checkmark",
                     attrs: { color: "#00A69A", fill: "#00A69A" }
                   })
                 ],
@@ -24919,6 +24937,7 @@ var render = function() {
                     },
                     [
                       _c("circle", {
+                        staticClass: "circle",
                         attrs: {
                           id: "Oval",
                           stroke: _vm.color,
@@ -24931,6 +24950,7 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       _c("polygon", {
+                        staticClass: "checkmark",
                         attrs: {
                           id: "Path",
                           fill: "#FFFFFF",

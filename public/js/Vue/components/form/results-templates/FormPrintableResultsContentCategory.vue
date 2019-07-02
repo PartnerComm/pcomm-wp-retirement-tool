@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div :class="category.slug">
     <div class="results-timeline-tabs-content-container-header-title printable" v-if="filteredPosts.length > 0">
-      <span class="italics" v-if="category.secondary_title">{{category.secondary_title}} </span><span class="strong">{{category.name}}</span>
+      <span class="italics" v-if="category.secondary_title.length > 0">{{category.secondary_title}} </span><span class="strong">{{category.name}}</span>
     </div>
     <div class="instruction-block" v-for="(post, index) in filteredPosts" :key="index">
         <div class="pr-2">

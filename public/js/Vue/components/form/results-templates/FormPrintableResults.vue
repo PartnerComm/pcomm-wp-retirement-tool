@@ -1,5 +1,6 @@
 <template>
   <div class="form-print-results">
+    <button class="form-buttons-previous nav-button" @click="closePrintResults">Back to Results</button>
     <results-timeline-content />
     <div class="results-timeline-tabs" v-if="tabs">
         <div v-for="(tab, index) in tabs" :key="index" class="printable-results-box">
@@ -27,7 +28,9 @@ export default {
     ResultsTimelineContent
   },
   methods: {
-  
+    closePrintResults() {
+      this.$store.dispatch('UPDATE_PRINT_RESULTS', false);
+    }
   },
   computed: {
     tabs() {
