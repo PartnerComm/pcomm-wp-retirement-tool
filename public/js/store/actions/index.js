@@ -156,6 +156,20 @@ const actions = {
     feedbackPost[key] = value;
     context.commit('MUTATE_FEEDBACK_KEY', feedbackPost);
   },
+  RESET_FORM: (context) => {
+    context.dispatch('SET_CURRENT_SELECTION', '');
+    context.dispatch('SET_CURRENT_TAB', context.getters.GET_FORM_STATUS('tabs')[0]);
+    context.commit('MUTATE_KEY', {key: 'date', value: ''});
+    context.commit('MUTATE_KEY', {key: 'formAnswers', value: []});
+    context.commit('MUTATE_KEY', {key: 'selectionSummary', value: []});
+    context.commit('MUTATE_KEY', {key: 'filterAnswers', value: []});
+    context.commit('MUTATE_KEY', {key: 'activePath', value: ''});
+    context.commit('MUTATE_KEY', {key: 'formAnswers', value: []});
+    context.commit('MUTATE_KEY', {key: 'formStep', value: 0});
+    context.commit('MUTATE_FORM_RESULTS', false);
+    context.commit('MUTATE_FORM_INTRO', true);
+
+  }
 }
 
 export default actions;

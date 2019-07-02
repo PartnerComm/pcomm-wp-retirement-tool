@@ -2725,7 +2725,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     adjustMonths: function adjustMonths(months) {
       var date = moment__WEBPACK_IMPORTED_MODULE_0___default()(this.retirementDate);
-      var newDate = date.subtract('month', parseInt(months));
+      var newDate = date.subtract(parseInt(months), 'month');
       return newDate.format('LL');
     },
     adjustDays: function adjustDays(days) {
@@ -3098,7 +3098,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     adjustMonths: function adjustMonths(months) {
       var date = moment__WEBPACK_IMPORTED_MODULE_0___default()(this.retirementDate);
-      var newDate = date.subtract('month', parseInt(months));
+      var newDate = date.subtract(parseInt(months), 'month');
       return newDate.format('LL');
     },
     adjustDays: function adjustDays(days) {
@@ -3265,6 +3265,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     activatePrinting: function activatePrinting() {
       this.$store.dispatch('UPDATE_PRINT_RESULTS', true);
+    },
+    resetForm: function resetForm() {
+      this.$store.dispatch('RESET_FORM');
     }
   },
   computed: {
@@ -24738,22 +24741,26 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "form-button", on: { click: _vm.activatePrinting } },
-        [
-          _c(
-            "button",
-            { staticClass: "print-button mr-1" },
-            [_c("print"), _vm._v(" Print")],
-            1
-          ),
-          _vm._v(" "),
-          _c("button", { staticClass: "nav-button start-over" }, [
-            _vm._v("Start Over")
-          ])
-        ]
-      )
+      _c("div", { staticClass: "form-button" }, [
+        _c(
+          "button",
+          {
+            staticClass: "print-button mr-1",
+            on: { click: _vm.activatePrinting }
+          },
+          [_c("print"), _vm._v(" Print")],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "nav-button start-over",
+            on: { click: _vm.resetForm }
+          },
+          [_vm._v("Start Over")]
+        )
+      ])
     ]),
     _vm._v(" "),
     _vm.showSelection
@@ -43138,6 +43145,40 @@ var actions = {
     var feedbackPost = context.getters.FEEDBACK_NEW_POST;
     feedbackPost[key] = value;
     context.commit('MUTATE_FEEDBACK_KEY', feedbackPost);
+  },
+  RESET_FORM: function RESET_FORM(context) {
+    context.dispatch('SET_CURRENT_SELECTION', '');
+    context.dispatch('SET_CURRENT_TAB', context.getters.GET_FORM_STATUS('tabs')[0]);
+    context.commit('MUTATE_KEY', {
+      key: 'date',
+      value: ''
+    });
+    context.commit('MUTATE_KEY', {
+      key: 'formAnswers',
+      value: []
+    });
+    context.commit('MUTATE_KEY', {
+      key: 'selectionSummary',
+      value: []
+    });
+    context.commit('MUTATE_KEY', {
+      key: 'filterAnswers',
+      value: []
+    });
+    context.commit('MUTATE_KEY', {
+      key: 'activePath',
+      value: ''
+    });
+    context.commit('MUTATE_KEY', {
+      key: 'formAnswers',
+      value: []
+    });
+    context.commit('MUTATE_KEY', {
+      key: 'formStep',
+      value: 0
+    });
+    context.commit('MUTATE_FORM_RESULTS', false);
+    context.commit('MUTATE_FORM_INTRO', true);
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (actions);

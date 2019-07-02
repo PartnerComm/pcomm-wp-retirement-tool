@@ -34,7 +34,7 @@ export default {
   methods: {
     adjustMonths(months) {
       const date= moment(this.retirementDate);
-      const newDate = date.subtract('month', parseInt(months));
+      const newDate = date.subtract(parseInt(months), 'month');
       return newDate.format('LL');
     },
     adjustDays(days) {

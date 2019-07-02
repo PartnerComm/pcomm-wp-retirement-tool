@@ -7,9 +7,9 @@
               <circled-plus :showSelection="showSelection"/>
             </span>
         </div>
-        <div class="form-button" @click="activatePrinting">
-            <button class="print-button mr-1" > <print /> Print</button>
-            <button class="nav-button start-over" >Start Over</button>
+        <div class="form-button">
+            <button @click="activatePrinting" class="print-button mr-1" > <print /> Print</button>
+            <button @click="resetForm" class="nav-button start-over" >Start Over</button>
         </div>
     </div>
     <div v-if="showSelection" class="results-user-selections-bottom">
@@ -49,6 +49,9 @@ export default {
     },
     activatePrinting() {
       this.$store.dispatch('UPDATE_PRINT_RESULTS', true);
+    },
+    resetForm() {
+      this.$store.dispatch('RESET_FORM');
     }
   },
   computed: {
