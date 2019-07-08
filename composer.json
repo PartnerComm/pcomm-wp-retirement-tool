@@ -1,7 +1,7 @@
 {
   "name": "pcomm/pcomm-wp-retirement-tool",
   "description": "Implements a Retirement tool with a PHP back end and Vue front end",
-  "version": "0.0.1",
+  "version": "0.9.0",
   "type": "wordpress-plugin",
   "repositories": [
     {
