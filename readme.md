@@ -17,7 +17,9 @@ Add the following to the `require` section of the composer.json file:
 
 `"pcomm/pcomm-wp-retirement-tool":"<version number here>"`
 
-Activate the plugin in the Wordpress Admin.
+From the webdocs directory in your terminal, run `composer update`.
+
+Once the composer update is complete, activate the plugin in the Wordpress Admin.
 
 
 ## Setting up your Retirement tool
@@ -30,7 +32,9 @@ On activation two custom post types will be created:
 Additionally, there will be three taxonomies created that get attached to `Retirement Tool Posts`:
 
 `Retirement Tool Questions` - the general taxonomy used to both build the form and assign answers to posts for displaying on the results page.
+
 `Retirement Tool Timeframes` - a secondary taxonomy used to further narrow down the results posts.
+
 `Retirement Tool Categories` - a third taxonomy used to further narrow down the results posts.
 
 To start building your form, create `Retirement Tool Questions` as a 3-level taxonomy.  Level 1 will be your first question answer choices.  These will be the overarching category that sets the path the user will take through the form.
@@ -64,10 +68,13 @@ For the other questions, a `tip` description may be added by filling in the `des
 ## API Routes
 
 `/wp-json/wp/v2/retirement_tool_post`
+
 `/wp-json/wp/v2/retirement_feedback`
 
 `/wp-json/wp/v2/retirement_tool_question`
+
 `/wp-json/wp/v2/retirement_tool_timeframe`
+
 `/wp-json/wp/v2/retirement_tool_category`
 
 

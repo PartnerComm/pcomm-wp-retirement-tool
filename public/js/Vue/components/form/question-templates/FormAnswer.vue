@@ -1,8 +1,10 @@
 <template>
   <div class="form-answer" :class="{active: data.active, inactive: inactive}">
-    <checkmark v-if="question && question.question_type === 'select-many'" :color="circleColor" :fill="(active) ? '#00A69A' : '#FFFFFF'" />
-    <radio v-if="question.question_type === 'select-one' || question.question_type === '' || !question" :color="circleColor" :fill="(active) ? '#00A69A' : '#FFFFFF'" />
-    <span>{{data.name}}</span>
+    <div class="form-answer-icon">
+      <checkmark v-if="question && question.question_type === 'select-many'" :color="circleColor" :fill="(active) ? '#00A69A' : '#FFFFFF'" />
+      <radio v-if="question.question_type === 'select-one' || question.question_type === '' || !question" :color="circleColor" :fill="(active) ? '#00A69A' : '#FFFFFF'" />
+    </div>
+    <span class="form-answer-text">{{data.name}}</span>
     <div class="form-answer-tooltip" :class="{active: tooltip}" v-if="data.description" @mouseover="toggleTooltip(true)" @mouseleave="toggleTooltip(false)">
       <info />
       <div class="form-answer-tooltip-body" v-if="data.description && tooltip">{{data.description}}</div>

@@ -5,7 +5,9 @@
     <loader v-if="paths.length === 0" />
     <div class="form-option" v-for="(path, index) in paths" :key="index" @click="selectPath(path)" :class="{'form-option-last': index === paths.length-1, 'form-option-first': index === 0}" v-if="paths.length > 0">
       <div class="form-answer" :active="(currentSelection && currentSelection.id === path.id) ? true : false" :class="{active: currentSelection && currentSelection.id === path.id, inactive: currentSelection && currentSelection.id !== path.id}">
-        <radio :color="((currentSelection && currentSelection.id === path.id) || !currentSelection) ? '#00A69A':'#C6C6C6' " :fill="(currentSelection && currentSelection.id === path.id) ? '#00A69A' : '#FFFFFF'" />
+        <div class="form-answer-icon">
+          <radio :color="((currentSelection && currentSelection.id === path.id) || !currentSelection) ? '#00A69A':'#C6C6C6' " :fill="(currentSelection && currentSelection.id === path.id) ? '#00A69A' : '#FFFFFF'" />
+        </div>
         <span>{{path.name}}</span>
       </div>
     </div>
