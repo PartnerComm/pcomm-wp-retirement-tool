@@ -2157,6 +2157,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -2430,6 +2432,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _icons_Checkmark__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../icons/Checkmark */ "./public/js/Vue/components/icons/Checkmark.vue");
 /* harmony import */ var _icons_Radio__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../icons/Radio */ "./public/js/Vue/components/icons/Radio.vue");
 /* harmony import */ var _icons_Info__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../icons/Info */ "./public/js/Vue/components/icons/Info.vue");
+//
+//
 //
 //
 //
@@ -23674,25 +23678,31 @@ var render = function() {
                     }
                   },
                   [
-                    _c("radio", {
-                      attrs: {
-                        color:
-                          (_vm.currentSelection &&
-                            _vm.currentSelection.id === path.id) ||
-                          !_vm.currentSelection
-                            ? "#00A69A"
-                            : "#C6C6C6",
-                        fill:
-                          _vm.currentSelection &&
-                          _vm.currentSelection.id === path.id
-                            ? "#00A69A"
-                            : "#FFFFFF"
-                      }
-                    }),
+                    _c(
+                      "div",
+                      { staticClass: "form-answer-icon" },
+                      [
+                        _c("radio", {
+                          attrs: {
+                            color:
+                              (_vm.currentSelection &&
+                                _vm.currentSelection.id === path.id) ||
+                              !_vm.currentSelection
+                                ? "#00A69A"
+                                : "#C6C6C6",
+                            fill:
+                              _vm.currentSelection &&
+                              _vm.currentSelection.id === path.id
+                                ? "#00A69A"
+                                : "#FFFFFF"
+                          }
+                        })
+                      ],
+                      1
+                    ),
                     _vm._v(" "),
                     _c("span", [_vm._v(_vm._s(path.name))])
-                  ],
-                  1
+                  ]
                 )
               ]
             )
@@ -23889,27 +23899,36 @@ var render = function() {
       class: { active: _vm.data.active, inactive: _vm.inactive }
     },
     [
-      _vm.question && _vm.question.question_type === "select-many"
-        ? _c("checkmark", {
-            attrs: {
-              color: _vm.circleColor,
-              fill: _vm.active ? "#00A69A" : "#FFFFFF"
-            }
-          })
-        : _vm._e(),
+      _c(
+        "div",
+        { staticClass: "form-answer-icon" },
+        [
+          _vm.question && _vm.question.question_type === "select-many"
+            ? _c("checkmark", {
+                attrs: {
+                  color: _vm.circleColor,
+                  fill: _vm.active ? "#00A69A" : "#FFFFFF"
+                }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.question.question_type === "select-one" ||
+          _vm.question.question_type === "" ||
+          !_vm.question
+            ? _c("radio", {
+                attrs: {
+                  color: _vm.circleColor,
+                  fill: _vm.active ? "#00A69A" : "#FFFFFF"
+                }
+              })
+            : _vm._e()
+        ],
+        1
+      ),
       _vm._v(" "),
-      _vm.question.question_type === "select-one" ||
-      _vm.question.question_type === "" ||
-      !_vm.question
-        ? _c("radio", {
-            attrs: {
-              color: _vm.circleColor,
-              fill: _vm.active ? "#00A69A" : "#FFFFFF"
-            }
-          })
-        : _vm._e(),
-      _vm._v(" "),
-      _c("span", [_vm._v(_vm._s(_vm.data.name))]),
+      _c("span", { staticClass: "form-answer-text" }, [
+        _vm._v(_vm._s(_vm.data.name))
+      ]),
       _vm._v(" "),
       _vm.data.description
         ? _c(
@@ -23938,8 +23957,7 @@ var render = function() {
             1
           )
         : _vm._e()
-    ],
-    1
+    ]
   )
 }
 var staticRenderFns = []
@@ -43387,7 +43405,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/cbonade/Dev/msk-mskqf-713-082/webdocs/content/p/pcomm-wp-retirement-tool/public/js/pcomm-wp-retirement-tool-public.js */"./public/js/pcomm-wp-retirement-tool-public.js");
+module.exports = __webpack_require__(/*! /Users/cbonade/Dev/pcomm-wp-retirement-tool/public/js/pcomm-wp-retirement-tool-public.js */"./public/js/pcomm-wp-retirement-tool-public.js");
 
 
 /***/ })
