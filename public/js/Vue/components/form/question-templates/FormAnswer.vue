@@ -7,7 +7,7 @@
     <span class="form-answer-text">{{data.name}}</span>
     <div class="form-answer-tooltip" :class="{active: tooltip}" v-if="data.description" @mouseover="toggleTooltip(true)" @mouseleave="toggleTooltip(false)">
       <info />
-      <div class="form-answer-tooltip-body" v-if="data.description && tooltip">{{data.description}}</div>
+      <div class="form-answer-tooltip-body" v-if="data.description && tooltip" v-html="data.description"></div>
     </div>
   </div>
 </template>
