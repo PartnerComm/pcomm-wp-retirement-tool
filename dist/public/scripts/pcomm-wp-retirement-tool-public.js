@@ -23949,9 +23949,10 @@ var render = function() {
               _c("info"),
               _vm._v(" "),
               _vm.data.description && _vm.tooltip
-                ? _c("div", { staticClass: "form-answer-tooltip-body" }, [
-                    _vm._v(_vm._s(_vm.data.description))
-                  ])
+                ? _c("div", {
+                    staticClass: "form-answer-tooltip-body",
+                    domProps: { innerHTML: _vm._s(_vm.data.description) }
+                  })
                 : _vm._e()
             ],
             1
