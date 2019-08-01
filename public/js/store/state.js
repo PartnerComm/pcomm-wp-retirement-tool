@@ -5,6 +5,8 @@ export default {
   answerValid: false,
   currentTab: {},
   currentSelection: '',
+  currentExclusions: '',
+  excludedAnswers: [],
   feedbackPost: {},
   filterAnswers: [],
   formStep: 0,

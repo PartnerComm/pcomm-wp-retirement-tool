@@ -85,6 +85,7 @@ For the other questions, a `tip` description may be added by filling in the `des
 
 
 ## Changelog
+0.9.6 - Change the "Select All that apply" question style to require exact matches instead of allowing partial matches.
 0.9.5 - Adjust Tool Tip to output as html instead of text.
 0.9.3 - Add wrapper class for mobile responsive answer icons.  Update readme install instructions and formatting.
 0.9.0 - Beta release, all features available and documentation written.

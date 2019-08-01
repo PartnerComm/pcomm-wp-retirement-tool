@@ -53,7 +53,9 @@ export default {
       }
       
       const payload = this.selectedAnswers;
+      const payload2 = this.question.answers.filter(e => this.selectedAnswers.indexOf(e) === -1);
       this.$store.dispatch('SET_CURRENT_SELECTION', payload);
+      this.$store.dispatch('SET_EXCLUDED_ANSWERS', payload2);
     },
     newWindow(url) {
       url = new DOMParser().parseFromString(url, "text/xml");
