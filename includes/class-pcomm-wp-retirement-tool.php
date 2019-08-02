@@ -137,6 +137,11 @@ class Pcomm_Wp_Retirement_Tool {
 		 * The class responsible for defining all custom post types.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-pcomm-wp-retirement-tool-cpt.php';
+
+		/**
+		 * The class responsible for defining all custom post type metaboxes.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-pcomm-wp-retirement-tool-metaboxes.php';
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
