@@ -2538,8 +2538,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     selectAnswer: function selectAnswer(answer) {
-      var _this = this;
-
       if (answer.slug === "none-of-the-above") {
         this.selectedAnswers = [];
         this.selectedAnswers.push(answer);
@@ -2565,11 +2563,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       var payload = this.selectedAnswers;
-      var payload2 = this.question.answers.filter(function (e) {
-        return _this.selectedAnswers.indexOf(e) === -1;
-      });
       this.$store.dispatch('SET_CURRENT_SELECTION', payload);
-      this.$store.dispatch('SET_EXCLUDED_ANSWERS', payload2);
     },
     newWindow: function newWindow(url) {
       url = new DOMParser().parseFromString(url, "text/xml");
@@ -43086,14 +43080,6 @@ var actions = {
   },
   COMMIT_CURRENT_SELECTION: function COMMIT_CURRENT_SELECTION(context) {
     var payload = context.getters.GET_FORM_STATUS('currentSelection');
-
-    if (context.getters.GET_FORM_STATUS('currentExclusions') != '') {
-      console.log('yep');
-      var payload2 = context.getters.GET_FORM_STATUS('currentExclusions');
-      context.commit('COMMIT_EXCLUSIONS', payload2);
-      context.dispatch('SET_EXCLUDED_ANSWERS', '');
-    }
-
     context.commit('ADD_ANSWER', payload);
     context.dispatch('SET_CURRENT_SELECTION', '');
   },
@@ -43212,12 +43198,6 @@ var actions = {
     });
     context.commit('MUTATE_FORM_RESULTS', false);
     context.commit('MUTATE_FORM_INTRO', true);
-  },
-  SET_EXCLUDED_ANSWERS: function SET_EXCLUDED_ANSWERS(context, value) {
-    context.commit('MUTATE_KEY', {
-      key: 'currentExclusions',
-      value: value
-    });
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (actions);
@@ -43266,9 +43246,7 @@ __webpack_require__.r(__webpack_exports__);
   POSTS_FILTERED_BY_ANSWERS: function POSTS_FILTERED_BY_ANSWERS(state) {
     return state.allPosts.filter(function (e) {
       return state.filterAnswers.every(function (elem) {
-        return e.retirement_tool_question.indexOf(elem) > -1 && e.post_tag.indexOf('intro-text') === -1 && e.post_tag.indexOf('feedback-additional-content') === -1 && state.excludedAnswers.every(function (element) {
-          return e.retirement_tool_question.indexOf(element) === -1;
-        });
+        return e.retirement_tool_question.indexOf(elem) > -1 && e.post_tag.indexOf('intro-text') === -1 && e.post_tag.indexOf('feedback-additional-content') === -1;
       });
     });
   },
@@ -43350,11 +43328,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   MUTATE_FEEDBACK_KEY: function MUTATE_FEEDBACK_KEY(state, value) {
     state.feedbackPost = value;
-  },
-  COMMIT_EXCLUSIONS: function COMMIT_EXCLUSIONS(state, value) {
-    value.forEach(function (e) {
-      state.excludedAnswers.push(e.slug);
-    });
   }
 });
 
@@ -43375,8 +43348,6 @@ __webpack_require__.r(__webpack_exports__);
   answerValid: false,
   currentTab: {},
   currentSelection: '',
-  currentExclusions: '',
-  excludedAnswers: [],
   feedbackPost: {},
   filterAnswers: [],
   formStep: 0,

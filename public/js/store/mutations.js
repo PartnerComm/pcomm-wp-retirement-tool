@@ -44,10 +44,4 @@ export default {
   MUTATE_FEEDBACK_KEY: (state, value) => {
     state.feedbackPost = value;
   },
-  COMMIT_EXCLUSIONS: (state, value) => {
-    value.forEach(e => {
-      state.excludedAnswers.push(e.slug);
-     })
-    
-  }
 };
