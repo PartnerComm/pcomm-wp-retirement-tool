@@ -16,6 +16,7 @@
      public function __construct()
      {
          add_action('add_meta_boxes', [$this, 'retirement_tool_rules']);
+         add_action('save_post', [$this, 'save_retirement_tool_rules']);
      }
      
      public function retirement_tool_rules() 
@@ -30,13 +31,24 @@
         );
       }
      }
-     public function create_rule_generator() 
+     public function create_rule_generator($post) 
      {
+      $value = htmlspecialchars(get_post_meta($post->ID, 'retirement_tool_rules', true), ENT_QUOTES);
       ?>
         <div id="pcretirementtooladmin">
-          <rule-generator></rule-generator>
+          <rule-generator ruleset="<?php echo $value; ?>"></rule-generator>
         </div>
       <?php
+     }
+     public function save_retirement_tool_rules($post_id)
+     {
+      if (array_key_exists('retirement_tool_rules', $_POST)) {
+        update_post_meta(
+            $post_id,
+            'retirement_tool_rules',
+            $_POST['retirement_tool_rules']
+        );
+      }
      }
  }
 

@@ -1,4 +1,4 @@
 
-// export default {
-//   allQuestions: [],
-// };
+export default {
+  answerChoices: [],
+};

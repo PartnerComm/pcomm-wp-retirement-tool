@@ -43044,6 +43044,17 @@ var actions = {
 
               if (response.status === 200) {
                 payload = response.data;
+                payload.forEach(function (e) {
+                  if (e.meta.retirement_tool_rules.length > 0) {
+                    e.meta.retirement_tool_rules = JSON.parse(e.meta.retirement_tool_rules);
+                    e.meta.dont_show = e.meta.retirement_tool_rules.filter(function (elem) {
+                      return elem.action === 'do-not-show';
+                    });
+                    e.meta.always_show = e.meta.retirement_tool_rules.filter(function (elem) {
+                      return elem.action === 'always-show';
+                    });
+                  }
+                });
                 context.commit('MUTATE_KEY', {
                   key: 'allPosts',
                   value: payload
@@ -43239,34 +43250,60 @@ __webpack_require__.r(__webpack_exports__);
     return state.activePath;
   },
   POSTS_FILTERED_BY_MONTH: function POSTS_FILTERED_BY_MONTH(state, getters) {
-    return getters.POSTS_FILTERED_BY_ANSWERS.filter(function (e) {
-      return e.retirement_tool_timeframe.indexOf(state.currentTab.slug) > -1;
-    });
+    if (state.filterAnswers.length > 0) {
+      return getters.POSTS_FILTERED_BY_ANSWERS.filter(function (e) {
+        return e.retirement_tool_timeframe.indexOf(state.currentTab.slug) > -1;
+      });
+    }
   },
   POSTS_FILTERED_BY_ANSWERS: function POSTS_FILTERED_BY_ANSWERS(state) {
-    return state.allPosts.filter(function (e) {
-      return state.filterAnswers.every(function (elem) {
-        return e.retirement_tool_question.indexOf(elem) > -1 && e.post_tag.indexOf('intro-text') === -1 && e.post_tag.indexOf('feedback-additional-content') === -1;
+    if (state.filterAnswers.length > 0) {
+      return state.allPosts.filter(function (e) {
+        return state.filterAnswers.every(function (elem) {
+          return e.retirement_tool_question.indexOf(elem) > -1 && e.post_tag.indexOf('intro-text') === -1 && e.post_tag.indexOf('feedback-additional-content') === -1;
+        });
       });
-    });
+    }
+
+    return false;
   },
   HELPFUL_RESOURCES: function HELPFUL_RESOURCES(state) {
-    return state.allPosts.filter(function (e) {
-      return e.post_tag.indexOf('helpful-resources') > -1;
-    });
+    if (state.allPosts && state.allPosts.length > 0) {
+      return state.allPosts.filter(function (e) {
+        return e.post_tag.indexOf('helpful-resources') > -1;
+      });
+    }
   },
   INTRO_POSTS: function INTRO_POSTS(state) {
-    return state.allPosts.filter(function (e) {
-      return e.retirement_tool_question.indexOf(state.filterAnswers[0]) > -1 && e.post_tag.indexOf('intro-text') > -1;
-    });
+    if (state.allPosts && state.allPosts.length > 0) {
+      return state.allPosts.filter(function (e) {
+        return e.retirement_tool_question.indexOf(state.filterAnswers[0]) > -1 && e.post_tag.indexOf('intro-text') > -1;
+      });
+    }
   },
   ADDITIONAL_CONTENT: function ADDITIONAL_CONTENT(state) {
-    return state.allPosts.filter(function (e) {
-      return e.post_tag.indexOf('feedback-additional-content') > -1;
-    });
+    if (state.allPosts && state.allPosts.length > 0) {
+      return state.allPosts.filter(function (e) {
+        return e.post_tag.indexOf('feedback-additional-content') > -1;
+      });
+    }
   },
   FEEDBACK_NEW_POST: function FEEDBACK_NEW_POST(state) {
     return state.feedbackPost;
+  },
+  POSTS_WITH_OVERRIDES: function POSTS_WITH_OVERRIDES(state) {
+    if (state.allPosts && state.allPosts.length > 0) {
+      return state.allPosts.filter(function (e) {
+        return e.meta.retirement_tool_rules.length > 0;
+      });
+    }
+  },
+  ACTIVE_RULES: function ACTIVE_RULES(state, getters) {
+    if (state.allPosts && state.allPosts.length > 0 && state.filterAnswers.length > 0) {
+      getters.POSTS_WITH_OVERRIDES.filter(function (e) {
+        return state.filterAnswers.some(e.meta.retirement_tool_rules.answers);
+      });
+    }
   }
 });
 

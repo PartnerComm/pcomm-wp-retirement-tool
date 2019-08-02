@@ -12,7 +12,6 @@
 
  class Pcomm_Wp_Retirement_Tool_Cpt
  {
-
      public function __construct()
      {
          $this->retirement_post_slug = 'retirement_tool_post';
@@ -49,6 +48,10 @@
         ];
          register_post_type($post_type, $args);
          register_taxonomy_for_object_type('post_tag', 'retirement_tool_post');
+         register_post_meta('retirement_tool_post', 'retirement_tool_rules', array(
+             'show_in_rest' => true,
+             'type' => 'string'
+         ));
      }
      public function register_feedback_cpt()
      {
@@ -72,12 +75,12 @@
             'public' => true,
             'has_archive' => true,
             'supports' => [ 'title', 'editor', 'thumbnail', 'excerpt', 'page-attributes', 'custom-fields', 'revisions', 'page-attributes' ],
-						'menu_icon' => 'dashicons-id',
-						'show_in_rest' => true,
-						'show_in_menu' => true
-				];
+                        'menu_icon' => 'dashicons-id',
+                        'show_in_rest' => true,
+                        'show_in_menu' => true
+                ];
 
-				 register_post_type($post_type, $args);
+         register_post_type($post_type, $args);
      }
  }
 

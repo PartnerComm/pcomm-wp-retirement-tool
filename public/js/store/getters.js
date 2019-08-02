@@ -18,28 +18,50 @@ export default {
     return state.activePath;
   },
   POSTS_FILTERED_BY_MONTH: (state, getters) => {
-    return getters.POSTS_FILTERED_BY_ANSWERS.filter(e => e.retirement_tool_timeframe.indexOf(state.currentTab.slug) > -1);
+    if (state.filterAnswers.length > 0) {
+      return getters.POSTS_FILTERED_BY_ANSWERS.filter(e => e.retirement_tool_timeframe.indexOf(state.currentTab.slug) > -1);
+    }
   },
   POSTS_FILTERED_BY_ANSWERS: (state) => {
-    return state.allPosts.filter(e => {
-      return state.filterAnswers.every(elem => e.retirement_tool_question.indexOf(elem) > -1 && e.post_tag.indexOf('intro-text') === -1 && e.post_tag.indexOf('feedback-additional-content') === -1);
-    })
+    if (state.filterAnswers.length > 0) {
+      return state.allPosts.filter(e => {
+        return state.filterAnswers.every(elem => e.retirement_tool_question.indexOf(elem) > -1 && e.post_tag.indexOf('intro-text') === -1 && e.post_tag.indexOf('feedback-additional-content') === -1);
+      })
+    }
+    return false;
   },
   HELPFUL_RESOURCES: (state) => {
-    return state.allPosts.filter(e => e.post_tag.indexOf('helpful-resources') >-1);
+    if (state.allPosts && state.allPosts.length > 0) {
+      return state.allPosts.filter(e => e.post_tag.indexOf('helpful-resources') >-1);
+    }
   },
   INTRO_POSTS: (state) => {
-    return state.allPosts.filter(e => {
-      return e.retirement_tool_question.indexOf(state.filterAnswers[0]) > -1 && e.post_tag.indexOf('intro-text') > -1;
-    })
+    if (state.allPosts && state.allPosts.length > 0) {
+      return state.allPosts.filter(e => {
+        return e.retirement_tool_question.indexOf(state.filterAnswers[0]) > -1 && e.post_tag.indexOf('intro-text') > -1;
+      })
+    }
   },
   ADDITIONAL_CONTENT: (state) => {
-    return state.allPosts.filter(e => {
-      return e.post_tag.indexOf('feedback-additional-content') > -1;
-    })
+    if (state.allPosts && state.allPosts.length > 0) {
+      return state.allPosts.filter(e => {
+        return e.post_tag.indexOf('feedback-additional-content') > -1;
+      })
+    }
   },
   FEEDBACK_NEW_POST: (state) => {
     return state.feedbackPost;
+  },
+  POSTS_WITH_OVERRIDES: (state) => {
+    if (state.allPosts && state.allPosts.length > 0) {
+      return state.allPosts.filter(e => {
+        return e.meta.retirement_tool_rules.length > 0;
+      })
+    }
+  },
+  ACTIVE_RULES: (state, getters) => {
+    if (state.allPosts && state.allPosts.length > 0 && state.filterAnswers.length > 0) {
+      getters.POSTS_WITH_OVERRIDES.filter(e => state.filterAnswers.some(e.meta.retirement_tool_rules.answers));
+    }
   }
-
 }

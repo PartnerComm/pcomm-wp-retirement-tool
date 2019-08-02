@@ -101,7 +101,15 @@ const actions = {
   GET_RETIREMENT_TOOL_POSTS: async (context) => {
     const response = await axios.get('/wp-json/wp/v2/retirement_tool_post?per_page=100');
     if (response.status === 200) {
-      const payload = response.data;
+      let payload = response.data;
+      payload.forEach(e => {
+        if (e.meta.retirement_tool_rules.length > 0) {
+          e.meta.retirement_tool_rules = JSON.parse(e.meta.retirement_tool_rules);
+          e.meta.dont_show = e.meta.retirement_tool_rules.filter(elem => elem.action === 'do-not-show');
+          e.meta.always_show = e.meta.retirement_tool_rules.filter(elem => elem.action === 'always-show');
+        }
+      })
+
       context.commit('MUTATE_KEY', {key: 'allPosts', value: payload});
     }
   },

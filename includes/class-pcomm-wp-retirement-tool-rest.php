@@ -19,7 +19,6 @@ class Pcomm_Wp_Retirement_Tool_Rest
         add_action('rest_api_init', array($this, 'add_timeframe_meta'));
         add_action('rest_api_init', array($this, 'add_category_meta'));
 
-
     }
 
     public function modify_cpt_rest()

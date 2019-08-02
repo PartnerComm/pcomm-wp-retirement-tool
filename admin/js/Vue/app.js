@@ -9,7 +9,6 @@ import store from '../store/store';
 
 // General Components
 
-
 // Globally registered components
 setTimeout(() => {
   const elementExists = document.getElementById('pcretirementtooladmin');
@@ -22,4 +21,4 @@ setTimeout(() => {
       store
     });
   }
-}, 5000);
+}, 500);
