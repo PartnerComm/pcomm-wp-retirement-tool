@@ -85,7 +85,7 @@ For the other questions, a `tip` description may be added by filling in the `des
 
 
 ## Changelog
-0.9.8 - Add basic test UI for rule selector
+0.9.10 - Add basic test UI for rule selector
 0.9.7 - Undo 0.9.6
 0.9.5 - Adjust Tool Tip to output as html instead of text.
 0.9.3 - Add wrapper class for mobile responsive answer icons.  Update readme install instructions and formatting.
