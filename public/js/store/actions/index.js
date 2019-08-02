@@ -115,12 +115,6 @@ const actions = {
   },
   COMMIT_CURRENT_SELECTION: (context) => {
     const payload = context.getters.GET_FORM_STATUS('currentSelection');
-    if (context.getters.GET_FORM_STATUS('currentExclusions') != '') {
-      console.log('yep');
-      const payload2 = context.getters.GET_FORM_STATUS('currentExclusions');
-      context.commit('COMMIT_EXCLUSIONS', payload2);
-      context.dispatch('SET_EXCLUDED_ANSWERS', '');
-    }
     context.commit('ADD_ANSWER', payload);
     context.dispatch('SET_CURRENT_SELECTION', '');
   },
@@ -175,9 +169,6 @@ const actions = {
     context.commit('MUTATE_FORM_RESULTS', false);
     context.commit('MUTATE_FORM_INTRO', true);
 
-  },
-  SET_EXCLUDED_ANSWERS: (context, value) => {
-    context.commit('MUTATE_KEY', {key: 'currentExclusions', value: value});
   }
 }
 
