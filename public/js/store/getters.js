@@ -19,7 +19,41 @@ export default {
   },
   POSTS_FILTERED_BY_MONTH: (state, getters) => {
     if (state.filterAnswers.length > 0) {
-      return getters.POSTS_FILTERED_BY_ANSWERS.filter(e => e.retirement_tool_timeframe.indexOf(state.currentTab.slug) > -1);
+      let monthsPosts = getters.POSTS_FILTERED_BY_ANSWERS.filter(e => e.retirement_tool_timeframe.indexOf(state.currentTab.slug) > -1);
+      if (getters.ACTIVE_RULES.always_show_only.length > 0) {
+        getters.ACTIVE_RULES.always_show_only.forEach(e => {
+          
+        })
+      }
+      if (getters.ACTIVE_RULES.always_show_contains.length > 0) {
+        getters.ACTIVE_RULES.always_show_contains.forEach(e => {
+          if (monthsPosts.indexOf(e) === -1) {
+            monthsPosts.push(e);
+          }
+        })
+      }
+      if (getters.ACTIVE_RULES.always_show_not_contains.length > 0) {
+        getters.ACTIVE_RULES.always_show_not_contains.forEach(e => {
+          if (monthsPosts.indexOf(e) === -1) {
+            monthsPosts.push(e);
+          }
+        })
+      }
+      if (getters.ACTIVE_RULES.dont_show_contains.length > 0) {
+        getters.ACTIVE_RULES.dont_show_contains.forEach(e => {
+          if (monthsPosts.indexOf(e) > -1) {
+            monthsPosts.splice(monthsPosts.indexOf(e), 1);
+          }
+        })
+      }
+      if (getters.ACTIVE_RULES.dont_show_not_contains.length > 0) {
+        getters.ACTIVE_RULES.dont_show_not_contains.forEach(e => {
+          if (monthsPosts.indexOf(e) > -1) {
+            monthsPosts.splice(monthsPosts.indexOf(e), 1);
+          }
+        })
+      }
+      return monthsPosts;
     }
   },
   POSTS_FILTERED_BY_ANSWERS: (state) => {
@@ -60,8 +94,29 @@ export default {
     }
   },
   ACTIVE_RULES: (state, getters) => {
-    if (state.allPosts && state.allPosts.length > 0 && state.filterAnswers.length > 0) {
-      getters.POSTS_WITH_OVERRIDES.filter(e => state.filterAnswers.some(e.meta.retirement_tool_rules.answers));
+    if (getters.POSTS_WITH_OVERRIDES && getters.POSTS_WITH_OVERRIDES.length > 0) {
+      const posts = getters.POSTS_WITH_OVERRIDES;
+      return {
+        "always_show_only": posts.filter(e => e.meta.always_show.filter(elem => elem.type === 'contains-only' && elem.action === 'always-show').length > 0),
+        "always_show_contains": posts.filter(e => e.meta.always_show.filter(elem => elem.answers.some(element => state.filterAnswers.indexOf(element) > -1) && elem.type === 'contains' && elem.action === 'always-show').length > 0),
+        "always_show_contains-all": posts.filter(e => e.meta.always_show.filter(elem => elem.type === 'contains-all' && elem.action === 'always-show').length > 0),
+        "always_show_not_contains": posts.filter(e => e.meta.always_show.filter(elem => elem.answers.some(element => state.filterAnswers.indexOf(element) === -1) && elem.type === 'does-not-contain' && elem.action === 'always-show').length > 0),
+        "dont_show_only": posts.filter(e => e.meta.dont_show.filter(elem => elem.type === 'contains-only' && elem.action === 'do-not-show').length > 0),
+        "dont_show_contains": posts.filter(e => e.meta.dont_show.filter(elem => elem.answers.some(element => state.filterAnswers.indexOf(element) > -1) && elem.type === 'contains' && elem.action === 'do-not-show').length > 0),
+        "dont_show_contains-all": posts.filter(e => e.meta.dont_show.filter(elem => elem.type === 'contains-all' && elem.action === 'do-not-show').length > 0),
+        "dont_show_not_contains": posts.filter(e => e.meta.dont_show.filter(elem => elem.answers.every(element => state.filterAnswers.indexOf(element) === -1) && elem.type === 'does-not-contain' && elem.action === 'do-not-show').length > 0),
+      }
+    }
+    return {
+        "always_show_only": [],
+        "always_show_contains": [],
+        "always_show_contains-all": [],
+        "always_show_not_contains": [],
+        "dont_show_only": [],
+        "dont_show_contains": [],
+        "dont_show_contains-all": [],
+        "dont_show_not_contains": [],
+      
     }
   }
 }

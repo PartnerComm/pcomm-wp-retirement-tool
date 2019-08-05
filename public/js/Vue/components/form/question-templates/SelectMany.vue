@@ -38,22 +38,19 @@ export default {
         const index = this.selectedAnswers.indexOf(answer);
         this.selectedAnswers.splice(index, 1);
         if (this.selectedAnswers.length === 0) {
-          // this.$store.dispatch('UPDATE_VALIDATION', false);
         }
       } else {
-        // if (this.selectedAnswers.indexOf('none-of-the-above') > -1) {
-        //   this.selectedAnswers = [];
-        // }
         if (this.selectedAnswers.map(e => e.slug).indexOf('none-of-the-above') > -1) {
           this.selectedAnswers = [];
         }
         this.selectedAnswers.push(answer);
-        // this.$store.dispatch('UPDATE_VALIDATION', true);
         }
       }
       
       const payload = this.selectedAnswers;
+      const payload2 = this.question.answers.filter(e => this.selectedAnswers.indexOf(e) === -1);
       this.$store.dispatch('SET_CURRENT_SELECTION', payload);
+      this.$store.dispatch('SET_EXCLUDED_ANSWERS', payload2);
     },
     newWindow(url) {
       url = new DOMParser().parseFromString(url, "text/xml");
@@ -73,6 +70,7 @@ export default {
 
   },
   mounted() {
+    this.$store.dispatch('SET_SELECT_ALL_ANSWERS', this.question.answers.map(e => e.slug));
   }
   
   }

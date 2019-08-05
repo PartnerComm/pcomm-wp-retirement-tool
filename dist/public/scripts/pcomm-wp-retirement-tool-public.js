@@ -2538,6 +2538,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     selectAnswer: function selectAnswer(answer) {
+      var _this = this;
+
       if (answer.slug === "none-of-the-above") {
         this.selectedAnswers = [];
         this.selectedAnswers.push(answer);
@@ -2546,24 +2548,24 @@ __webpack_require__.r(__webpack_exports__);
           var index = this.selectedAnswers.indexOf(answer);
           this.selectedAnswers.splice(index, 1);
 
-          if (this.selectedAnswers.length === 0) {// this.$store.dispatch('UPDATE_VALIDATION', false);
-          }
+          if (this.selectedAnswers.length === 0) {}
         } else {
-          // if (this.selectedAnswers.indexOf('none-of-the-above') > -1) {
-          //   this.selectedAnswers = [];
-          // }
           if (this.selectedAnswers.map(function (e) {
             return e.slug;
           }).indexOf('none-of-the-above') > -1) {
             this.selectedAnswers = [];
           }
 
-          this.selectedAnswers.push(answer); // this.$store.dispatch('UPDATE_VALIDATION', true);
+          this.selectedAnswers.push(answer);
         }
       }
 
       var payload = this.selectedAnswers;
+      var payload2 = this.question.answers.filter(function (e) {
+        return _this.selectedAnswers.indexOf(e) === -1;
+      });
       this.$store.dispatch('SET_CURRENT_SELECTION', payload);
+      this.$store.dispatch('SET_EXCLUDED_ANSWERS', payload2);
     },
     newWindow: function newWindow(url) {
       url = new DOMParser().parseFromString(url, "text/xml");
@@ -2579,7 +2581,11 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {},
-  mounted: function mounted() {}
+  mounted: function mounted() {
+    this.$store.dispatch('SET_SELECT_ALL_ANSWERS', this.question.answers.map(function (e) {
+      return e.slug;
+    }));
+  }
 });
 
 /***/ }),
@@ -3038,7 +3044,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     tabs: function tabs() {
-      return this.$store.getters.GET_FORM_STATUS('tabs');
+      return this.$store.getters.GET_FORM_STATUS('tabs').filter(function (e) {
+        return parseInt(e.parent) === 0;
+      });
     },
     currentTab: function currentTab() {
       return this.$store.getters.GET_FORM_STATUS('currentTab');
@@ -3156,7 +3164,15 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _icons_Checkmark__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../icons/Checkmark */ "./public/js/Vue/components/icons/Checkmark.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _icons_Checkmark__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../icons/Checkmark */ "./public/js/Vue/components/icons/Checkmark.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -3183,12 +3199,43 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   data: function data() {
-    return {};
+    return {
+      postsWithOverrides: [],
+      showPosts: false
+    };
   },
   components: {
-    Checkmark: _icons_Checkmark__WEBPACK_IMPORTED_MODULE_0__["default"]
+    Checkmark: _icons_Checkmark__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  methods: {},
+  methods: {
+    filterPosts: function () {
+      var _filterPosts = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                this.postsWithOverrides = this.filteredPosts;
+
+              case 1:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function filterPosts() {
+        return _filterPosts.apply(this, arguments);
+      }
+
+      return filterPosts;
+    }(),
+    processPosts: function processPosts() {
+      this.filterPosts().then(this.showPosts = true);
+    }
+  },
   computed: {
     filteredPosts: function filteredPosts() {
       var _this = this;
@@ -3199,10 +3246,15 @@ __webpack_require__.r(__webpack_exports__);
     },
     resultsSections: function resultsSections() {
       return this.$store.getters.GET_FORM_STATUS('resultsSections');
+    },
+    activeRules: function activeRules() {
+      return this.$store.getters.ACTIVE_RULES;
     }
   },
   created: function created() {},
-  mounted: function mounted() {}
+  mounted: function mounted() {
+    this.processPosts();
+  }
 });
 
 /***/ }),
@@ -43091,6 +43143,14 @@ var actions = {
   },
   COMMIT_CURRENT_SELECTION: function COMMIT_CURRENT_SELECTION(context) {
     var payload = context.getters.GET_FORM_STATUS('currentSelection');
+
+    if (context.getters.GET_FORM_STATUS('currentExclusions') != '') {
+      console.log('yep');
+      var payload2 = context.getters.GET_FORM_STATUS('currentExclusions');
+      context.commit('COMMIT_EXCLUSIONS', payload2);
+      context.dispatch('SET_EXCLUDED_ANSWERS', '');
+    }
+
     context.commit('ADD_ANSWER', payload);
     context.dispatch('SET_CURRENT_SELECTION', '');
   },
@@ -43209,6 +43269,18 @@ var actions = {
     });
     context.commit('MUTATE_FORM_RESULTS', false);
     context.commit('MUTATE_FORM_INTRO', true);
+  },
+  SET_EXCLUDED_ANSWERS: function SET_EXCLUDED_ANSWERS(context, value) {
+    context.commit('MUTATE_KEY', {
+      key: 'currentExclusions',
+      value: value
+    });
+  },
+  SET_SELECT_ALL_ANSWERS: function SET_SELECT_ALL_ANSWERS(context, value) {
+    context.commit('MUTATE_KEY', {
+      key: 'selectAllAnswers',
+      value: value
+    });
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (actions);
@@ -43251,9 +43323,47 @@ __webpack_require__.r(__webpack_exports__);
   },
   POSTS_FILTERED_BY_MONTH: function POSTS_FILTERED_BY_MONTH(state, getters) {
     if (state.filterAnswers.length > 0) {
-      return getters.POSTS_FILTERED_BY_ANSWERS.filter(function (e) {
+      var monthsPosts = getters.POSTS_FILTERED_BY_ANSWERS.filter(function (e) {
         return e.retirement_tool_timeframe.indexOf(state.currentTab.slug) > -1;
       });
+
+      if (getters.ACTIVE_RULES.always_show_only.length > 0) {
+        getters.ACTIVE_RULES.always_show_only.forEach(function (e) {});
+      }
+
+      if (getters.ACTIVE_RULES.always_show_contains.length > 0) {
+        getters.ACTIVE_RULES.always_show_contains.forEach(function (e) {
+          if (monthsPosts.indexOf(e) === -1) {
+            monthsPosts.push(e);
+          }
+        });
+      }
+
+      if (getters.ACTIVE_RULES.always_show_not_contains.length > 0) {
+        getters.ACTIVE_RULES.always_show_not_contains.forEach(function (e) {
+          if (monthsPosts.indexOf(e) === -1) {
+            monthsPosts.push(e);
+          }
+        });
+      }
+
+      if (getters.ACTIVE_RULES.dont_show_contains.length > 0) {
+        getters.ACTIVE_RULES.dont_show_contains.forEach(function (e) {
+          if (monthsPosts.indexOf(e) > -1) {
+            monthsPosts.splice(monthsPosts.indexOf(e), 1);
+          }
+        });
+      }
+
+      if (getters.ACTIVE_RULES.dont_show_not_contains.length > 0) {
+        getters.ACTIVE_RULES.dont_show_not_contains.forEach(function (e) {
+          if (monthsPosts.indexOf(e) > -1) {
+            monthsPosts.splice(monthsPosts.indexOf(e), 1);
+          }
+        });
+      }
+
+      return monthsPosts;
     }
   },
   POSTS_FILTERED_BY_ANSWERS: function POSTS_FILTERED_BY_ANSWERS(state) {
@@ -43299,11 +43409,70 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   ACTIVE_RULES: function ACTIVE_RULES(state, getters) {
-    if (state.allPosts && state.allPosts.length > 0 && state.filterAnswers.length > 0) {
-      getters.POSTS_WITH_OVERRIDES.filter(function (e) {
-        return state.filterAnswers.some(e.meta.retirement_tool_rules.answers);
-      });
+    if (getters.POSTS_WITH_OVERRIDES && getters.POSTS_WITH_OVERRIDES.length > 0) {
+      var posts = getters.POSTS_WITH_OVERRIDES;
+      return {
+        "always_show_only": posts.filter(function (e) {
+          return e.meta.always_show.filter(function (elem) {
+            return elem.type === 'contains-only' && elem.action === 'always-show';
+          }).length > 0;
+        }),
+        "always_show_contains": posts.filter(function (e) {
+          return e.meta.always_show.filter(function (elem) {
+            return elem.answers.some(function (element) {
+              return state.filterAnswers.indexOf(element) > -1;
+            }) && elem.type === 'contains' && elem.action === 'always-show';
+          }).length > 0;
+        }),
+        "always_show_contains-all": posts.filter(function (e) {
+          return e.meta.always_show.filter(function (elem) {
+            return elem.type === 'contains-all' && elem.action === 'always-show';
+          }).length > 0;
+        }),
+        "always_show_not_contains": posts.filter(function (e) {
+          return e.meta.always_show.filter(function (elem) {
+            return elem.answers.some(function (element) {
+              return state.filterAnswers.indexOf(element) === -1;
+            }) && elem.type === 'does-not-contain' && elem.action === 'always-show';
+          }).length > 0;
+        }),
+        "dont_show_only": posts.filter(function (e) {
+          return e.meta.dont_show.filter(function (elem) {
+            return elem.type === 'contains-only' && elem.action === 'do-not-show';
+          }).length > 0;
+        }),
+        "dont_show_contains": posts.filter(function (e) {
+          return e.meta.dont_show.filter(function (elem) {
+            return elem.answers.some(function (element) {
+              return state.filterAnswers.indexOf(element) > -1;
+            }) && elem.type === 'contains' && elem.action === 'do-not-show';
+          }).length > 0;
+        }),
+        "dont_show_contains-all": posts.filter(function (e) {
+          return e.meta.dont_show.filter(function (elem) {
+            return elem.type === 'contains-all' && elem.action === 'do-not-show';
+          }).length > 0;
+        }),
+        "dont_show_not_contains": posts.filter(function (e) {
+          return e.meta.dont_show.filter(function (elem) {
+            return elem.answers.every(function (element) {
+              return state.filterAnswers.indexOf(element) === -1;
+            }) && elem.type === 'does-not-contain' && elem.action === 'do-not-show';
+          }).length > 0;
+        })
+      };
     }
+
+    return {
+      "always_show_only": [],
+      "always_show_contains": [],
+      "always_show_contains-all": [],
+      "always_show_not_contains": [],
+      "dont_show_only": [],
+      "dont_show_contains": [],
+      "dont_show_contains-all": [],
+      "dont_show_not_contains": []
+    };
   }
 });
 
@@ -43365,6 +43534,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   MUTATE_FEEDBACK_KEY: function MUTATE_FEEDBACK_KEY(state, value) {
     state.feedbackPost = value;
+  },
+  COMMIT_EXCLUSIONS: function COMMIT_EXCLUSIONS(state, value) {
+    value.forEach(function (e) {
+      state.excludedAnswers.push(e.slug);
+    });
   }
 });
 
@@ -43385,6 +43559,8 @@ __webpack_require__.r(__webpack_exports__);
   answerValid: false,
   currentTab: {},
   currentSelection: '',
+  currentExclusions: '',
+  excludedAnswers: [],
   feedbackPost: {},
   filterAnswers: [],
   formStep: 0,
@@ -43396,6 +43572,7 @@ __webpack_require__.r(__webpack_exports__);
   printingResults: false,
   resultsSections: [],
   selectionSummary: [],
+  selectAllAnswers: [],
   showFeedbackButton: false,
   showFeedbackForm: false,
   showFeedbackSuccess: false,

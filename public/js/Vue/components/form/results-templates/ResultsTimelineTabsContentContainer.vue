@@ -26,14 +26,21 @@ export default {
   },
   data() {
     return {
-
+      postsWithOverrides: [],
+      showPosts: false
     }
   },
   components: {
     Checkmark
   },
   methods: {
-
+    async filterPosts() {
+      this.postsWithOverrides = this.filteredPosts;
+      
+    },
+    processPosts() {
+      this.filterPosts().then(this.showPosts = true);
+    }
   },
   computed: {
     filteredPosts() {
@@ -42,12 +49,15 @@ export default {
     resultsSections() {
       return this.$store.getters.GET_FORM_STATUS('resultsSections');
     },
+    activeRules() {
+      return this.$store.getters.ACTIVE_RULES;
+    }
   },
   created() {
 
   },
   mounted() {
-
+    this.processPosts();
   }
 
   }

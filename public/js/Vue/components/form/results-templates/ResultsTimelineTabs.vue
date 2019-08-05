@@ -46,7 +46,7 @@ export default {
   },
   computed: {
     tabs() {
-      return this.$store.getters.GET_FORM_STATUS('tabs');
+      return this.$store.getters.GET_FORM_STATUS('tabs').filter(e => parseInt(e.parent) === 0);
     },
     currentTab() {
       return this.$store.getters.GET_FORM_STATUS('currentTab')
