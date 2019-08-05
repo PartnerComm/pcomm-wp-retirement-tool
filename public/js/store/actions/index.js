@@ -20,7 +20,7 @@ const actions = {
     const payload = value;
     context.commit('MUTATE_FORM_QUESTIONS', payload);
     if (payload === true) {
-      window.scrollTo(0,0);
+      window.scrollTo(0,220);
     }
   },
   UPDATE_FORM_RESULTS: (context, value) => {
@@ -68,7 +68,7 @@ const actions = {
     }
     const payload = newStep;
     context.commit('MUTATE_FORM_STEP', payload);
-    window.scrollTo(0,0);
+    window.scrollTo(0,220);
   },
   RESET_FORM_DEFAULTS: (context) => {
     context.commit('MUTATE_KEY', {key: 'formAnswers', value: []});
@@ -124,7 +124,6 @@ const actions = {
   COMMIT_CURRENT_SELECTION: (context) => {
     const payload = context.getters.GET_FORM_STATUS('currentSelection');
     if (context.getters.GET_FORM_STATUS('currentExclusions') != '') {
-      console.log('yep');
       const payload2 = context.getters.GET_FORM_STATUS('currentExclusions');
       context.commit('COMMIT_EXCLUSIONS', payload2);
       context.dispatch('SET_EXCLUDED_ANSWERS', '');

@@ -42886,7 +42886,7 @@ var actions = {
     context.commit('MUTATE_FORM_QUESTIONS', payload);
 
     if (payload === true) {
-      window.scrollTo(0, 0);
+      window.scrollTo(0, 220);
     }
   },
   UPDATE_FORM_RESULTS: function UPDATE_FORM_RESULTS(context, value) {
@@ -42956,7 +42956,7 @@ var actions = {
 
     var payload = newStep;
     context.commit('MUTATE_FORM_STEP', payload);
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 220);
   },
   RESET_FORM_DEFAULTS: function RESET_FORM_DEFAULTS(context) {
     context.commit('MUTATE_KEY', {
@@ -43145,7 +43145,6 @@ var actions = {
     var payload = context.getters.GET_FORM_STATUS('currentSelection');
 
     if (context.getters.GET_FORM_STATUS('currentExclusions') != '') {
-      console.log('yep');
       var payload2 = context.getters.GET_FORM_STATUS('currentExclusions');
       context.commit('COMMIT_EXCLUSIONS', payload2);
       context.dispatch('SET_EXCLUDED_ANSWERS', '');
