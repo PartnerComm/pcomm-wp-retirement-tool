@@ -85,6 +85,7 @@ For the other questions, a `tip` description may be added by filling in the `des
 
 
 ## Changelog
+0.9.10 - Complete rule selector logic and UI
 0.9.10 - Add basic test UI for rule selector
 0.9.7 - Undo 0.9.6
 0.9.5 - Adjust Tool Tip to output as html instead of text.

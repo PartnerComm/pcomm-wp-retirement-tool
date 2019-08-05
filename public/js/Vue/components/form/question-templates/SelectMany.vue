@@ -46,11 +46,12 @@ export default {
         this.selectedAnswers.push(answer);
         }
       }
-      
       const payload = this.selectedAnswers;
       const payload2 = this.question.answers.filter(e => this.selectedAnswers.indexOf(e) === -1);
+      const payload3 = this.question.answers.filter(e => this.selectedAnswers.indexOf(e) > -1);
       this.$store.dispatch('SET_CURRENT_SELECTION', payload);
       this.$store.dispatch('SET_EXCLUDED_ANSWERS', payload2);
+      this.$store.dispatch('SET_SELECT_ALL_ANSWERS', payload3);
     },
     newWindow(url) {
       url = new DOMParser().parseFromString(url, "text/xml");
@@ -70,7 +71,6 @@ export default {
 
   },
   mounted() {
-    this.$store.dispatch('SET_SELECT_ALL_ANSWERS', this.question.answers.map(e => e.slug));
   }
   
   }

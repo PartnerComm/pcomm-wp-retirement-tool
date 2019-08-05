@@ -99,6 +99,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_RuleGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/RuleGenerator */ "./admin/js/Vue/components/RuleGenerator.vue");
 /* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/store */ "./admin/js/store/store.js");
+/* harmony import */ var _directives_clickOutside__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./directives/clickOutside */ "./admin/js/Vue/directives/clickOutside.js");
 var Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 
 var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
@@ -106,13 +107,13 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 
 Vue.use(vue_axios__WEBPACK_IMPORTED_MODULE_0___default.a, axios);
 
- // General Components
-// Globally registered components
+
 
 setTimeout(function () {
   var elementExists = document.getElementById('pcretirementtooladmin');
 
   if (elementExists) {
+    Vue.directive('click-outside', _directives_clickOutside__WEBPACK_IMPORTED_MODULE_3__["default"]);
     var app = new Vue({
       el: '#pcretirementtooladmin',
       components: {
@@ -209,6 +210,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RuleGenerator_vue_vue_type_template_id_5719158f_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./admin/js/Vue/directives/clickOutside.js":
+/*!*************************************************!*\
+  !*** ./admin/js/Vue/directives/clickOutside.js ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  bind: function bind(el, binding, vnode) {
+    el.clickOutsideEvent = function (event) {
+      if (!(el === event.target || el.contains(event.target))) {
+        vnode.context[binding.expression](event);
+      }
+    };
+
+    document.body.addEventListener('click', el.clickOutsideEvent);
+  },
+  unbind: function unbind(el) {
+    document.body.removeEventListener('click', el.clickOutsideEvent);
+  }
+});
 
 /***/ }),
 
@@ -2158,7 +2185,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-// v-model="rules[index].answer"
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     ruleset: {
@@ -2184,7 +2212,16 @@ __webpack_require__.r(__webpack_exports__);
       this.rules.push(blankObject);
     },
     deleteRule: function deleteRule(index) {
-      this.rules.splice(index, 1);
+      var confirm = window.confirm('Are you sure you wish to delete this rule?');
+
+      if (confirm) {
+        this.rules.splice(index, 1);
+      }
+    },
+    toggleExpand: function toggleExpand() {
+      if (this.expand >= 0) {
+        this.expand = false;
+      }
     },
     expandAnswers: function expandAnswers(index) {
       if (this.expand === index) {
@@ -2222,7 +2259,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".input-row[data-v-5719158f] {\n  display: flex;\n  align-items: center;\n}\n.input-row select[data-v-5719158f], .input-row div[data-v-5719158f], .input-row button[data-v-5719158f] {\n  margin-left: 1rem;\n}\n.input-row .answers[data-v-5719158f] {\n  position: relative;\n}\n.input-row .answers span[data-v-5719158f] {\n  border: 1px solid #ddd;\n  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.07);\n  background-color: #fff;\n  color: #32373c;\n  padding: 0.25rem 4rem 0.25rem 0.75rem;\n  border-radius: 5px;\n}\n.input-row .answers-checkboxes[data-v-5719158f] {\n  background-color: #FFFFFF;\n  box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.12);\n  position: absolute;\n  top: 2rem;\n  left: -1rem;\n  min-width: 300px;\n  padding: 0.5rem 2rem 0.5rem 0;\n  z-index: 2000;\n}\n.input-row .answers-choice[data-v-5719158f] {\n  display: flex;\n  margin-bottom: 0.25rem;\n  align-items: center;\n}", ""]);
+exports.push([module.i, ".retirement-tool-rule-generator[data-v-5719158f] {\n  padding: 0.5rem 0;\n}\n.add-rule-button[data-v-5719158f] {\n  margin-bottom: 1rem;\n  background-color: #49b2fc;\n  color: #FFFFFF;\n  border: none;\n  padding: 0.25rem 2rem;\n  font-size: 18px;\n  font-weight: 700;\n  border: 2px solid #49b2fc;\n  border-radius: 5px;\n}\n.add-rule-button[data-v-5719158f]:hover {\n  cursor: pointer;\n  background-color: #000000;\n  color: #49b2fc;\n}\n.delete-button[data-v-5719158f] {\n  background-color: #5a5859;\n  color: #FFFFFF;\n  font-weight: 700;\n  border: 2px solid #5a5859;\n}\n.delete-button[data-v-5719158f]:hover {\n  cursor: pointer;\n  background-color: #FFFFFF;\n  color: #5a5859;\n}\nbutton[data-v-5719158f]:focus {\n  outline: none;\n}\n.input-row[data-v-5719158f] {\n  display: flex;\n  align-items: center;\n  flex-wrap: wrap;\n  font-size: 18px;\n  margin-bottom: 0.25rem;\n}\n.input-row select[data-v-5719158f] {\n  font-size: 18px;\n  margin-bottom: 0.25rem;\n}\n.input-row select[data-v-5719158f]:hover, .input-row .answers[data-v-5719158f]:hover {\n  cursor: pointer;\n}\n.input-row select[data-v-5719158f], .input-row div[data-v-5719158f], .input-row button[data-v-5719158f] {\n  margin-left: 1rem;\n}\n.input-row .answers[data-v-5719158f] {\n  position: relative;\n}\n.input-row .answers span[data-v-5719158f] {\n  border: 1px solid #ddd;\n  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.07);\n  background-color: #fff;\n  color: #32373c;\n  padding: 0.15rem 4rem 0.15rem 0.75rem;\n  border-radius: 5px;\n  position: relative;\n}\n.input-row .answers span[data-v-5719158f]:after {\n  position: absolute;\n  content: \"\";\n  width: 0;\n  height: 0;\n  top: 10px;\n  right: 20px;\n  border-left: 6px solid transparent;\n  border-right: 6px solid transparent;\n  border-top: 6px solid #000;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.input-row .answers span.active[data-v-5719158f]:after {\n  -webkit-transform: rotate(180deg);\n          transform: rotate(180deg);\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.input-row .answers-checkboxes[data-v-5719158f] {\n  background-color: #FFFFFF;\n  box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.12);\n  position: absolute;\n  top: 2rem;\n  left: -1rem;\n  min-width: 300px;\n  padding: 0.5rem 2rem 0.5rem 0;\n  z-index: 2000;\n}\n.input-row .answers-choice[data-v-5719158f] {\n  display: flex;\n  margin-bottom: 0.25rem;\n  align-items: center;\n}\n.list-enter-active[data-v-5719158f], .list-leave-active[data-v-5719158f] {\n  transition: all 1s;\n}\n.list-enter[data-v-5719158f], .list-leave-to[data-v-5719158f] {\n  opacity: 0;\n  -webkit-transform: translateY(30px);\n          transform: translateY(30px);\n}", ""]);
 
 // exports
 
@@ -4117,6 +4154,7 @@ var render = function() {
       _c(
         "button",
         {
+          staticClass: "add-rule-button",
           attrs: { role: "button" },
           on: {
             click: function($event) {
@@ -4128,72 +4166,62 @@ var render = function() {
         [_vm._v("Add Rule")]
       ),
       _vm._v(" "),
-      _vm._l(_vm.rules, function(rule, index) {
-        return _c("div", { staticClass: "input-row" }, [
-          _vm._v("\n    If \n    "),
-          _c(
-            "select",
-            {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.rules[index].type,
-                  expression: "rules[index].type"
-                }
-              ],
-              on: {
-                change: function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.$set(
-                    _vm.rules[index],
-                    "type",
-                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                  )
-                }
-              }
-            },
-            [
-              _c("option", { attrs: { value: "default" } }, [
-                _vm._v("--Select Rule Type--")
-              ]),
-              _vm._v(" "),
-              _c("option", { attrs: { value: "contains" } }, [
-                _vm._v("Contains")
-              ]),
-              _vm._v(" "),
-              _c("option", { attrs: { value: "contains-only" } }, [
-                _vm._v("Contains Only")
-              ]),
-              _vm._v(" "),
-              _c("option", { attrs: { value: "contains-all" } }, [
-                _vm._v("Contains All")
-              ]),
-              _vm._v(" "),
-              _c("option", { attrs: { value: "does-not-contain" } }, [
-                _vm._v("Does not contain")
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "answers" }, [
+      _c(
+        "transition-group",
+        { attrs: { name: "list", tag: "div" } },
+        _vm._l(_vm.rules, function(rule, index) {
+          return _c("div", { key: "rule-" + index, staticClass: "input-row" }, [
+            _vm._v("\n      If \n      "),
             _c(
-              "span",
+              "select",
               {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.rules[index].type,
+                    expression: "rules[index].type"
+                  }
+                ],
                 on: {
-                  click: function($event) {
-                    return _vm.expandAnswers(index)
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.rules[index],
+                      "type",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
                   }
                 }
               },
-              [_vm._v("Answers")]
+              [
+                _c("option", { attrs: { value: "default" } }, [
+                  _vm._v("--Select Rule Type--")
+                ]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "contains" } }, [
+                  _vm._v("Contains")
+                ]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "contains-only" } }, [
+                  _vm._v("Contains Only")
+                ]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "contains-all" } }, [
+                  _vm._v("Contains All")
+                ]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "does-not-contain" } }, [
+                  _vm._v("Does not contain")
+                ])
+              ]
             ),
             _vm._v(" "),
             _c(
@@ -4201,133 +4229,167 @@ var render = function() {
               {
                 directives: [
                   {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.expand === index,
-                    expression: "expand === index"
+                    name: "click-outside",
+                    rawName: "v-click-outside",
+                    value: _vm.toggleExpand,
+                    expression: "toggleExpand"
                   }
                 ],
-                staticClass: "answers-checkboxes"
+                staticClass: "answers"
               },
-              _vm._l(_vm.answerChoices, function(answer) {
-                return _c("div", { staticClass: "answers-choice" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.rules[index].answers,
-                        expression: "rules[index].answers"
-                      }
-                    ],
-                    attrs: { id: answer.slug + index, type: "checkbox" },
-                    domProps: {
-                      value: answer.slug,
-                      checked: Array.isArray(_vm.rules[index].answers)
-                        ? _vm._i(_vm.rules[index].answers, answer.slug) > -1
-                        : _vm.rules[index].answers
-                    },
+              [
+                _c(
+                  "span",
+                  {
+                    class: { active: _vm.expand === index },
                     on: {
                       click: function($event) {
-                        return _vm.addAnswer(index, answer.slug)
-                      },
-                      change: function($event) {
-                        var $$a = _vm.rules[index].answers,
-                          $$el = $event.target,
-                          $$c = $$el.checked ? true : false
-                        if (Array.isArray($$a)) {
-                          var $$v = answer.slug,
-                            $$i = _vm._i($$a, $$v)
-                          if ($$el.checked) {
-                            $$i < 0 &&
-                              _vm.$set(
-                                _vm.rules[index],
-                                "answers",
-                                $$a.concat([$$v])
-                              )
-                          } else {
-                            $$i > -1 &&
-                              _vm.$set(
-                                _vm.rules[index],
-                                "answers",
-                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                              )
-                          }
-                        } else {
-                          _vm.$set(_vm.rules[index], "answers", $$c)
-                        }
+                        return _vm.expandAnswers(index)
                       }
                     }
+                  },
+                  [
+                    _vm._v(
+                      "Answers (" +
+                        _vm._s(_vm.rules[index].answers.length) +
+                        " selected)"
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.expand === index,
+                        expression: "expand === index"
+                      }
+                    ],
+                    staticClass: "answers-checkboxes"
+                  },
+                  _vm._l(_vm.answerChoices, function(answer) {
+                    return _c("div", { staticClass: "answers-choice" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.rules[index].answers,
+                            expression: "rules[index].answers"
+                          }
+                        ],
+                        attrs: { id: answer.slug + index, type: "checkbox" },
+                        domProps: {
+                          value: answer.slug,
+                          checked: Array.isArray(_vm.rules[index].answers)
+                            ? _vm._i(_vm.rules[index].answers, answer.slug) > -1
+                            : _vm.rules[index].answers
+                        },
+                        on: {
+                          change: function($event) {
+                            var $$a = _vm.rules[index].answers,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = answer.slug,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  _vm.$set(
+                                    _vm.rules[index],
+                                    "answers",
+                                    $$a.concat([$$v])
+                                  )
+                              } else {
+                                $$i > -1 &&
+                                  _vm.$set(
+                                    _vm.rules[index],
+                                    "answers",
+                                    $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                  )
+                              }
+                            } else {
+                              _vm.$set(_vm.rules[index], "answers", $$c)
+                            }
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("label", { attrs: { for: "answer.slug" } }, [
+                        _vm._v(_vm._s(answer.name))
+                      ])
+                    ])
                   }),
-                  _vm._v(" "),
-                  _c("label", { attrs: { for: "answer.slug" } }, [
-                    _vm._v(_vm._s(answer.name))
-                  ])
+                  0
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.rules[index].action,
+                    expression: "rules[index].action"
+                  }
+                ],
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.rules[index],
+                      "action",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
+                }
+              },
+              [
+                _c("option", { attrs: { value: "default" } }, [
+                  _vm._v("--Select Action---")
+                ]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "always-show" } }, [
+                  _vm._v("Always show")
+                ]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "do-not-show" } }, [
+                  _vm._v("Do not show")
                 ])
-              }),
-              0
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "delete-button",
+                attrs: { role: "button" },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.deleteRule(index)
+                  }
+                }
+              },
+              [_vm._v("X")]
             )
-          ]),
-          _vm._v(" "),
-          _c(
-            "select",
-            {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.rules[index].action,
-                  expression: "rules[index].action"
-                }
-              ],
-              on: {
-                change: function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.$set(
-                    _vm.rules[index],
-                    "action",
-                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                  )
-                }
-              }
-            },
-            [
-              _c("option", { attrs: { value: "default" } }, [
-                _vm._v("--Select Action---")
-              ]),
-              _vm._v(" "),
-              _c("option", { attrs: { value: "always-show" } }, [
-                _vm._v("Always show")
-              ]),
-              _vm._v(" "),
-              _c("option", { attrs: { value: "do-not-show" } }, [
-                _vm._v("Do not show")
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              attrs: { role: "button" },
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  return _vm.deleteRule(index)
-                }
-              }
-            },
-            [_vm._v("X")]
-          )
-        ])
-      }),
+          ])
+        }),
+        0
+      ),
       _vm._v(" "),
       _c("input", {
         directives: [
@@ -4350,7 +4412,7 @@ var render = function() {
         }
       })
     ],
-    2
+    1
   )
 }
 var staticRenderFns = []

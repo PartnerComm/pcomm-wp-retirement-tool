@@ -9,7 +9,9 @@ import store from '../store/store';
 import RetirementForm from './components/form/RetirementForm';
 
 
-// Globally registered components
+// Directives
+
+
 
 const elementExists = document.getElementById('pc-retirement-tool');
 if (elementExists) {

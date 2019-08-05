@@ -7,12 +7,14 @@ import RuleGenerator from './components/RuleGenerator'
 
 import store from '../store/store';
 
-// General Components
 
-// Globally registered components
+import ClickOutside from './directives/clickOutside';
+
 setTimeout(() => {
   const elementExists = document.getElementById('pcretirementtooladmin');
   if (elementExists) {
+    Vue.directive('click-outside', ClickOutside);
+
     const app = new Vue({
       el: '#pcretirementtooladmin',
       components: {

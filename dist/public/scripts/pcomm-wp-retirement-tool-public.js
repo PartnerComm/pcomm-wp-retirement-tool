@@ -2564,8 +2564,12 @@ __webpack_require__.r(__webpack_exports__);
       var payload2 = this.question.answers.filter(function (e) {
         return _this.selectedAnswers.indexOf(e) === -1;
       });
+      var payload3 = this.question.answers.filter(function (e) {
+        return _this.selectedAnswers.indexOf(e) > -1;
+      });
       this.$store.dispatch('SET_CURRENT_SELECTION', payload);
       this.$store.dispatch('SET_EXCLUDED_ANSWERS', payload2);
+      this.$store.dispatch('SET_SELECT_ALL_ANSWERS', payload3);
     },
     newWindow: function newWindow(url) {
       url = new DOMParser().parseFromString(url, "text/xml");
@@ -2581,11 +2585,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {},
-  mounted: function mounted() {
-    this.$store.dispatch('SET_SELECT_ALL_ANSWERS', this.question.answers.map(function (e) {
-      return e.slug;
-    }));
-  }
+  mounted: function mounted() {}
 });
 
 /***/ }),
@@ -40437,7 +40437,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 Vue.use(vue_axios__WEBPACK_IMPORTED_MODULE_0___default.a, axios);
  // General Components
 
- // Globally registered components
+ // Directives
 
 var elementExists = document.getElementById('pc-retirement-tool');
 
@@ -43328,11 +43328,23 @@ __webpack_require__.r(__webpack_exports__);
       });
 
       if (getters.ACTIVE_RULES.always_show_only.length > 0) {
-        getters.ACTIVE_RULES.always_show_only.forEach(function (e) {});
+        getters.ACTIVE_RULES.always_show_only.forEach(function (e) {
+          if (monthsPosts.indexOf(e) === -1) {
+            monthsPosts.push(e);
+          }
+        });
       }
 
       if (getters.ACTIVE_RULES.always_show_contains.length > 0) {
         getters.ACTIVE_RULES.always_show_contains.forEach(function (e) {
+          if (monthsPosts.indexOf(e) === -1) {
+            monthsPosts.push(e);
+          }
+        });
+      }
+
+      if (getters.ACTIVE_RULES.always_show_contains_all.length > 0) {
+        getters.ACTIVE_RULES.always_show_contains_all.forEach(function (e) {
           if (monthsPosts.indexOf(e) === -1) {
             monthsPosts.push(e);
           }
@@ -43347,8 +43359,24 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
 
+      if (getters.ACTIVE_RULES.dont_show_only.length > 0) {
+        getters.ACTIVE_RULES.dont_show_only.forEach(function (e) {
+          if (monthsPosts.indexOf(e) > -1) {
+            monthsPosts.splice(monthsPosts.indexOf(e), 1);
+          }
+        });
+      }
+
       if (getters.ACTIVE_RULES.dont_show_contains.length > 0) {
         getters.ACTIVE_RULES.dont_show_contains.forEach(function (e) {
+          if (monthsPosts.indexOf(e) > -1) {
+            monthsPosts.splice(monthsPosts.indexOf(e), 1);
+          }
+        });
+      }
+
+      if (getters.ACTIVE_RULES.dont_show_contains_all.length > 0) {
+        getters.ACTIVE_RULES.dont_show_contains_all.forEach(function (e) {
           if (monthsPosts.indexOf(e) > -1) {
             monthsPosts.splice(monthsPosts.indexOf(e), 1);
           }
@@ -43370,8 +43398,8 @@ __webpack_require__.r(__webpack_exports__);
     if (state.filterAnswers.length > 0) {
       return state.allPosts.filter(function (e) {
         return state.filterAnswers.every(function (elem) {
-          return e.retirement_tool_question.indexOf(elem) > -1 && e.post_tag.indexOf('intro-text') === -1 && e.post_tag.indexOf('feedback-additional-content') === -1;
-        });
+          return e.retirement_tool_question.indexOf(elem) > -1;
+        }) && e.post_tag.indexOf('intro-text') === -1 && e.post_tag.indexOf('feedback-additional-content') === -1;
       });
     }
 
@@ -43414,7 +43442,9 @@ __webpack_require__.r(__webpack_exports__);
       return {
         "always_show_only": posts.filter(function (e) {
           return e.meta.always_show.filter(function (elem) {
-            return elem.type === 'contains-only' && elem.action === 'always-show';
+            return elem.answers.every(function (element) {
+              return state.filterAnswers.indexOf(element) > -1;
+            }) && state.selectAllAnswers.length === elem.answers.length && elem.type === 'contains-only' && elem.action === 'always-show';
           }).length > 0;
         }),
         "always_show_contains": posts.filter(function (e) {
@@ -43424,9 +43454,11 @@ __webpack_require__.r(__webpack_exports__);
             }) && elem.type === 'contains' && elem.action === 'always-show';
           }).length > 0;
         }),
-        "always_show_contains-all": posts.filter(function (e) {
+        "always_show_contains_all": posts.filter(function (e) {
           return e.meta.always_show.filter(function (elem) {
-            return elem.type === 'contains-all' && elem.action === 'always-show';
+            return elem.answers.every(function (element) {
+              return state.filterAnswers.indexOf(element) > -1;
+            }) && elem.type === 'contains-all' && elem.action === 'always-show';
           }).length > 0;
         }),
         "always_show_not_contains": posts.filter(function (e) {
@@ -43438,7 +43470,9 @@ __webpack_require__.r(__webpack_exports__);
         }),
         "dont_show_only": posts.filter(function (e) {
           return e.meta.dont_show.filter(function (elem) {
-            return elem.type === 'contains-only' && elem.action === 'do-not-show';
+            return elem.answers.every(function (element) {
+              return state.filterAnswers.indexOf(element) > -1;
+            }) && state.selectAllAnswers.length === elem.answers.length && elem.type === 'contains-only' && elem.action === 'do-not-show';
           }).length > 0;
         }),
         "dont_show_contains": posts.filter(function (e) {
@@ -43448,9 +43482,11 @@ __webpack_require__.r(__webpack_exports__);
             }) && elem.type === 'contains' && elem.action === 'do-not-show';
           }).length > 0;
         }),
-        "dont_show_contains-all": posts.filter(function (e) {
+        "dont_show_contains_all": posts.filter(function (e) {
           return e.meta.dont_show.filter(function (elem) {
-            return elem.type === 'contains-all' && elem.action === 'do-not-show';
+            return elem.answers.every(function (element) {
+              return state.filterAnswers.indexOf(element) > -1;
+            }) && elem.type === 'contains-all' && elem.action === 'do-not-show';
           }).length > 0;
         }),
         "dont_show_not_contains": posts.filter(function (e) {
@@ -43466,11 +43502,11 @@ __webpack_require__.r(__webpack_exports__);
     return {
       "always_show_only": [],
       "always_show_contains": [],
-      "always_show_contains-all": [],
+      "always_show_contains_all": [],
       "always_show_not_contains": [],
       "dont_show_only": [],
       "dont_show_contains": [],
-      "dont_show_contains-all": [],
+      "dont_show_contains_all": [],
       "dont_show_not_contains": []
     };
   }
