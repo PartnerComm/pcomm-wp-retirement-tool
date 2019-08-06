@@ -2624,11 +2624,19 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     selectAnswer: function selectAnswer(answer) {
       this.$store.dispatch('SET_CURRENT_SELECTION', answer);
+    },
+    sortTerms: function sortTerms(a, b) {
+      if (parseInt(a.term_order) < parseInt(b.term_order)) return -1;
+      if (parseInt(a.term_order) > parseInt(b.term_order)) return 1;
+      return 0;
     }
   },
   computed: {
     selectedAnswer: function selectedAnswer() {
       return this.$store.getters.GET_FORM_STATUS('currentSelection');
+    },
+    sortedAnswers: function sortedAnswers() {
+      return this.question.answers.sort(this.sortTerms);
     }
   },
   created: function created() {},
@@ -3025,11 +3033,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: {// tabs: {
-    //     type: Array,
-    //     required: true,
-    // },
-  },
+  props: {},
   data: function data() {
     return {};
   },
@@ -3044,9 +3048,19 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     tabs: function tabs() {
+      var _this = this;
+
       return this.$store.getters.GET_FORM_STATUS('tabs').filter(function (e) {
-        return parseInt(e.parent) === 0;
+        return parseInt(e.parent) === 0 && _this.allPosts.filter(function (elem) {
+          return elem.retirement_tool_timeframe.indexOf(e.slug) > -1;
+        }).length > 0;
       });
+    },
+    posts: function posts() {
+      return this.$store.getters.POSTS_FILTERED_BY_MONTH;
+    },
+    allPosts: function allPosts() {
+      return this.$store.getters.POSTS_FILTERED_BY_ANSWERS;
     },
     currentTab: function currentTab() {
       return this.$store.getters.GET_FORM_STATUS('currentTab');
@@ -24133,7 +24147,7 @@ var render = function() {
     _c(
       "div",
       { staticClass: "answers" },
-      _vm._l(this.question.answers, function(answer, index) {
+      _vm._l(_vm.sortedAnswers, function(answer, index) {
         return _c(
           "div",
           {
@@ -43021,10 +43035,7 @@ var actions = {
 
               if (response.status === 200) {
                 payload = response.data;
-                context.commit('MUTATE_KEY', {
-                  key: 'tabs',
-                  value: payload
-                });
+                context.commit('SET_TABS', payload);
                 context.dispatch('SET_CURRENT_TAB', payload[0]);
               }
 
@@ -43325,81 +43336,82 @@ __webpack_require__.r(__webpack_exports__);
       var monthsPosts = getters.POSTS_FILTERED_BY_ANSWERS.filter(function (e) {
         return e.retirement_tool_timeframe.indexOf(state.currentTab.slug) > -1;
       });
+      return monthsPosts;
+    }
+  },
+  POSTS_FILTERED_BY_ANSWERS: function POSTS_FILTERED_BY_ANSWERS(state, getters) {
+    if (state.filterAnswers.length > 0) {
+      var filteredPosts = state.allPosts.filter(function (e) {
+        return state.filterAnswers.every(function (elem) {
+          return e.retirement_tool_question.indexOf(elem) > -1;
+        }) && e.post_tag.indexOf('intro-text') === -1 && e.post_tag.indexOf('feedback-additional-content') === -1;
+      });
 
       if (getters.ACTIVE_RULES.always_show_only.length > 0) {
         getters.ACTIVE_RULES.always_show_only.forEach(function (e) {
-          if (monthsPosts.indexOf(e) === -1) {
-            monthsPosts.push(e);
+          if (filteredPosts.indexOf(e) === -1) {
+            filteredPosts.push(e);
           }
         });
       }
 
       if (getters.ACTIVE_RULES.always_show_contains.length > 0) {
         getters.ACTIVE_RULES.always_show_contains.forEach(function (e) {
-          if (monthsPosts.indexOf(e) === -1) {
-            monthsPosts.push(e);
+          if (filteredPosts.indexOf(e) === -1) {
+            filteredPosts.push(e);
           }
         });
       }
 
       if (getters.ACTIVE_RULES.always_show_contains_all.length > 0) {
         getters.ACTIVE_RULES.always_show_contains_all.forEach(function (e) {
-          if (monthsPosts.indexOf(e) === -1) {
-            monthsPosts.push(e);
+          if (filteredPosts.indexOf(e) === -1) {
+            filteredPosts.push(e);
           }
         });
       }
 
       if (getters.ACTIVE_RULES.always_show_not_contains.length > 0) {
         getters.ACTIVE_RULES.always_show_not_contains.forEach(function (e) {
-          if (monthsPosts.indexOf(e) === -1) {
-            monthsPosts.push(e);
+          if (filteredPosts.indexOf(e) === -1) {
+            filteredPosts.push(e);
           }
         });
       }
 
       if (getters.ACTIVE_RULES.dont_show_only.length > 0) {
         getters.ACTIVE_RULES.dont_show_only.forEach(function (e) {
-          if (monthsPosts.indexOf(e) > -1) {
-            monthsPosts.splice(monthsPosts.indexOf(e), 1);
+          if (filteredPosts.indexOf(e) > -1) {
+            filteredPosts.splice(filteredPosts.indexOf(e), 1);
           }
         });
       }
 
       if (getters.ACTIVE_RULES.dont_show_contains.length > 0) {
         getters.ACTIVE_RULES.dont_show_contains.forEach(function (e) {
-          if (monthsPosts.indexOf(e) > -1) {
-            monthsPosts.splice(monthsPosts.indexOf(e), 1);
+          if (filteredPosts.indexOf(e) > -1) {
+            filteredPosts.splice(filteredPosts.indexOf(e), 1);
           }
         });
       }
 
       if (getters.ACTIVE_RULES.dont_show_contains_all.length > 0) {
         getters.ACTIVE_RULES.dont_show_contains_all.forEach(function (e) {
-          if (monthsPosts.indexOf(e) > -1) {
-            monthsPosts.splice(monthsPosts.indexOf(e), 1);
+          if (filteredPosts.indexOf(e) > -1) {
+            filteredPosts.splice(filteredPosts.indexOf(e), 1);
           }
         });
       }
 
       if (getters.ACTIVE_RULES.dont_show_not_contains.length > 0) {
         getters.ACTIVE_RULES.dont_show_not_contains.forEach(function (e) {
-          if (monthsPosts.indexOf(e) > -1) {
-            monthsPosts.splice(monthsPosts.indexOf(e), 1);
+          if (filteredPosts.indexOf(e) > -1) {
+            filteredPosts.splice(filteredPosts.indexOf(e), 1);
           }
         });
       }
 
-      return monthsPosts;
-    }
-  },
-  POSTS_FILTERED_BY_ANSWERS: function POSTS_FILTERED_BY_ANSWERS(state) {
-    if (state.filterAnswers.length > 0) {
-      return state.allPosts.filter(function (e) {
-        return state.filterAnswers.every(function (elem) {
-          return e.retirement_tool_question.indexOf(elem) > -1;
-        }) && e.post_tag.indexOf('intro-text') === -1 && e.post_tag.indexOf('feedback-additional-content') === -1;
-      });
+      return filteredPosts;
     }
 
     return false;
@@ -43574,6 +43586,14 @@ __webpack_require__.r(__webpack_exports__);
     value.forEach(function (e) {
       state.excludedAnswers.push(e.slug);
     });
+  },
+  SET_TABS: function SET_TABS(state, value) {
+    value.forEach(function (e) {
+      e.subTabs = value.filter(function (elem) {
+        return elem.parent === e.id;
+      });
+    });
+    state.tabs = value;
   }
 });
 

@@ -48,5 +48,11 @@ export default {
     value.forEach(e => {
       state.excludedAnswers.push(e.slug);
      })
+  },
+  SET_TABS: (state, value) => {
+    value.forEach(e => {
+      e.subTabs = value.filter(elem => elem.parent === e.id);
+    })
+    state.tabs = value;
   }
 };

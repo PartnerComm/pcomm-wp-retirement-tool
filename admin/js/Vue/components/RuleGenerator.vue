@@ -11,7 +11,7 @@
           <option value="contains-all">Contains All</option>
           <option value="does-not-contain">Does not contain</option>
         </select>
-        <div class="answers"  v-click-outside="toggleExpand">
+        <div class="answers">
           <span :class="{active: expand === index}" @click="expandAnswers(index)">Answers ({{rules[index].answers.length}} selected)</span>
           <div class="answers-checkboxes" v-show="expand === index">
             <div class="answers-choice" v-for="answer in answerChoices">

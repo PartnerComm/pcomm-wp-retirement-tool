@@ -20,71 +20,74 @@ export default {
   POSTS_FILTERED_BY_MONTH: (state, getters) => {
     if (state.filterAnswers.length > 0) {
       let monthsPosts = getters.POSTS_FILTERED_BY_ANSWERS.filter(e => e.retirement_tool_timeframe.indexOf(state.currentTab.slug) > -1);
+      
+      return monthsPosts;
+    }
+  },
+  POSTS_FILTERED_BY_ANSWERS: (state, getters) => {
+    if (state.filterAnswers.length > 0) {
+      let filteredPosts = state.allPosts.filter(e => {
+        return state.filterAnswers.every(elem => e.retirement_tool_question.indexOf(elem) > -1) && e.post_tag.indexOf('intro-text') === -1 && e.post_tag.indexOf('feedback-additional-content') === -1;
+      });
       if (getters.ACTIVE_RULES.always_show_only.length > 0) {
         getters.ACTIVE_RULES.always_show_only.forEach(e => {
-          if (monthsPosts.indexOf(e) === -1) {
-            monthsPosts.push(e);
+          if (filteredPosts.indexOf(e) === -1) {
+            filteredPosts.push(e);
           }
         })
       }
       if (getters.ACTIVE_RULES.always_show_contains.length > 0) {
         getters.ACTIVE_RULES.always_show_contains.forEach(e => {
-          if (monthsPosts.indexOf(e) === -1) {
-            monthsPosts.push(e);
+          if (filteredPosts.indexOf(e) === -1) {
+            filteredPosts.push(e);
           }
         })
       }
       if (getters.ACTIVE_RULES.always_show_contains_all.length > 0) {
         getters.ACTIVE_RULES.always_show_contains_all.forEach(e => {
-          if (monthsPosts.indexOf(e) === -1) {
-            monthsPosts.push(e);
+          if (filteredPosts.indexOf(e) === -1) {
+            filteredPosts.push(e);
           }
         })
       }
       if (getters.ACTIVE_RULES.always_show_not_contains.length > 0) {
         getters.ACTIVE_RULES.always_show_not_contains.forEach(e => {
-          if (monthsPosts.indexOf(e) === -1) {
-            monthsPosts.push(e);
+          if (filteredPosts.indexOf(e) === -1) {
+            filteredPosts.push(e);
           }
         })
       }
       if (getters.ACTIVE_RULES.dont_show_only.length > 0) {
         getters.ACTIVE_RULES.dont_show_only.forEach(e => {
-          if (monthsPosts.indexOf(e) > -1) {
-            monthsPosts.splice(monthsPosts.indexOf(e), 1);
+          if (filteredPosts.indexOf(e) > -1) {
+            filteredPosts.splice(filteredPosts.indexOf(e), 1);
           }
         })
       }
       if (getters.ACTIVE_RULES.dont_show_contains.length > 0) {
         getters.ACTIVE_RULES.dont_show_contains.forEach(e => {
-          if (monthsPosts.indexOf(e) > -1) {
-            monthsPosts.splice(monthsPosts.indexOf(e), 1);
+          if (filteredPosts.indexOf(e) > -1) {
+            filteredPosts.splice(filteredPosts.indexOf(e), 1);
           }
         })
       }
       if (getters.ACTIVE_RULES.dont_show_contains_all.length > 0) {
         getters.ACTIVE_RULES.dont_show_contains_all.forEach(e => {
-          if (monthsPosts.indexOf(e) > -1) {
-            monthsPosts.splice(monthsPosts.indexOf(e), 1);
+          if (filteredPosts.indexOf(e) > -1) {
+            filteredPosts.splice(filteredPosts.indexOf(e), 1);
           }
         })
       }
       if (getters.ACTIVE_RULES.dont_show_not_contains.length > 0) {
         getters.ACTIVE_RULES.dont_show_not_contains.forEach(e => {
-          if (monthsPosts.indexOf(e) > -1) {
-            monthsPosts.splice(monthsPosts.indexOf(e), 1);
+          if (filteredPosts.indexOf(e) > -1) {
+            filteredPosts.splice(filteredPosts.indexOf(e), 1);
           }
         })
       }
-      return monthsPosts;
+      return filteredPosts;
     }
-  },
-  POSTS_FILTERED_BY_ANSWERS: (state) => {
-    if (state.filterAnswers.length > 0) {
-      return state.allPosts.filter(e => {
-        return state.filterAnswers.every(elem => e.retirement_tool_question.indexOf(elem) > -1) && e.post_tag.indexOf('intro-text') === -1 && e.post_tag.indexOf('feedback-additional-content') === -1;
-      })
-    }
+
     return false;
   },
   HELPFUL_RESOURCES: (state) => {

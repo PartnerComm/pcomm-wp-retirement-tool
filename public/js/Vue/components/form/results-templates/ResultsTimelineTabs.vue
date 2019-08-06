@@ -25,10 +25,7 @@ import ResultsTimelineTabsContent from './ResultsTimelineTabsContent';
 import TabsIcon from '../../icons/Tabs';
 export default {
   props: {
-    // tabs: {
-    //     type: Array,
-    //     required: true,
-    // },
+
   },
   data() {
     return {
@@ -46,7 +43,13 @@ export default {
   },
   computed: {
     tabs() {
-      return this.$store.getters.GET_FORM_STATUS('tabs').filter(e => parseInt(e.parent) === 0);
+      return this.$store.getters.GET_FORM_STATUS('tabs').filter(e => parseInt(e.parent) === 0 && this.allPosts.filter(elem => elem.retirement_tool_timeframe.indexOf(e.slug) > -1).length > 0);
+    },
+    posts() {
+      return this.$store.getters.POSTS_FILTERED_BY_MONTH;
+    },
+    allPosts() {
+      return this.$store.getters.POSTS_FILTERED_BY_ANSWERS;
     },
     currentTab() {
       return this.$store.getters.GET_FORM_STATUS('currentTab')

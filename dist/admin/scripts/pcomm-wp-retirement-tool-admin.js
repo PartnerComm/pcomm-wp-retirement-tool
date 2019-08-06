@@ -4224,109 +4224,95 @@ var render = function() {
               ]
             ),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "click-outside",
-                    rawName: "v-click-outside",
-                    value: _vm.toggleExpand,
-                    expression: "toggleExpand"
-                  }
-                ],
-                staticClass: "answers"
-              },
-              [
-                _c(
-                  "span",
-                  {
-                    class: { active: _vm.expand === index },
-                    on: {
-                      click: function($event) {
-                        return _vm.expandAnswers(index)
-                      }
+            _c("div", { staticClass: "answers" }, [
+              _c(
+                "span",
+                {
+                  class: { active: _vm.expand === index },
+                  on: {
+                    click: function($event) {
+                      return _vm.expandAnswers(index)
                     }
-                  },
-                  [
-                    _vm._v(
-                      "Answers (" +
-                        _vm._s(_vm.rules[index].answers.length) +
-                        " selected)"
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.expand === index,
-                        expression: "expand === index"
-                      }
-                    ],
-                    staticClass: "answers-checkboxes"
-                  },
-                  _vm._l(_vm.answerChoices, function(answer) {
-                    return _c("div", { staticClass: "answers-choice" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.rules[index].answers,
-                            expression: "rules[index].answers"
-                          }
-                        ],
-                        attrs: { id: answer.slug + index, type: "checkbox" },
-                        domProps: {
-                          value: answer.slug,
-                          checked: Array.isArray(_vm.rules[index].answers)
-                            ? _vm._i(_vm.rules[index].answers, answer.slug) > -1
-                            : _vm.rules[index].answers
-                        },
-                        on: {
-                          change: function($event) {
-                            var $$a = _vm.rules[index].answers,
-                              $$el = $event.target,
-                              $$c = $$el.checked ? true : false
-                            if (Array.isArray($$a)) {
-                              var $$v = answer.slug,
-                                $$i = _vm._i($$a, $$v)
-                              if ($$el.checked) {
-                                $$i < 0 &&
-                                  _vm.$set(
-                                    _vm.rules[index],
-                                    "answers",
-                                    $$a.concat([$$v])
-                                  )
-                              } else {
-                                $$i > -1 &&
-                                  _vm.$set(
-                                    _vm.rules[index],
-                                    "answers",
-                                    $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                                  )
-                              }
+                  }
+                },
+                [
+                  _vm._v(
+                    "Answers (" +
+                      _vm._s(_vm.rules[index].answers.length) +
+                      " selected)"
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.expand === index,
+                      expression: "expand === index"
+                    }
+                  ],
+                  staticClass: "answers-checkboxes"
+                },
+                _vm._l(_vm.answerChoices, function(answer) {
+                  return _c("div", { staticClass: "answers-choice" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.rules[index].answers,
+                          expression: "rules[index].answers"
+                        }
+                      ],
+                      attrs: { id: answer.slug + index, type: "checkbox" },
+                      domProps: {
+                        value: answer.slug,
+                        checked: Array.isArray(_vm.rules[index].answers)
+                          ? _vm._i(_vm.rules[index].answers, answer.slug) > -1
+                          : _vm.rules[index].answers
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.rules[index].answers,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = answer.slug,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 &&
+                                _vm.$set(
+                                  _vm.rules[index],
+                                  "answers",
+                                  $$a.concat([$$v])
+                                )
                             } else {
-                              _vm.$set(_vm.rules[index], "answers", $$c)
+                              $$i > -1 &&
+                                _vm.$set(
+                                  _vm.rules[index],
+                                  "answers",
+                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                )
                             }
+                          } else {
+                            _vm.$set(_vm.rules[index], "answers", $$c)
                           }
                         }
-                      }),
-                      _vm._v(" "),
-                      _c("label", { attrs: { for: "answer.slug" } }, [
-                        _vm._v(_vm._s(answer.name))
-                      ])
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("label", { attrs: { for: "answer.slug" } }, [
+                      _vm._v(_vm._s(answer.name))
                     ])
-                  }),
-                  0
-                )
-              ]
-            ),
+                  ])
+                }),
+                0
+              )
+            ]),
             _vm._v(" "),
             _c(
               "select",

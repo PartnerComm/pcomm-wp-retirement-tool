@@ -87,7 +87,7 @@ const actions = {
     const response = await axios.get('/wp-json/wp/v2/retirement_tool_timeframe?per_page=100');
     if (response.status === 200) {
       const payload = response.data;
-      context.commit('MUTATE_KEY', {key: 'tabs', value: payload});
+      context.commit('SET_TABS', payload);
       context.dispatch('SET_CURRENT_TAB', payload[0]);
     }
   }, 
