@@ -2304,6 +2304,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _form_elements_FeedbackModal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../form-elements/FeedbackModal */ "./public/js/Vue/components/form/form-elements/FeedbackModal.vue");
 /* harmony import */ var _form_elements_FeedbackSuccessModal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../form-elements/FeedbackSuccessModal */ "./public/js/Vue/components/form/form-elements/FeedbackSuccessModal.vue");
 /* harmony import */ var _results_templates_FormPrintableResults__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../results-templates/FormPrintableResults */ "./public/js/Vue/components/form/results-templates/FormPrintableResults.vue");
+/* harmony import */ var _form_elements_Loader__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../form-elements/Loader */ "./public/js/Vue/components/form/form-elements/Loader.vue");
 //
 //
 //
@@ -2319,6 +2320,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 
 
 
@@ -2336,7 +2339,8 @@ __webpack_require__.r(__webpack_exports__);
     FeedbackButton: _form_elements_FeedbackButton__WEBPACK_IMPORTED_MODULE_2__["default"],
     FeedbackModal: _form_elements_FeedbackModal__WEBPACK_IMPORTED_MODULE_3__["default"],
     FeedbackSuccess: _form_elements_FeedbackSuccessModal__WEBPACK_IMPORTED_MODULE_4__["default"],
-    FormPrintResults: _results_templates_FormPrintableResults__WEBPACK_IMPORTED_MODULE_5__["default"]
+    FormPrintResults: _results_templates_FormPrintableResults__WEBPACK_IMPORTED_MODULE_5__["default"],
+    Loader: _form_elements_Loader__WEBPACK_IMPORTED_MODULE_6__["default"]
   },
   methods: {},
   computed: {
@@ -2348,6 +2352,18 @@ __webpack_require__.r(__webpack_exports__);
     },
     printing: function printing() {
       return this.$store.getters.GET_FORM_STATUS('printingResults');
+    },
+    sections: function sections() {
+      return this.$store.getters.GET_FORM_STATUS('sectionsFetched');
+    },
+    tabs: function tabs() {
+      return this.$store.getters.GET_FORM_STATUS('tabsFetched');
+    },
+    categories: function categories() {
+      return this.$store.getters.GET_FORM_STATUS('categoriesFetched');
+    },
+    ready: function ready() {
+      return this.sections && this.tabs && this.categories;
     }
   },
   created: function created() {},
@@ -23960,7 +23976,9 @@ var render = function() {
           [
             _c("results-user-selections"),
             _vm._v(" "),
-            _c("results-timeline"),
+            _vm.ready ? _c("results-timeline") : _vm._e(),
+            _vm._v(" "),
+            !_vm.ready ? _c("loader") : _vm._e(),
             _vm._v(" "),
             _c("feedback-button"),
             _vm._v(" "),
@@ -41397,14 +41415,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************************************************!*\
   !*** ./public/js/Vue/components/form/form-steps/FormResults.vue ***!
   \******************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _FormResults_vue_vue_type_template_id_97d4e0ac___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FormResults.vue?vue&type=template&id=97d4e0ac& */ "./public/js/Vue/components/form/form-steps/FormResults.vue?vue&type=template&id=97d4e0ac&");
 /* harmony import */ var _FormResults_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FormResults.vue?vue&type=script&lang=js& */ "./public/js/Vue/components/form/form-steps/FormResults.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _FormResults_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _FormResults_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -41434,7 +41453,7 @@ component.options.__file = "public/js/Vue/components/form/form-steps/FormResults
 /*!*******************************************************************************************!*\
   !*** ./public/js/Vue/components/form/form-steps/FormResults.vue?vue&type=script&lang=js& ***!
   \*******************************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -43409,6 +43428,10 @@ var actions = {
                 payload = response.data;
                 context.commit('SET_TABS', payload);
                 context.dispatch('SET_CURRENT_TAB', payload[0]);
+                context.commit('MUTATE_KEY', {
+                  key: 'tabsFetched',
+                  value: true
+                });
               }
 
             case 4:
@@ -43446,6 +43469,10 @@ var actions = {
                   key: 'subCategories',
                   value: payload
                 });
+                context.commit('MUTATE_KEY', {
+                  key: 'categoriesFetched',
+                  value: true
+                });
               }
 
             case 4:
@@ -43482,6 +43509,10 @@ var actions = {
                 context.commit('MUTATE_KEY', {
                   key: 'resultsSections',
                   value: payload
+                });
+                context.commit('MUTATE_KEY', {
+                  key: 'sectionsFetched',
+                  value: true
                 });
               }
 
@@ -44021,6 +44052,7 @@ __webpack_require__.r(__webpack_exports__);
   activePath: '',
   allPosts: [],
   answerValid: false,
+  categoriesFetched: false,
   currentTab: {},
   currentSelection: '',
   currentExclusions: '',
@@ -44035,13 +44067,15 @@ __webpack_require__.r(__webpack_exports__);
   formIntroPaths: [],
   printingResults: false,
   resultsSections: [],
+  sectionsFetched: false,
   selectionSummary: [],
   selectAllAnswers: [],
   showFeedbackButton: false,
   showFeedbackForm: false,
   showFeedbackSuccess: false,
   subCategories: [],
-  tabs: []
+  tabs: [],
+  tabsFetched: false
 });
 
 /***/ }),

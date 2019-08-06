@@ -89,6 +89,8 @@ const actions = {
       const payload = response.data;
       context.commit('SET_TABS', payload);
       context.dispatch('SET_CURRENT_TAB', payload[0]);
+      context.commit('MUTATE_KEY', {key: 'tabsFetched', value: true});
+
     }
   }, 
   GET_SUBCATEGORIES: async (context) => {
@@ -96,6 +98,7 @@ const actions = {
     if (response.status === 200) {
       const payload = response.data;
       context.commit('MUTATE_KEY', {key: 'subCategories', value: payload});
+      context.commit('MUTATE_KEY', {key: 'categoriesFetched', value: true});
     }
   },
   GET_RETIREMENT_TOOL_RESULTS_SECTIONS: async (context) => {
@@ -103,6 +106,8 @@ const actions = {
     if (response.status === 200) {
       const payload = response.data;
       context.commit('MUTATE_KEY', {key: 'resultsSections', value: payload});
+      context.commit('MUTATE_KEY', {key: 'sectionsFetched', value: true});
+
     }
   }, 
   GET_RETIREMENT_TOOL_POSTS: async (context) => {

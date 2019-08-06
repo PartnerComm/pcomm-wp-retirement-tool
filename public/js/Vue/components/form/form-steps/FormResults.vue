@@ -2,7 +2,8 @@
   <div class="form-results">
     <div v-if="!printing">
       <results-user-selections />
-      <results-timeline />
+      <results-timeline v-if="ready" />
+      <loader v-if="!ready" />
       <feedback-button />
       <feedback-modal />
       <feedback-success />
@@ -20,7 +21,7 @@ import FeedbackButton from '../form-elements/FeedbackButton';
 import FeedbackModal from '../form-elements/FeedbackModal';
 import FeedbackSuccess from '../form-elements/FeedbackSuccessModal';
 import FormPrintResults from '../results-templates/FormPrintableResults';
-
+import Loader from '../form-elements/Loader'
 export default {
   props: {},
   data() {
@@ -34,7 +35,8 @@ export default {
     FeedbackButton,
     FeedbackModal,
     FeedbackSuccess,
-    FormPrintResults
+    FormPrintResults,
+    Loader
   },
   methods: {
   
@@ -48,6 +50,18 @@ export default {
     },
     printing() {
       return this.$store.getters.GET_FORM_STATUS('printingResults');
+    },
+    sections() {
+      return this.$store.getters.GET_FORM_STATUS('sectionsFetched');
+    },
+    tabs() {
+      return this.$store.getters.GET_FORM_STATUS('tabsFetched');
+    },
+    categories() {
+      return this.$store.getters.GET_FORM_STATUS('categoriesFetched');
+    },
+    ready() {
+      return this.sections && this.tabs && this.categories;
     }
   },
   created() {

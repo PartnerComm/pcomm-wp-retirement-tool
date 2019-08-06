@@ -3,6 +3,7 @@ export default {
   activePath: '',
   allPosts: [],
   answerValid: false,
+  categoriesFetched: false,
   currentTab: {},
   currentSelection: '',
   currentExclusions: '',
@@ -17,11 +18,13 @@ export default {
   formIntroPaths: [],
   printingResults: false,
   resultsSections: [],
+  sectionsFetched: false,
   selectionSummary: [],
   selectAllAnswers: [],
   showFeedbackButton: false,
   showFeedbackForm: false,
   showFeedbackSuccess: false,
   subCategories: [],
-  tabs: []
+  tabs: [],
+  tabsFetched: false
 };
