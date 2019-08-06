@@ -52,7 +52,7 @@ export default {
       return this.$store.getters.GET_FORM_STATUS('currentTab')
     },
     resultsSections() {
-      return this.$store.getters.GET_FORM_STATUS('resultsSections');
+      return this.$store.getters.GET_FORM_STATUS('resultsSections').filter(e => parseInt(e.parent) === 0);
     },
     tabs() {
       return this.$store.getters.GET_FORM_STATUS('tabs');

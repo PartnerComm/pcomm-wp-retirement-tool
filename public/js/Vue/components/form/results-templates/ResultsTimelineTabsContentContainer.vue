@@ -3,44 +3,35 @@
         <div class="results-timeline-tabs-content-container-header-title">
           <span class="italics" v-if="section.secondary_title.length > 0">{{section.secondary_title}} </span><span class="strong">{{section.name}}</span>
         </div>
-        <div class="instruction-block" v-for="(post, index) in filteredPosts" :key="index">
-            <div class="pr-2">
-                <checkmark class="results-checkmark" color="#00A69A" fill="#00A69A" />
-            </div>
-            <div >
-                <div class="instruction-block-text-strong" v-html="post.title.rendered"></div>
-                <div class="instruction-block-text" v-html="post.content.rendered"></div>
-            </div>
+        <div v-if="resultsSubSections.length === 0">
+          <standard-results  class="instruction-block" v-for="(post, index) in filteredPosts" :key="index" :post="post" />
+        </div>
+        <div v-if="resultsSubSections.length > 0">
+          <categorized-results v-for="(section, index) in resultsSubSections" :key="index" :filteredPosts="filteredPosts" :category="section" />
         </div>
   </div>
 </template>
 
 <script>
-import Checkmark from '../../icons/Checkmark';
+import StandardResults from './InstructionBlockStandard';
+import CategorizedResults from './InstructionBlockCategories';
 export default {
   props: {
       section: {
-          type: Object,
-          required: true
+        type: Object,
+        required: true
       }
   },
   data() {
     return {
-      postsWithOverrides: [],
-      showPosts: false
     }
   },
   components: {
-    Checkmark
+    StandardResults,
+    CategorizedResults
   },
   methods: {
-    async filterPosts() {
-      this.postsWithOverrides = this.filteredPosts;
-      
-    },
-    processPosts() {
-      this.filterPosts().then(this.showPosts = true);
-    }
+
   },
   computed: {
     filteredPosts() {
@@ -48,6 +39,9 @@ export default {
     },
     resultsSections() {
       return this.$store.getters.GET_FORM_STATUS('resultsSections');
+    },
+    resultsSubSections() {
+      return this.$store.getters.GET_FORM_STATUS('currentTab').subTabs.filter(e => this.filteredPosts.some(elem => elem.retirement_tool_timeframe.indexOf(e.slug) > -1));
     },
     activeRules() {
       return this.$store.getters.ACTIVE_RULES;
@@ -57,7 +51,6 @@ export default {
 
   },
   mounted() {
-    this.processPosts();
   }
 
   }
