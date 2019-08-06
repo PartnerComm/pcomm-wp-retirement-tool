@@ -3,11 +3,14 @@
         <div class="results-timeline-tabs-content-container-header-title">
           <span class="italics" v-if="section.secondary_title.length > 0">{{section.secondary_title}} </span><span class="strong">{{section.name}}</span>
         </div>
-        <div v-if="resultsSubSections.length === 0">
+        <div v-if="resultsSubSections.length === 0 && resultsSubCategories.length === 0">
           <standard-results  class="instruction-block" v-for="(post, index) in filteredPosts" :key="index" :post="post" />
         </div>
         <div v-if="resultsSubSections.length > 0">
-          <categorized-results v-for="(section, index) in resultsSubSections" :key="index" :filteredPosts="filteredPosts" :category="section" />
+          <categorized-results v-for="(section, index) in resultsSubSections" :key="index" :filteredPosts="filteredPosts" :category="section" type="timeframe"/>
+        </div>
+        <div v-if="resultsSubCategories.length > 0">
+          <categorized-results v-for="(category, index) in resultsSubCategories" :key="index" :filteredPosts="filteredPosts" :category="category" type="category"/>
         </div>
   </div>
 </template>
@@ -42,6 +45,9 @@ export default {
     },
     resultsSubSections() {
       return this.$store.getters.GET_FORM_STATUS('currentTab').subTabs.filter(e => this.filteredPosts.some(elem => elem.retirement_tool_timeframe.indexOf(e.slug) > -1));
+    },
+    resultsSubCategories() {
+      return this.$store.getters.GET_FORM_STATUS('subCategories').filter(e => this.filteredPosts.some(elem => elem.retirement_tool_category.indexOf(e.slug) > -1) && parseInt(e.parent) != 0 );
     },
     activeRules() {
       return this.$store.getters.ACTIVE_RULES;

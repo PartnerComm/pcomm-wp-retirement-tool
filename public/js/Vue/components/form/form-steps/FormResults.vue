@@ -56,6 +56,8 @@ export default {
   mounted() {
     this.$store.dispatch('GET_RETIREMENT_TOOL_RESULTS_SECTIONS');
     this.$store.dispatch('GET_TAB_LABELS');
+    this.$store.dispatch('GET_SUBCATEGORIES');
+
 
   }
   

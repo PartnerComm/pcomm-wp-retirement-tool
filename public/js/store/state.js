@@ -22,5 +22,6 @@ export default {
   showFeedbackButton: false,
   showFeedbackForm: false,
   showFeedbackSuccess: false,
+  subCategories: [],
   tabs: []
 };

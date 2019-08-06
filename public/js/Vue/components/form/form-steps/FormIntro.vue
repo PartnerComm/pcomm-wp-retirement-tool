@@ -82,7 +82,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch('GET_FORM_INTRO_PATHS');
-
+    window.scrollTo(0,0);
   }
   
   }

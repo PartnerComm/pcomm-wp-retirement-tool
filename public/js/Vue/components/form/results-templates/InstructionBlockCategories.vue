@@ -25,6 +25,10 @@ export default {
     category: {
       type: Object,
       required: true
+    },
+    type: {
+      type: String,
+      required: true
     }
   },
   data() {
@@ -40,7 +44,10 @@ export default {
   },
   computed: {
     categorizedPosts() {
-      return this.filteredPosts.filter(e => e.retirement_tool_timeframe.indexOf(this.category.slug) > -1);
+      if (this.type === 'timeframe') {
+        return this.filteredPosts.filter(e => e.retirement_tool_timeframe.indexOf(this.category.slug) > -1);
+      }
+      return this.filteredPosts.filter(e => e.retirement_tool_category.indexOf(this.category.slug) > -1);
     }
   },
   created() {

@@ -2222,6 +2222,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {},
   mounted: function mounted() {
     this.$store.dispatch('GET_FORM_INTRO_PATHS');
+    window.scrollTo(0, 0);
   }
 });
 
@@ -2353,6 +2354,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.$store.dispatch('GET_RETIREMENT_TOOL_RESULTS_SECTIONS');
     this.$store.dispatch('GET_TAB_LABELS');
+    this.$store.dispatch('GET_SUBCATEGORIES');
   }
 });
 
@@ -2885,6 +2887,10 @@ __webpack_require__.r(__webpack_exports__);
     category: {
       type: Object,
       required: true
+    },
+    type: {
+      type: String,
+      required: true
     }
   },
   data: function data() {
@@ -2898,8 +2904,14 @@ __webpack_require__.r(__webpack_exports__);
     categorizedPosts: function categorizedPosts() {
       var _this = this;
 
+      if (this.type === 'timeframe') {
+        return this.filteredPosts.filter(function (e) {
+          return e.retirement_tool_timeframe.indexOf(_this.category.slug) > -1;
+        });
+      }
+
       return this.filteredPosts.filter(function (e) {
-        return e.retirement_tool_timeframe.indexOf(_this.category.slug) > -1;
+        return e.retirement_tool_category.indexOf(_this.category.slug) > -1;
       });
     }
   },
@@ -3299,6 +3311,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3334,6 +3349,15 @@ __webpack_require__.r(__webpack_exports__);
         return _this2.filteredPosts.some(function (elem) {
           return elem.retirement_tool_timeframe.indexOf(e.slug) > -1;
         });
+      });
+    },
+    resultsSubCategories: function resultsSubCategories() {
+      var _this3 = this;
+
+      return this.$store.getters.GET_FORM_STATUS('subCategories').filter(function (e) {
+        return _this3.filteredPosts.some(function (elem) {
+          return elem.retirement_tool_category.indexOf(e.slug) > -1;
+        }) && parseInt(e.parent) != 0;
       });
     },
     activeRules: function activeRules() {
@@ -24939,7 +24963,8 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _vm.resultsSubSections.length === 0
+          _vm.resultsSubSections.length === 0 &&
+          _vm.resultsSubCategories.length === 0
             ? _c(
                 "div",
                 _vm._l(_vm.filteredPosts, function(post, index) {
@@ -24961,7 +24986,25 @@ var render = function() {
                     key: index,
                     attrs: {
                       filteredPosts: _vm.filteredPosts,
-                      category: section
+                      category: section,
+                      type: "timeframe"
+                    }
+                  })
+                }),
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.resultsSubCategories.length > 0
+            ? _c(
+                "div",
+                _vm._l(_vm.resultsSubCategories, function(category, index) {
+                  return _c("categorized-results", {
+                    key: index,
+                    attrs: {
+                      filteredPosts: _vm.filteredPosts,
+                      category: category,
+                      type: "category"
                     }
                   })
                 }),
@@ -43382,8 +43425,8 @@ var actions = {
 
     return GET_TAB_LABELS;
   }(),
-  GET_RETIREMENT_TOOL_RESULTS_SECTIONS: function () {
-    var _GET_RETIREMENT_TOOL_RESULTS_SECTIONS = _asyncToGenerator(
+  GET_SUBCATEGORIES: function () {
+    var _GET_SUBCATEGORIES = _asyncToGenerator(
     /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(context) {
       var response, payload;
@@ -43400,7 +43443,7 @@ var actions = {
               if (response.status === 200) {
                 payload = response.data;
                 context.commit('MUTATE_KEY', {
-                  key: 'resultsSections',
+                  key: 'subCategories',
                   value: payload
                 });
               }
@@ -43413,14 +43456,14 @@ var actions = {
       }, _callee4);
     }));
 
-    function GET_RETIREMENT_TOOL_RESULTS_SECTIONS(_x5) {
-      return _GET_RETIREMENT_TOOL_RESULTS_SECTIONS.apply(this, arguments);
+    function GET_SUBCATEGORIES(_x5) {
+      return _GET_SUBCATEGORIES.apply(this, arguments);
     }
 
-    return GET_RETIREMENT_TOOL_RESULTS_SECTIONS;
+    return GET_SUBCATEGORIES;
   }(),
-  GET_RETIREMENT_TOOL_POSTS: function () {
-    var _GET_RETIREMENT_TOOL_POSTS = _asyncToGenerator(
+  GET_RETIREMENT_TOOL_RESULTS_SECTIONS: function () {
+    var _GET_RETIREMENT_TOOL_RESULTS_SECTIONS = _asyncToGenerator(
     /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(context) {
       var response, payload;
@@ -43429,10 +43472,47 @@ var actions = {
           switch (_context5.prev = _context5.next) {
             case 0:
               _context5.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/wp-json/wp/v2/retirement_tool_post?per_page=100');
+              return axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/wp-json/wp/v2/retirement_tool_category?per_page=100');
 
             case 2:
               response = _context5.sent;
+
+              if (response.status === 200) {
+                payload = response.data;
+                context.commit('MUTATE_KEY', {
+                  key: 'resultsSections',
+                  value: payload
+                });
+              }
+
+            case 4:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
+    }));
+
+    function GET_RETIREMENT_TOOL_RESULTS_SECTIONS(_x6) {
+      return _GET_RETIREMENT_TOOL_RESULTS_SECTIONS.apply(this, arguments);
+    }
+
+    return GET_RETIREMENT_TOOL_RESULTS_SECTIONS;
+  }(),
+  GET_RETIREMENT_TOOL_POSTS: function () {
+    var _GET_RETIREMENT_TOOL_POSTS = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(context) {
+      var response, payload;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              _context6.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/wp-json/wp/v2/retirement_tool_post?per_page=100');
+
+            case 2:
+              response = _context6.sent;
 
               if (response.status === 200) {
                 payload = response.data;
@@ -43455,13 +43535,13 @@ var actions = {
 
             case 4:
             case "end":
-              return _context5.stop();
+              return _context6.stop();
           }
         }
-      }, _callee5);
+      }, _callee6);
     }));
 
-    function GET_RETIREMENT_TOOL_POSTS(_x6) {
+    function GET_RETIREMENT_TOOL_POSTS(_x7) {
       return _GET_RETIREMENT_TOOL_POSTS.apply(this, arguments);
     }
 
@@ -43534,20 +43614,20 @@ var actions = {
   SUBMIT_FEEDBACK: function () {
     var _SUBMIT_FEEDBACK = _asyncToGenerator(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(context) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(context) {
       var post, response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
         while (1) {
-          switch (_context6.prev = _context6.next) {
+          switch (_context7.prev = _context7.next) {
             case 0:
               post = context.getters.FEEDBACK_NEW_POST;
               post.title = moment__WEBPACK_IMPORTED_MODULE_3___default()().format('LL hh:mma');
               post.content = 'Rating: ' + post.rating + '.  Feedback: ' + post.feedback;
-              _context6.next = 5;
+              _context7.next = 5;
               return PostRepository.post(post);
 
             case 5:
-              response = _context6.sent;
+              response = _context7.sent;
 
               if (response && response.status === 201) {
                 context.dispatch('UPDATE_FEEDBACK_FORM', false);
@@ -43556,13 +43636,13 @@ var actions = {
 
             case 7:
             case "end":
-              return _context6.stop();
+              return _context7.stop();
           }
         }
-      }, _callee6);
+      }, _callee7);
     }));
 
-    function SUBMIT_FEEDBACK(_x7) {
+    function SUBMIT_FEEDBACK(_x8) {
       return _SUBMIT_FEEDBACK.apply(this, arguments);
     }
 
@@ -43960,6 +44040,7 @@ __webpack_require__.r(__webpack_exports__);
   showFeedbackButton: false,
   showFeedbackForm: false,
   showFeedbackSuccess: false,
+  subCategories: [],
   tabs: []
 });
 
