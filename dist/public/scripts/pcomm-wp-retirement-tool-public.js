@@ -41415,15 +41415,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************************************************!*\
   !*** ./public/js/Vue/components/form/form-steps/FormResults.vue ***!
   \******************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _FormResults_vue_vue_type_template_id_97d4e0ac___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FormResults.vue?vue&type=template&id=97d4e0ac& */ "./public/js/Vue/components/form/form-steps/FormResults.vue?vue&type=template&id=97d4e0ac&");
 /* harmony import */ var _FormResults_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FormResults.vue?vue&type=script&lang=js& */ "./public/js/Vue/components/form/form-steps/FormResults.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _FormResults_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _FormResults_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -41453,7 +41452,7 @@ component.options.__file = "public/js/Vue/components/form/form-steps/FormResults
 /*!*******************************************************************************************!*\
   !*** ./public/js/Vue/components/form/form-steps/FormResults.vue?vue&type=script&lang=js& ***!
   \*******************************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -43780,9 +43779,18 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   POSTS_FILTERED_BY_ANSWERS: function POSTS_FILTERED_BY_ANSWERS(state, getters) {
+    var selectAnswers = state.selectAllAnswers.map(function (e) {
+      return e.slug;
+    });
+    var nonSelectAnswers = state.filterAnswers.filter(function (e) {
+      return selectAnswers.indexOf(e) === -1;
+    });
+
     if (state.filterAnswers.length > 0) {
       var filteredPosts = state.allPosts.filter(function (e) {
-        return state.filterAnswers.every(function (elem) {
+        return nonSelectAnswers.every(function (elem) {
+          return e.retirement_tool_question.indexOf(elem) > -1;
+        }) && selectAnswers.some(function (elem) {
           return e.retirement_tool_question.indexOf(elem) > -1;
         }) && e.post_tag.indexOf('intro-text') === -1 && e.post_tag.indexOf('feedback-additional-content') === -1;
       });
