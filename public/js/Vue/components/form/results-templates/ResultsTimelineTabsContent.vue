@@ -32,10 +32,13 @@ export default {
   },
   methods: {
     incrementTab() {
-      this.$store.dispatch('SET_CURRENT_TAB', this.tabs[this.tabs.indexOf(this.currentTab) + 1])
+      this.$store.dispatch('SET_CURRENT_TAB', this.tabs[this.tabs.indexOf(this.currentTab) + 1]);
+      window.scrollTo(0,850);
     },
     decrementTab() {
-      this.$store.dispatch('SET_CURRENT_TAB', this.tabs[this.tabs.indexOf(this.currentTab) - 1])
+      this.$store.dispatch('SET_CURRENT_TAB', this.tabs[this.tabs.indexOf(this.currentTab) - 1]);
+      window.scrollTo(0,850);
+
     },
     adjustMonths(months) {
       const date= moment(this.retirementDate);
