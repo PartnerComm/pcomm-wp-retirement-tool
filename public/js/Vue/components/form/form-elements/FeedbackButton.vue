@@ -19,7 +19,9 @@ export default {
   },
   methods: {
     showFeedbackButton() {
-      this.$store.dispatch('UPDATE_FEEDBACK_BUTTON', true);
+      if (window.localStorage.getItem("feedback") != "complete") {
+        this.$store.dispatch('UPDATE_FEEDBACK_BUTTON', true);
+      }
     },
     closeFeedback() {
       this.$store.dispatch('UPDATE_FEEDBACK_BUTTON', false);

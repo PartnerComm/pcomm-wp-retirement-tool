@@ -113,6 +113,7 @@ class Pcomm_Wp_Retirement_Tool_Public
         }
         wp_localize_script( $this->plugin_name, 'wpApiSettings', array(
             'nonce' => wp_create_nonce( 'wp_rest' ),
+            'ajaxurl' => admin_url( 'admin-ajax.php' )
         ));
     }
 }

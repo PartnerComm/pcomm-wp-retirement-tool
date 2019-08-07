@@ -3,6 +3,8 @@ import axios from 'axios';
 import moment from 'moment';
 
 const PostRepository = RepositoryFactory.get('post');
+const WpAjaxRepository = RepositoryFactory.get('wp');
+
 const actions = {
   SELECT_PROGRAM: (context, value) => {
     const payload = value;
@@ -168,12 +170,16 @@ const actions = {
   },
   SUBMIT_FEEDBACK: async (context) => {
     const post = context.getters.FEEDBACK_NEW_POST;
-    post.title = moment().format('LL hh:mma');
-    post.content = 'Rating: ' + post.rating + '.  Feedback: ' + post.feedback;
-    const response = await PostRepository.post(post);
-    if (response && response.status === 201) {
+    const data = new FormData();
+    data.append('title', moment().format('LL hh:mma'));
+    data.append('content', 'Rating: ' + post.rating + '.  Feedback: ' + post.feedback);
+    const response = await WpAjaxRepository.post('feedback_post', data);
+
+    if (response && response.data.data.code === 201) {
       context.dispatch('UPDATE_FEEDBACK_FORM', false);
       context.dispatch('UPDATE_FEEDBACK_SUCCESS', true);
+      window.localStorage.setItem("feedback", "complete");
+
     }
   },
   UPDATE_FEEDBACK_VALUE: (context, {key, value}) => {

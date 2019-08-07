@@ -7,6 +7,8 @@ const Repository = axios.create({
   headers: {'X-WP-Nonce': wpApiSettings.nonce}
 });
 
+const WPAjax = axios.create({
+  baseURL: wpApiSettings.ajaxurl
+});
 
-
-export {Repository}
+export {Repository, WPAjax}

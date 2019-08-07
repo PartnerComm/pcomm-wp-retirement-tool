@@ -1807,7 +1807,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     showFeedbackButton: function showFeedbackButton() {
-      this.$store.dispatch('UPDATE_FEEDBACK_BUTTON', true);
+      if (window.localStorage.getItem("feedback") != "complete") {
+        this.$store.dispatch('UPDATE_FEEDBACK_BUTTON', true);
+      }
     },
     closeFeedback: function closeFeedback() {
       this.$store.dispatch('UPDATE_FEEDBACK_BUTTON', false);
@@ -3273,8 +3275,17 @@ __webpack_require__.r(__webpack_exports__);
         return parseInt(e.parent) === 0;
       });
     },
+    allPosts: function allPosts() {
+      return this.$store.getters.POSTS_FILTERED_BY_ANSWERS;
+    },
     tabs: function tabs() {
-      return this.$store.getters.GET_FORM_STATUS('tabs');
+      var _this = this;
+
+      return this.$store.getters.GET_FORM_STATUS('tabs').filter(function (e) {
+        return parseInt(e.parent) === 0 && _this.allPosts.filter(function (elem) {
+          return elem.retirement_tool_timeframe.indexOf(e.slug) > -1;
+        }).length > 0;
+      });
     },
     retirementDate: function retirementDate() {
       return this.$store.getters.GET_FORM_STATUS('date');
@@ -43154,12 +43165,13 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************************!*\
   !*** ./public/js/repository/Repository.js ***!
   \********************************************/
-/*! exports provided: Repository */
+/*! exports provided: Repository, WPAjax */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Repository", function() { return Repository; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WPAjax", function() { return WPAjax; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
@@ -43169,6 +43181,9 @@ var Repository = axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({
   headers: {
     'X-WP-Nonce': wpApiSettings.nonce
   }
+});
+var WPAjax = axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({
+  baseURL: wpApiSettings.ajaxurl
 });
 
 
@@ -43186,11 +43201,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RepositoryFactory", function() { return RepositoryFactory; });
 /* harmony import */ var _taxonomyRepository__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./taxonomyRepository */ "./public/js/repository/taxonomyRepository.js");
 /* harmony import */ var _postRepository__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./postRepository */ "./public/js/repository/postRepository.js");
+/* harmony import */ var _wordpressAjax__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./wordpressAjax */ "./public/js/repository/wordpressAjax.js");
+
 
 
 var repositories = {
   taxonomy: _taxonomyRepository__WEBPACK_IMPORTED_MODULE_0__["default"],
-  post: _postRepository__WEBPACK_IMPORTED_MODULE_1__["default"]
+  post: _postRepository__WEBPACK_IMPORTED_MODULE_1__["default"],
+  wp: _wordpressAjax__WEBPACK_IMPORTED_MODULE_2__["default"]
 };
 var RepositoryFactory = {
   get: function get(name) {
@@ -43246,6 +43264,29 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./public/js/repository/wordpressAjax.js":
+/*!***********************************************!*\
+  !*** ./public/js/repository/wordpressAjax.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Repository__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Repository */ "./public/js/repository/Repository.js");
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  post: function post(action, data) {
+    data.append('action', action);
+    data.append('security', wpApiSettings.nonce);
+    return _Repository__WEBPACK_IMPORTED_MODULE_0__["WPAjax"].post(null, data)["catch"](function (e) {
+      return console.log(e);
+    });
+  }
+});
+
+/***/ }),
+
 /***/ "./public/js/store/actions/index.js":
 /*!******************************************!*\
   !*** ./public/js/store/actions/index.js ***!
@@ -43272,6 +43313,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 var PostRepository = _repository_RepositoryFactory_js__WEBPACK_IMPORTED_MODULE_1__["RepositoryFactory"].get('post');
+var WpAjaxRepository = _repository_RepositoryFactory_js__WEBPACK_IMPORTED_MODULE_1__["RepositoryFactory"].get('wp');
 var actions = {
   SELECT_PROGRAM: function SELECT_PROGRAM(context, value) {
     var payload = value;
@@ -43645,26 +43687,28 @@ var actions = {
     var _SUBMIT_FEEDBACK = _asyncToGenerator(
     /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(context) {
-      var post, response;
+      var post, data, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
         while (1) {
           switch (_context7.prev = _context7.next) {
             case 0:
               post = context.getters.FEEDBACK_NEW_POST;
-              post.title = moment__WEBPACK_IMPORTED_MODULE_3___default()().format('LL hh:mma');
-              post.content = 'Rating: ' + post.rating + '.  Feedback: ' + post.feedback;
-              _context7.next = 5;
-              return PostRepository.post(post);
+              data = new FormData();
+              data.append('title', moment__WEBPACK_IMPORTED_MODULE_3___default()().format('LL hh:mma'));
+              data.append('content', 'Rating: ' + post.rating + '.  Feedback: ' + post.feedback);
+              _context7.next = 6;
+              return WpAjaxRepository.post('feedback_post', data);
 
-            case 5:
+            case 6:
               response = _context7.sent;
 
-              if (response && response.status === 201) {
+              if (response && response.data.data.code === 201) {
                 context.dispatch('UPDATE_FEEDBACK_FORM', false);
                 context.dispatch('UPDATE_FEEDBACK_SUCCESS', true);
+                window.localStorage.setItem("feedback", "complete");
               }
 
-            case 7:
+            case 8:
             case "end":
               return _context7.stop();
           }
@@ -43786,7 +43830,7 @@ __webpack_require__.r(__webpack_exports__);
       return selectAnswers.indexOf(e) === -1;
     });
 
-    if (state.filterAnswers.length > 0) {
+    if (state.filterAnswers.length > 0 && state.activePath && state.activePath.questions.length > 0) {
       var filteredPosts = state.allPosts.filter(function (e) {
         return nonSelectAnswers.every(function (elem) {
           return e.retirement_tool_question.indexOf(elem) > -1;
@@ -43860,6 +43904,16 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return filteredPosts;
+    }
+
+    if (state.activePath && state.activePath.questions.length === 0) {
+      var _filteredPosts = state.allPosts.filter(function (e) {
+        return state.filterAnswers.every(function (elem) {
+          return e.retirement_tool_question.indexOf(elem) > -1;
+        });
+      });
+
+      return _filteredPosts;
     }
 
     return false;

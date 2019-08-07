@@ -139,6 +139,10 @@ class Pcomm_Wp_Retirement_Tool {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-pcomm-wp-retirement-tool-cpt.php';
 
 		/**
+		 * The class responsible for defining all ajax functions.
+		 */
+		 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-pcomm-wp-retirement-tool-ajax.php';
+		/**
 		 * The class responsible for defining all custom post type metaboxes.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-pcomm-wp-retirement-tool-metaboxes.php';

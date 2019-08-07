@@ -54,8 +54,11 @@ export default {
     resultsSections() {
       return this.$store.getters.GET_FORM_STATUS('resultsSections').filter(e => parseInt(e.parent) === 0);
     },
+    allPosts() {
+      return this.$store.getters.POSTS_FILTERED_BY_ANSWERS;
+    },
     tabs() {
-      return this.$store.getters.GET_FORM_STATUS('tabs');
+      return this.$store.getters.GET_FORM_STATUS('tabs').filter(e => parseInt(e.parent) === 0 && this.allPosts.filter(elem => elem.retirement_tool_timeframe.indexOf(e.slug) > -1).length > 0);
     },
     retirementDate() {
       return this.$store.getters.GET_FORM_STATUS('date');

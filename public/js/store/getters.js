@@ -28,7 +28,7 @@ export default {
     let selectAnswers = state.selectAllAnswers.map(e => e.slug);
     let nonSelectAnswers = state.filterAnswers.filter(e => selectAnswers.indexOf(e) === -1);
 
-    if (state.filterAnswers.length > 0) {
+    if (state.filterAnswers.length > 0 && state.activePath && state.activePath.questions.length > 0) {
       let filteredPosts = state.allPosts.filter(e => {
         return nonSelectAnswers.every(elem => e.retirement_tool_question.indexOf(elem) > -1) && selectAnswers.some(elem => e.retirement_tool_question.indexOf(elem) > -1) && e.post_tag.indexOf('intro-text') === -1 && e.post_tag.indexOf('feedback-additional-content') === -1;
       });
@@ -88,6 +88,14 @@ export default {
           }
         })
       }
+      return filteredPosts;
+    } 
+
+    if (state.activePath && state.activePath.questions.length === 0) {
+      let filteredPosts = state.allPosts.filter(e => {
+        return state.filterAnswers.every(elem => e.retirement_tool_question.indexOf(elem) > -1);
+      });
+      
       return filteredPosts;
     }
 
