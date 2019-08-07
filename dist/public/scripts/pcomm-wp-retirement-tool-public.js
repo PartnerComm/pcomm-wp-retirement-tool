@@ -3257,11 +3257,11 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     incrementTab: function incrementTab() {
       this.$store.dispatch('SET_CURRENT_TAB', this.tabs[this.tabs.indexOf(this.currentTab) + 1]);
-      window.scrollTo(0, 850);
+      window.scrollTo(0, 800);
     },
     decrementTab: function decrementTab() {
       this.$store.dispatch('SET_CURRENT_TAB', this.tabs[this.tabs.indexOf(this.currentTab) - 1]);
-      window.scrollTo(0, 850);
+      window.scrollTo(0, 800);
     },
     adjustMonths: function adjustMonths(months) {
       var date = moment__WEBPACK_IMPORTED_MODULE_0___default()(this.retirementDate);

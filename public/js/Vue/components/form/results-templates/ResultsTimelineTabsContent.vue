@@ -33,11 +33,11 @@ export default {
   methods: {
     incrementTab() {
       this.$store.dispatch('SET_CURRENT_TAB', this.tabs[this.tabs.indexOf(this.currentTab) + 1]);
-      window.scrollTo(0,850);
+      window.scrollTo(0,800);
     },
     decrementTab() {
       this.$store.dispatch('SET_CURRENT_TAB', this.tabs[this.tabs.indexOf(this.currentTab) - 1]);
-      window.scrollTo(0,850);
+      window.scrollTo(0,800);
 
     },
     adjustMonths(months) {
