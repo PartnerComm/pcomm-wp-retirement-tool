@@ -75,6 +75,9 @@ export default {
     },
     currentSelection() {
       return this.$store.getters.GET_FORM_STATUS('currentSelection');
+    },
+    tabs() {
+      return this.$store.getters.GET_FORM_STATUS('tabs').filter(e => parseInt(e.parent) === 0);
     }
   },
   created() {

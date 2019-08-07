@@ -1,7 +1,7 @@
 <template>
   <div class="results-timeline-tabs-content-container" :class="section.slug" v-if="filteredPosts.length > 0">
         <div class="results-timeline-tabs-content-container-header-title">
-          <span class="italics" v-if="section.secondary_title.length > 0">{{section.secondary_title}} </span><span class="strong">{{section.name}}</span>
+          <span class="italics" v-if="section.secondary_title.length > 0" v-html="section.secondary_title"></span>&nbsp;<span class="strong" v-html="section.name"></span>
         </div>
         <div v-if="resultsSubSections.length === 0 && resultsSubCategories.length === 0">
           <standard-results  class="instruction-block" v-for="(post, index) in filteredPosts" :key="index" :post="post" />
@@ -23,6 +23,10 @@ export default {
       section: {
         type: Object,
         required: true
+      },
+      tabs: {
+        type: Boolean,
+        required: true
       }
   },
   data() {
@@ -38,7 +42,13 @@ export default {
   },
   computed: {
     filteredPosts() {
+      if (this.tabs) {
         return this.$store.getters.POSTS_FILTERED_BY_MONTH.filter(e => e.retirement_tool_category.indexOf(this.section.slug) >-1 )
+      }
+      return this.allPosts.filter(e => e.retirement_tool_category.indexOf(this.section.slug) >-1);
+    },
+    allPosts() {
+      return this.$store.getters.POSTS_FILTERED_BY_ANSWERS;
     },
     resultsSections() {
       return this.$store.getters.GET_FORM_STATUS('resultsSections');

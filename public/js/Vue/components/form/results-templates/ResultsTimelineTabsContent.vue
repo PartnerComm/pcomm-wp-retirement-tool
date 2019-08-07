@@ -1,12 +1,13 @@
 <template>
   <div class="results-timeline-tabs-content" v-if="currentTab">
-    <div class="results-timeline-tabs-content-header-title">
+    <div class="results-timeline-tabs-content-header-title" v-if="tabs.length > 0">
       {{currentTab.name}} <span v-if="currentTab.secondary_title != ''">{{currentTab.secondary_title}}</span>
     </div>
-    <div class="results-timeline-tabs-content-header-pill">
+    <div class="results-timeline-tabs-content-header-pill" v-if="retirementDate">
       <div class="pill" v-if="currentTab.numeric_value != 1">{{adjustedDate}}</div>
     </div>
-    <results-timeline-tabs-content-container v-for="(section, index) in resultsSections" :key="index" :section="section"/>
+    <results-timeline-tabs-content-container v-for="(section, index) in resultsSections" :key="index" :section="section" :tabs="true" v-if="tabs.length > 0" />
+    <results-timeline-tabs-content-container v-for="(section, index) in resultsSections" :key="index" :section="section" :tabs="false" v-if="tabs.length === 0" />
     <div class="form-button text-center">
         <button v-if="tabs.indexOf(currentTab) > 0" class="form-buttons-previous nav-button" @click="decrementTab">Previous</button>
         <button v-if="tabs.indexOf(currentTab) < tabs.length-1" class="form-buttons-next nav-button" @click="incrementTab">Next Milestone</button>

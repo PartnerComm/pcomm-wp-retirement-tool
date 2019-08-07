@@ -1,6 +1,6 @@
 <template>
   <div class="results-timeline-tabs">
-        <div class="results-timeline-tabs-nav" v-if="tabs">
+        <div class="results-timeline-tabs-nav" v-if="tabs.length > 0">
             <div v-for="(tab, index) in tabs" :key="index" class="" :value="tab.id" @click="selectTab(tab)">
                 <div class="results-timeline-tabs-nav-content">
                     <div class="results-timeline-tabs-nav-content-title" v-html="tab.name">

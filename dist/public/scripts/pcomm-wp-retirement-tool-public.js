@@ -2219,6 +2219,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     currentSelection: function currentSelection() {
       return this.$store.getters.GET_FORM_STATUS('currentSelection');
+    },
+    tabs: function tabs() {
+      return this.$store.getters.GET_FORM_STATUS('tabs').filter(function (e) {
+        return parseInt(e.parent) === 0;
+      });
     }
   },
   created: function created() {},
@@ -3238,6 +3243,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3348,6 +3354,10 @@ __webpack_require__.r(__webpack_exports__);
     section: {
       type: Object,
       required: true
+    },
+    tabs: {
+      type: Boolean,
+      required: true
     }
   },
   data: function data() {
@@ -3362,9 +3372,18 @@ __webpack_require__.r(__webpack_exports__);
     filteredPosts: function filteredPosts() {
       var _this = this;
 
-      return this.$store.getters.POSTS_FILTERED_BY_MONTH.filter(function (e) {
+      if (this.tabs) {
+        return this.$store.getters.POSTS_FILTERED_BY_MONTH.filter(function (e) {
+          return e.retirement_tool_category.indexOf(_this.section.slug) > -1;
+        });
+      }
+
+      return this.allPosts.filter(function (e) {
         return e.retirement_tool_category.indexOf(_this.section.slug) > -1;
       });
+    },
+    allPosts: function allPosts() {
+      return this.$store.getters.POSTS_FILTERED_BY_ANSWERS;
     },
     resultsSections: function resultsSections() {
       return this.$store.getters.GET_FORM_STATUS('resultsSections');
@@ -24790,7 +24809,7 @@ var render = function() {
     "div",
     { staticClass: "results-timeline-tabs" },
     [
-      _vm.tabs
+      _vm.tabs.length > 0
         ? _c(
             "div",
             { staticClass: "results-timeline-tabs-nav" },
@@ -24886,34 +24905,51 @@ var render = function() {
         "div",
         { staticClass: "results-timeline-tabs-content" },
         [
-          _c(
-            "div",
-            { staticClass: "results-timeline-tabs-content-header-title" },
-            [
-              _vm._v("\n    " + _vm._s(_vm.currentTab.name) + " "),
-              _vm.currentTab.secondary_title != ""
-                ? _c("span", [_vm._v(_vm._s(_vm.currentTab.secondary_title))])
-                : _vm._e()
-            ]
-          ),
+          _vm.tabs.length > 0
+            ? _c(
+                "div",
+                { staticClass: "results-timeline-tabs-content-header-title" },
+                [
+                  _vm._v("\n    " + _vm._s(_vm.currentTab.name) + " "),
+                  _vm.currentTab.secondary_title != ""
+                    ? _c("span", [
+                        _vm._v(_vm._s(_vm.currentTab.secondary_title))
+                      ])
+                    : _vm._e()
+                ]
+              )
+            : _vm._e(),
           _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "results-timeline-tabs-content-header-pill" },
-            [
-              _vm.currentTab.numeric_value != 1
-                ? _c("div", { staticClass: "pill" }, [
-                    _vm._v(_vm._s(_vm.adjustedDate))
-                  ])
-                : _vm._e()
-            ]
-          ),
+          _vm.retirementDate
+            ? _c(
+                "div",
+                { staticClass: "results-timeline-tabs-content-header-pill" },
+                [
+                  _vm.currentTab.numeric_value != 1
+                    ? _c("div", { staticClass: "pill" }, [
+                        _vm._v(_vm._s(_vm.adjustedDate))
+                      ])
+                    : _vm._e()
+                ]
+              )
+            : _vm._e(),
           _vm._v(" "),
           _vm._l(_vm.resultsSections, function(section, index) {
-            return _c("results-timeline-tabs-content-container", {
-              key: index,
-              attrs: { section: section }
-            })
+            return _vm.tabs.length > 0
+              ? _c("results-timeline-tabs-content-container", {
+                  key: index,
+                  attrs: { section: section, tabs: true }
+                })
+              : _vm._e()
+          }),
+          _vm._v(" "),
+          _vm._l(_vm.resultsSections, function(section, index) {
+            return _vm.tabs.length === 0
+              ? _c("results-timeline-tabs-content-container", {
+                  key: index,
+                  attrs: { section: section, tabs: false }
+                })
+              : _vm._e()
           }),
           _vm._v(" "),
           _c("div", { staticClass: "form-button text-center" }, [
@@ -24982,13 +25018,16 @@ var render = function() {
             },
             [
               _vm.section.secondary_title.length > 0
-                ? _c("span", { staticClass: "italics" }, [
-                    _vm._v(_vm._s(_vm.section.secondary_title) + " ")
-                  ])
+                ? _c("span", {
+                    staticClass: "italics",
+                    domProps: { innerHTML: _vm._s(_vm.section.secondary_title) }
+                  })
                 : _vm._e(),
-              _c("span", { staticClass: "strong" }, [
-                _vm._v(_vm._s(_vm.section.name))
-              ])
+              _vm._v(" "),
+              _c("span", {
+                staticClass: "strong",
+                domProps: { innerHTML: _vm._s(_vm.section.name) }
+              })
             ]
           ),
           _vm._v(" "),
@@ -43468,7 +43507,7 @@ var actions = {
               if (response.status === 200) {
                 payload = response.data;
                 context.commit('SET_TABS', payload);
-                context.dispatch('SET_CURRENT_TAB', payload[0]);
+                context.dispatch('SET_INITIAL_TAB');
                 context.commit('MUTATE_KEY', {
                   key: 'tabsFetched',
                   value: true
@@ -43489,6 +43528,17 @@ var actions = {
 
     return GET_TAB_LABELS;
   }(),
+  SET_INITIAL_TAB: function SET_INITIAL_TAB(context) {
+    var tabs = context.getters.GET_FORM_STATUS('tabs');
+    var activePath = context.getters.ACTIVE_PATH;
+    var questions = context.getters.GET_FORM_STATUS('formIntroPaths');
+
+    if (activePath === questions[questions.length - 1]) {
+      context.dispatch('SET_CURRENT_TAB', tabs[tabs.length - 1]);
+    } else {
+      context.dispatch('SET_CURRENT_TAB', tabs[0]);
+    }
+  },
   GET_SUBCATEGORIES: function () {
     var _GET_SUBCATEGORIES = _asyncToGenerator(
     /*#__PURE__*/

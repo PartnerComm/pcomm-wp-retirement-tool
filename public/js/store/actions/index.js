@@ -90,11 +90,21 @@ const actions = {
     if (response.status === 200) {
       const payload = response.data;
       context.commit('SET_TABS', payload);
-      context.dispatch('SET_CURRENT_TAB', payload[0]);
+      context.dispatch('SET_INITIAL_TAB');
       context.commit('MUTATE_KEY', {key: 'tabsFetched', value: true});
 
     }
   }, 
+  SET_INITIAL_TAB: (context) => {
+    const tabs = context.getters.GET_FORM_STATUS('tabs');
+    const activePath = context.getters.ACTIVE_PATH;
+    const questions = context.getters.GET_FORM_STATUS('formIntroPaths');
+    if (activePath === questions[questions.length-1]) {
+      context.dispatch('SET_CURRENT_TAB', tabs[tabs.length-1]);
+    } else {
+      context.dispatch('SET_CURRENT_TAB', tabs[0]);
+    }
+  },
   GET_SUBCATEGORIES: async (context) => {
     const response = await axios.get('/wp-json/wp/v2/retirement_tool_category?per_page=100');
     if (response.status === 200) {
