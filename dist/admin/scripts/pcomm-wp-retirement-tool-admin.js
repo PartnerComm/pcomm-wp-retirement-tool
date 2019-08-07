@@ -17560,9 +17560,9 @@ module.exports = g;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/cbonade/Dev/msk-mskqf-713-082/webdocs/content/p/pcomm-wp-retirement-tool/admin/js/pcomm-wp-retirement-tool-admin.js */"./admin/js/pcomm-wp-retirement-tool-admin.js");
-__webpack_require__(/*! /Users/cbonade/Dev/msk-mskqf-713-082/webdocs/content/p/pcomm-wp-retirement-tool/admin/scss/style.scss */"./admin/scss/style.scss");
-module.exports = __webpack_require__(/*! /Users/cbonade/Dev/msk-mskqf-713-082/webdocs/content/p/pcomm-wp-retirement-tool/public/scss/style.scss */"./public/scss/style.scss");
+__webpack_require__(/*! /Users/scoronado2/Documents/partnercomm/github/msk/pcomm-wp-retirement-tool/admin/js/pcomm-wp-retirement-tool-admin.js */"./admin/js/pcomm-wp-retirement-tool-admin.js");
+__webpack_require__(/*! /Users/scoronado2/Documents/partnercomm/github/msk/pcomm-wp-retirement-tool/admin/scss/style.scss */"./admin/scss/style.scss");
+module.exports = __webpack_require__(/*! /Users/scoronado2/Documents/partnercomm/github/msk/pcomm-wp-retirement-tool/public/scss/style.scss */"./public/scss/style.scss");
 
 
 /***/ })
