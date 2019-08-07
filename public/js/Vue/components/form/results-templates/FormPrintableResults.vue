@@ -15,6 +15,7 @@ import TabsIcon from '../../icons/Tabs';
 import FormPrintableResultsContent from './FormPrintableResultsContent';
 import ResultsTimelineContent from '../results-templates/ResultsTimelineContent';
 
+
 export default {
   props: {},
   data() {
@@ -25,7 +26,8 @@ export default {
   components: {
     TabsIcon,
     FormPrintableResultsContent,
-    ResultsTimelineContent
+    ResultsTimelineContent,
+
   },
   methods: {
     closePrintResults() {
@@ -34,7 +36,7 @@ export default {
   },
   computed: {
     tabs() {
-      return this.$store.getters.GET_FORM_STATUS('tabs');
+      return this.$store.getters.GET_FORM_STATUS('tabs').filter(e => parseInt(e.parent) === 0);
     },
   },
   created() {

@@ -1,7 +1,7 @@
 <template>
   <div class="results-timeline-tabs-content-container" :class="section.slug" v-if="filteredPosts.length > 0">
         <div class="results-timeline-tabs-content-header-title">
-          <span class="italics">{{section.secondary_title}} </span><span class="strong">{{section.name}}</span>
+          <span class="strong">{{section.name}}</span>&nbsp;<span class="italics" v-if="section.secondary_title.length > 0">{{section.secondary_title}} </span>
         </div>
         <div class="results-timeline-tabs-content-header-pill" v-if="retirementDate">
           <div class="pill" v-if="section.numeric_value != 1">{{adjustedDate}}</div>
@@ -64,7 +64,7 @@ export default {
       return date;
     },
     resultsSections() {
-      return this.$store.getters.GET_FORM_STATUS('resultsSections');
+      return this.$store.getters.GET_FORM_STATUS('resultsSections').filter(e => parseInt(e.parent) === 0);
     },
   },
   created() {

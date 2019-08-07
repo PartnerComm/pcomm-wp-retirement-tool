@@ -79,7 +79,8 @@ export default {
       const date = moment(this.retirementDate).format('LL');
       return date;
       
-    }
+    },
+    
 
   },
   created() {

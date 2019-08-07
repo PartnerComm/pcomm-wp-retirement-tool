@@ -2714,7 +2714,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     tabs: function tabs() {
-      return this.$store.getters.GET_FORM_STATUS('tabs');
+      return this.$store.getters.GET_FORM_STATUS('tabs').filter(function (e) {
+        return parseInt(e.parent) === 0;
+      });
     }
   },
   created: function created() {},
@@ -2805,7 +2807,9 @@ __webpack_require__.r(__webpack_exports__);
       return date;
     },
     resultsSections: function resultsSections() {
-      return this.$store.getters.GET_FORM_STATUS('resultsSections');
+      return this.$store.getters.GET_FORM_STATUS('resultsSections').filter(function (e) {
+        return parseInt(e.parent) === 0;
+      });
     }
   },
   created: function created() {},
@@ -2824,6 +2828,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _icons_Checkmark__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../icons/Checkmark */ "./public/js/Vue/components/icons/Checkmark.vue");
+/* harmony import */ var _InstructionBlockStandard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./InstructionBlockStandard */ "./public/js/Vue/components/form/results-templates/InstructionBlockStandard.vue");
+/* harmony import */ var _InstructionBlockCategories__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./InstructionBlockCategories */ "./public/js/Vue/components/form/results-templates/InstructionBlockCategories.vue");
 //
 //
 //
@@ -2841,6 +2847,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -2857,7 +2865,9 @@ __webpack_require__.r(__webpack_exports__);
     return {};
   },
   components: {
-    Checkmark: _icons_Checkmark__WEBPACK_IMPORTED_MODULE_0__["default"]
+    Checkmark: _icons_Checkmark__WEBPACK_IMPORTED_MODULE_0__["default"],
+    StandardResults: _InstructionBlockStandard__WEBPACK_IMPORTED_MODULE_1__["default"],
+    CategorizedResults: _InstructionBlockCategories__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   methods: {},
   computed: {
@@ -2866,6 +2876,24 @@ __webpack_require__.r(__webpack_exports__);
 
       return this.$store.getters.POSTS_FILTERED_BY_ANSWERS.filter(function (e) {
         return e.retirement_tool_timeframe.indexOf(_this.section.slug) > -1 && e.retirement_tool_category.indexOf(_this.category.slug) > -1;
+      });
+    },
+    resultsSubSections: function resultsSubSections() {
+      var _this2 = this;
+
+      return this.$store.getters.GET_FORM_STATUS('tabs').filter(function (e) {
+        return _this2.filteredPosts.some(function (elem) {
+          return elem.retirement_tool_timeframe.indexOf(e.slug) > -1;
+        }) && parseInt(e.parent) != 0;
+      });
+    },
+    resultsSubCategories: function resultsSubCategories() {
+      var _this3 = this;
+
+      return this.$store.getters.GET_FORM_STATUS('subCategories').filter(function (e) {
+        return _this3.filteredPosts.some(function (elem) {
+          return elem.retirement_tool_category.indexOf(e.slug) > -1;
+        }) && parseInt(e.parent) != 0;
       });
     }
   },
@@ -24430,12 +24458,15 @@ var render = function() {
             "div",
             { staticClass: "results-timeline-tabs-content-header-title" },
             [
-              _c("span", { staticClass: "italics" }, [
-                _vm._v(_vm._s(_vm.section.secondary_title) + " ")
-              ]),
               _c("span", { staticClass: "strong" }, [
                 _vm._v(_vm._s(_vm.section.name))
-              ])
+              ]),
+              _vm._v(" "),
+              _vm.section.secondary_title.length > 0
+                ? _c("span", { staticClass: "italics" }, [
+                    _vm._v(_vm._s(_vm.section.secondary_title) + " ")
+                  ])
+                : _vm._e()
             ]
           ),
           _vm._v(" "),
@@ -24492,55 +24523,75 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { class: _vm.category.slug },
-    [
-      _vm.filteredPosts.length > 0
-        ? _c(
-            "div",
-            {
-              staticClass:
-                "results-timeline-tabs-content-container-header-title printable"
-            },
-            [
-              _vm.category.secondary_title.length > 0
-                ? _c("span", { staticClass: "italics" }, [
-                    _vm._v(_vm._s(_vm.category.secondary_title) + " ")
-                  ])
-                : _vm._e(),
-              _c("span", { staticClass: "strong" }, [
-                _vm._v(_vm._s(_vm.category.name))
-              ])
-            ]
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _vm._l(_vm.filteredPosts, function(post, index) {
-        return _c("div", { key: index, staticClass: "instruction-block" }, [
-          _c(
-            "div",
-            { staticClass: "pr-2" },
-            [_c("checkmark", { attrs: { color: "#00A69A", fill: "#00A69A" } })],
-            1
-          ),
-          _vm._v(" "),
-          _c("div", [
-            _c("div", {
-              staticClass: "instruction-block-text-strong",
-              domProps: { innerHTML: _vm._s(post.title.rendered) }
-            }),
-            _vm._v(" "),
-            _c("div", {
-              staticClass: "instruction-block-text",
-              domProps: { innerHTML: _vm._s(post.content.rendered) }
+  return _c("div", { class: _vm.category.slug }, [
+    _vm.filteredPosts.length > 0
+      ? _c(
+          "div",
+          {
+            staticClass:
+              "results-timeline-tabs-content-container-header-title printable"
+          },
+          [
+            _vm.category.secondary_title.length > 0
+              ? _c("span", { staticClass: "italics" }, [
+                  _vm._v(_vm._s(_vm.category.secondary_title) + " ")
+                ])
+              : _vm._e(),
+            _c("span", { staticClass: "strong" }, [
+              _vm._v(_vm._s(_vm.category.name))
+            ])
+          ]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.resultsSubSections.length === 0 && _vm.resultsSubCategories.length === 0
+      ? _c(
+          "div",
+          _vm._l(_vm.filteredPosts, function(post, index) {
+            return _c("standard-results", {
+              key: index,
+              staticClass: "instruction-block",
+              attrs: { post: post }
             })
-          ])
-        ])
-      })
-    ],
-    2
-  )
+          }),
+          1
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.resultsSubSections.length > 0
+      ? _c(
+          "div",
+          _vm._l(_vm.resultsSubSections, function(section, index) {
+            return _c("categorized-results", {
+              key: index,
+              attrs: {
+                filteredPosts: _vm.filteredPosts,
+                category: section,
+                type: "timeframe"
+              }
+            })
+          }),
+          1
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.resultsSubCategories.length > 0
+      ? _c(
+          "div",
+          _vm._l(_vm.resultsSubCategories, function(category, index) {
+            return _c("categorized-results", {
+              key: index,
+              attrs: {
+                filteredPosts: _vm.filteredPosts,
+                category: category,
+                type: "category"
+              }
+            })
+          }),
+          1
+        )
+      : _vm._e()
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
