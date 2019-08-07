@@ -38,14 +38,20 @@ export default {
     CategorizedResults
   },
   methods: {
-
+    sortTerms(a,b) {
+        if (parseInt(a.menu_order) < parseInt(b.menu_order))
+          return -1;
+        if (parseInt(a.menu_order) > parseInt(b.menu_order))
+          return 1;
+        return 0;
+    }
   },
   computed: {
     filteredPosts() {
       if (this.tabs) {
-        return this.$store.getters.POSTS_FILTERED_BY_MONTH.filter(e => e.retirement_tool_category.indexOf(this.section.slug) >-1 )
+        return this.$store.getters.POSTS_FILTERED_BY_MONTH.filter(e => e.retirement_tool_category.indexOf(this.section.slug) >-1 ).sort(this.sortTerms)
       }
-      return this.allPosts.filter(e => e.retirement_tool_category.indexOf(this.section.slug) >-1);
+      return this.allPosts.filter(e => e.retirement_tool_category.indexOf(this.section.slug) >-1).sort(this.sortTerms);
     },
     allPosts() {
       return this.$store.getters.POSTS_FILTERED_BY_ANSWERS;

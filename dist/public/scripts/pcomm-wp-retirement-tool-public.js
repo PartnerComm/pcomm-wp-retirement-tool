@@ -3369,7 +3369,13 @@ __webpack_require__.r(__webpack_exports__);
     StandardResults: _InstructionBlockStandard__WEBPACK_IMPORTED_MODULE_0__["default"],
     CategorizedResults: _InstructionBlockCategories__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  methods: {},
+  methods: {
+    sortTerms: function sortTerms(a, b) {
+      if (parseInt(a.menu_order) < parseInt(b.menu_order)) return -1;
+      if (parseInt(a.menu_order) > parseInt(b.menu_order)) return 1;
+      return 0;
+    }
+  },
   computed: {
     filteredPosts: function filteredPosts() {
       var _this = this;
@@ -3377,12 +3383,12 @@ __webpack_require__.r(__webpack_exports__);
       if (this.tabs) {
         return this.$store.getters.POSTS_FILTERED_BY_MONTH.filter(function (e) {
           return e.retirement_tool_category.indexOf(_this.section.slug) > -1;
-        });
+        }).sort(this.sortTerms);
       }
 
       return this.allPosts.filter(function (e) {
         return e.retirement_tool_category.indexOf(_this.section.slug) > -1;
-      });
+      }).sort(this.sortTerms);
     },
     allPosts: function allPosts() {
       return this.$store.getters.POSTS_FILTERED_BY_ANSWERS;
