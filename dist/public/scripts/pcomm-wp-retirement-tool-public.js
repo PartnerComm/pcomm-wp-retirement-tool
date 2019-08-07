@@ -2229,7 +2229,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {},
   mounted: function mounted() {
     this.$store.dispatch('GET_FORM_INTRO_PATHS');
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 250);
   }
 });
 
