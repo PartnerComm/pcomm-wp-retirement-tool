@@ -2204,6 +2204,15 @@ __webpack_require__.r(__webpack_exports__);
         this.$store.dispatch('SUBMIT_COMPLETED_FORM');
       }
     },
+    makeBoldItalic: function makeBoldItalic(answer) {
+      if (answer.includes('`')) {
+        var rx = answer.match(/`(.*)`/)[1];
+        var re = answer.match(/`(.*)`/)[0];
+        answer = answer.replace(re, "<span>" + rx + "</span>");
+      }
+
+      return answer;
+    },
     sortTerms: function sortTerms(a, b) {
       if (parseInt(a.term_order) < parseInt(b.term_order)) return -1;
       if (parseInt(a.term_order) > parseInt(b.term_order)) return 1;
@@ -23965,7 +23974,13 @@ var render = function() {
                       1
                     ),
                     _vm._v(" "),
-                    _c("span", [_vm._v(_vm._s(path.name))])
+                    _c("span", {
+                      staticClass: "taxonomy-mark-up",
+                      class: path.slug,
+                      domProps: {
+                        innerHTML: _vm._s(_vm.makeBoldItalic(path.name))
+                      }
+                    })
                   ]
                 )
               ]

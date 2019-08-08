@@ -8,7 +8,7 @@
         <div class="form-answer-icon">
           <radio :color="((currentSelection && currentSelection.id === path.id) || !currentSelection) ? '#00A69A':'#C6C6C6' " :fill="(currentSelection && currentSelection.id === path.id) ? '#00A69A' : '#FFFFFF'" />
         </div>
-        <span>{{path.name}}</span>
+        <span class="taxonomy-mark-up" :class="path.slug" v-html="makeBoldItalic(path.name)"></span>
       </div>
     </div>
     <form-buttons @navigate-forward="setActivePath"/>
@@ -57,6 +57,15 @@ export default {
       } else {
         this.$store.dispatch('SUBMIT_COMPLETED_FORM');
       }
+    },
+    makeBoldItalic(answer) {
+    if (answer.includes('`')) {
+        var rx = answer.match(/`(.*)`/)[1];
+        var re = answer.match(/`(.*)`/)[0];
+        answer = answer.replace(re, "<span>" + rx + "</span>");
+    }
+    return answer
+
     },
     sortTerms(a,b) {
         if (parseInt(a.term_order) < parseInt(b.term_order))
