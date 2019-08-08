@@ -2694,6 +2694,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -2714,9 +2717,16 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     tabs: function tabs() {
+      var _this = this;
+
       return this.$store.getters.GET_FORM_STATUS('tabs').filter(function (e) {
-        return parseInt(e.parent) === 0;
+        return parseInt(e.parent) === 0 && _this.allPosts.filter(function (elem) {
+          return elem.retirement_tool_timeframe.indexOf(e.slug) > -1;
+        }).length > 0;
       });
+    },
+    allPosts: function allPosts() {
+      return this.$store.getters.POSTS_FILTERED_BY_ANSWERS;
     }
   },
   created: function created() {},
@@ -2751,14 +2761,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     section: {
       type: Object,
-      required: true
+      required: false
     }
   },
   data: function data() {
@@ -2783,9 +2792,13 @@ __webpack_require__.r(__webpack_exports__);
     filteredPosts: function filteredPosts() {
       var _this = this;
 
-      return this.$store.getters.POSTS_FILTERED_BY_ANSWERS.filter(function (e) {
-        return e.retirement_tool_timeframe.indexOf(_this.section.slug) > -1;
-      });
+      if (this.section) {
+        return this.$store.getters.POSTS_FILTERED_BY_ANSWERS.filter(function (e) {
+          return e.retirement_tool_timeframe.indexOf(_this.section.slug) > -1;
+        });
+      }
+
+      return this.$store.getters.POSTS_FILTERED_BY_ANSWERS;
     },
     retirementDate: function retirementDate() {
       return this.$store.getters.GET_FORM_STATUS('date');
@@ -2854,7 +2867,7 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     section: {
       type: Object,
-      required: true
+      required: false
     },
     category: {
       type: Object,
@@ -2874,8 +2887,14 @@ __webpack_require__.r(__webpack_exports__);
     filteredPosts: function filteredPosts() {
       var _this = this;
 
+      if (this.section) {
+        return this.$store.getters.POSTS_FILTERED_BY_ANSWERS.filter(function (e) {
+          return e.retirement_tool_timeframe.indexOf(_this.section.slug) > -1 && e.retirement_tool_category.indexOf(_this.category.slug) > -1;
+        });
+      }
+
       return this.$store.getters.POSTS_FILTERED_BY_ANSWERS.filter(function (e) {
-        return e.retirement_tool_timeframe.indexOf(_this.section.slug) > -1 && e.retirement_tool_category.indexOf(_this.category.slug) > -1;
+        return e.retirement_tool_category.indexOf(_this.category.slug) > -1;
       });
     },
     resultsSubSections: function resultsSubSections() {
@@ -24401,7 +24420,7 @@ var render = function() {
       _vm._v(" "),
       _c("results-timeline-content"),
       _vm._v(" "),
-      _vm.tabs
+      _vm.tabs.length > 0
         ? _c(
             "div",
             { staticClass: "results-timeline-tabs" },
@@ -24418,6 +24437,15 @@ var render = function() {
               )
             }),
             0
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.tabs.length === 0
+        ? _c(
+            "div",
+            { staticClass: "results-timeline-tabs" },
+            [_c("form-printable-results-content")],
+            1
           )
         : _vm._e()
     ],
@@ -24451,24 +24479,26 @@ var render = function() {
         "div",
         {
           staticClass: "results-timeline-tabs-content-container",
-          class: _vm.section.slug
+          class: [_vm.section ? _vm.section.slug : ""]
         },
         [
-          _c(
-            "div",
-            { staticClass: "results-timeline-tabs-content-header-title" },
-            [
-              _c("span", { staticClass: "strong" }, [
-                _vm._v(_vm._s(_vm.section.name))
-              ]),
-              _vm._v(" "),
-              _vm.section.secondary_title.length > 0
-                ? _c("span", { staticClass: "italics" }, [
-                    _vm._v(_vm._s(_vm.section.secondary_title) + " ")
-                  ])
-                : _vm._e()
-            ]
-          ),
+          _vm.section
+            ? _c(
+                "div",
+                { staticClass: "results-timeline-tabs-content-header-title" },
+                [
+                  _c("span", { staticClass: "strong" }, [
+                    _vm._v(_vm._s(_vm.section.name))
+                  ]),
+                  _vm._v(" "),
+                  _vm.section.secondary_title.length > 0
+                    ? _c("span", { staticClass: "italics" }, [
+                        _vm._v(_vm._s(_vm.section.secondary_title) + " ")
+                      ])
+                    : _vm._e()
+                ]
+              )
+            : _vm._e(),
           _vm._v(" "),
           _vm.retirementDate
             ? _c(

@@ -23,7 +23,7 @@ export default {
   props: {
     section: {
       type: Object,
-      required: true
+      required: false
     },
     category: {
       type: Object,
@@ -45,7 +45,10 @@ export default {
   },
   computed: {
     filteredPosts() {
+      if(this.section) {
         return this.$store.getters.POSTS_FILTERED_BY_ANSWERS.filter(e => e.retirement_tool_timeframe.indexOf(this.section.slug) >-1 && e.retirement_tool_category.indexOf(this.category.slug) >-1 )
+      }
+      return this.$store.getters.POSTS_FILTERED_BY_ANSWERS.filter(e => e.retirement_tool_category.indexOf(this.category.slug) >-1 )
     },
     resultsSubSections() {
       return this.$store.getters.GET_FORM_STATUS('tabs').filter(e => this.filteredPosts.some(elem => elem.retirement_tool_timeframe.indexOf(e.slug) > -1) && parseInt(e.parent) != 0);
