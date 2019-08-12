@@ -4,7 +4,7 @@
     <div class="question-subtitle">(Check all that apply)</div>
     <div class="question-description" v-if="question.description" v-html="question.description"></div> 
     <div class="answers">
-        <div class="form-option" v-for="(answer,index) in this.question.answers" :key="index" @click="selectAnswer(answer)" :class="{'form-option-last': answer.slug === 'none-of-the-above', 'form-option-first': index === 0}">
+        <div class="form-option" v-for="(answer,index) in sortedAnswers" :key="index" @click="selectAnswer(answer)" :class="{'form-option-last': answer.slug === 'none-of-the-above', 'form-option-first': index === 0}">
           <form-answer 
           :question="question" 
           :data="answer" 
@@ -60,11 +60,20 @@ export default {
       console.log(url.firstChild);
       return url.firstChild;
     },
-    
+    sortTerms(a,b) {
+        if (parseInt(a.term_order) < parseInt(b.term_order))
+          return -1;
+        if (parseInt(a.term_order) > parseInt(b.term_order))
+          return 1;
+        return 0;
+    }
   },
   computed: {
     currentSelection() {
       return this.$store.getters.GET_FORM_STATUS('currentSelection');
+    },
+    sortedAnswers() {
+      return this.question.answers.sort(this.sortTerms);
     }
   },
   created() {

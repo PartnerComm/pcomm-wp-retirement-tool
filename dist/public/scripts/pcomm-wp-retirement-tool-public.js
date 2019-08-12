@@ -2611,11 +2611,19 @@ __webpack_require__.r(__webpack_exports__);
       console.log(url);
       console.log(url.firstChild);
       return url.firstChild;
+    },
+    sortTerms: function sortTerms(a, b) {
+      if (parseInt(a.term_order) < parseInt(b.term_order)) return -1;
+      if (parseInt(a.term_order) > parseInt(b.term_order)) return 1;
+      return 0;
     }
   },
   computed: {
     currentSelection: function currentSelection() {
       return this.$store.getters.GET_FORM_STATUS('currentSelection');
+    },
+    sortedAnswers: function sortedAnswers() {
+      return this.question.answers.sort(this.sortTerms);
     }
   },
   created: function created() {},
@@ -24283,7 +24291,7 @@ var render = function() {
     _c(
       "div",
       { staticClass: "answers" },
-      _vm._l(this.question.answers, function(answer, index) {
+      _vm._l(_vm.sortedAnswers, function(answer, index) {
         return _c(
           "div",
           {
