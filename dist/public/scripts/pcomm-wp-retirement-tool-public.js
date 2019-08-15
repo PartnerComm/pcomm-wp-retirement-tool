@@ -3497,11 +3497,19 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _icons_Radio__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../icons/Radio */ "./public/js/Vue/components/icons/Radio.vue");
-/* harmony import */ var _icons_Checkmark__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../icons/Checkmark */ "./public/js/Vue/components/icons/Checkmark.vue");
-/* harmony import */ var _icons_Print__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../icons/Print */ "./public/js/Vue/components/icons/Print.vue");
-/* harmony import */ var _icons_CheckNoCircle__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../icons/CheckNoCircle */ "./public/js/Vue/components/icons/CheckNoCircle.vue");
-/* harmony import */ var _icons_CircledPlus__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../icons/CircledPlus */ "./public/js/Vue/components/icons/CircledPlus.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _icons_Radio__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../icons/Radio */ "./public/js/Vue/components/icons/Radio.vue");
+/* harmony import */ var _icons_Checkmark__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../icons/Checkmark */ "./public/js/Vue/components/icons/Checkmark.vue");
+/* harmony import */ var _icons_Print__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../icons/Print */ "./public/js/Vue/components/icons/Print.vue");
+/* harmony import */ var _icons_CheckNoCircle__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../icons/CheckNoCircle */ "./public/js/Vue/components/icons/CheckNoCircle.vue");
+/* harmony import */ var _icons_CircledPlus__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../icons/CircledPlus */ "./public/js/Vue/components/icons/CircledPlus.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -3538,19 +3546,40 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   components: {
-    Radio: _icons_Radio__WEBPACK_IMPORTED_MODULE_0__["default"],
-    Checkmark: _icons_Checkmark__WEBPACK_IMPORTED_MODULE_1__["default"],
-    Print: _icons_Print__WEBPACK_IMPORTED_MODULE_2__["default"],
-    CheckNoCircle: _icons_CheckNoCircle__WEBPACK_IMPORTED_MODULE_3__["default"],
-    CircledPlus: _icons_CircledPlus__WEBPACK_IMPORTED_MODULE_4__["default"]
+    Radio: _icons_Radio__WEBPACK_IMPORTED_MODULE_1__["default"],
+    Checkmark: _icons_Checkmark__WEBPACK_IMPORTED_MODULE_2__["default"],
+    Print: _icons_Print__WEBPACK_IMPORTED_MODULE_3__["default"],
+    CheckNoCircle: _icons_CheckNoCircle__WEBPACK_IMPORTED_MODULE_4__["default"],
+    CircledPlus: _icons_CircledPlus__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   methods: {
     handleClick: function handleClick() {
       this.showSelection = !this.showSelection;
     },
-    activatePrinting: function activatePrinting() {
-      this.$store.dispatch('UPDATE_PRINT_RESULTS', true);
-    },
+    activatePrinting: function () {
+      var _activatePrinting = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                this.$store.dispatch('UPDATE_PRINT_RESULTS', true);
+
+              case 1:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function activatePrinting() {
+        return _activatePrinting.apply(this, arguments);
+      }
+
+      return activatePrinting;
+    }(),
     resetForm: function resetForm() {
       this.$store.dispatch('RESET_FORM');
     }
@@ -24501,7 +24530,7 @@ var render = function() {
     ? _c(
         "div",
         {
-          staticClass: "results-timeline-tabs-content-container",
+          staticClass: "results-timeline-tabs-content-container printing",
           class: [_vm.section ? _vm.section.slug : ""]
         },
         [
@@ -43490,18 +43519,46 @@ var actions = {
     var payload = value;
     context.commit('MUTATE_FORM_RESULTS', payload);
   },
-  UPDATE_PRINT_RESULTS: function UPDATE_PRINT_RESULTS(context, value) {
-    var payload = value;
-    context.commit('MUTATE_PRINT_RESULTS', payload);
-  },
-  SUBMIT_COMPLETED_FORM: function () {
-    var _SUBMIT_COMPLETED_FORM = _asyncToGenerator(
+  UPDATE_PRINT_RESULTS: function () {
+    var _UPDATE_PRINT_RESULTS = _asyncToGenerator(
     /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(context, value) {
-      var selectedAnswers, monthNames;
+      var payload;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
+            case 0:
+              payload = value;
+              _context.next = 3;
+              return context.commit('MUTATE_PRINT_RESULTS', payload);
+
+            case 3:
+              if (value === true) {
+                window.print();
+              }
+
+            case 4:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    function UPDATE_PRINT_RESULTS(_x, _x2) {
+      return _UPDATE_PRINT_RESULTS.apply(this, arguments);
+    }
+
+    return UPDATE_PRINT_RESULTS;
+  }(),
+  SUBMIT_COMPLETED_FORM: function () {
+    var _SUBMIT_COMPLETED_FORM = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(context, value) {
+      var selectedAnswers, monthNames;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
             case 0:
               context.dispatch('COMMIT_CURRENT_SELECTION');
               selectedAnswers = context.getters.GET_FORM_STATUS('formAnswers');
@@ -43528,13 +43585,13 @@ var actions = {
 
             case 7:
             case "end":
-              return _context.stop();
+              return _context2.stop();
           }
         }
-      }, _callee);
+      }, _callee2);
     }));
 
-    function SUBMIT_COMPLETED_FORM(_x, _x2) {
+    function SUBMIT_COMPLETED_FORM(_x3, _x4) {
       return _SUBMIT_COMPLETED_FORM.apply(this, arguments);
     }
 
@@ -43567,17 +43624,17 @@ var actions = {
   GET_FORM_INTRO_PATHS: function () {
     var _GET_FORM_INTRO_PATHS = _asyncToGenerator(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(context) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(context) {
       var response, payload;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context3.prev = _context3.next) {
             case 0:
-              _context2.next = 2;
+              _context3.next = 2;
               return axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/wp-json/wp/v2/retirement_tool_question?parent=0&per_page=100');
 
             case 2:
-              response = _context2.sent;
+              response = _context3.sent;
 
               if (response.status === 200) {
                 payload = response.data;
@@ -43589,13 +43646,13 @@ var actions = {
 
             case 4:
             case "end":
-              return _context2.stop();
+              return _context3.stop();
           }
         }
-      }, _callee2);
+      }, _callee3);
     }));
 
-    function GET_FORM_INTRO_PATHS(_x3) {
+    function GET_FORM_INTRO_PATHS(_x5) {
       return _GET_FORM_INTRO_PATHS.apply(this, arguments);
     }
 
@@ -43604,17 +43661,17 @@ var actions = {
   GET_TAB_LABELS: function () {
     var _GET_TAB_LABELS = _asyncToGenerator(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(context) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(context) {
       var response, payload;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context4.prev = _context4.next) {
             case 0:
-              _context3.next = 2;
+              _context4.next = 2;
               return axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/wp-json/wp/v2/retirement_tool_timeframe?per_page=100');
 
             case 2:
-              response = _context3.sent;
+              response = _context4.sent;
 
               if (response.status === 200) {
                 payload = response.data;
@@ -43628,13 +43685,13 @@ var actions = {
 
             case 4:
             case "end":
-              return _context3.stop();
+              return _context4.stop();
           }
         }
-      }, _callee3);
+      }, _callee4);
     }));
 
-    function GET_TAB_LABELS(_x4) {
+    function GET_TAB_LABELS(_x6) {
       return _GET_TAB_LABELS.apply(this, arguments);
     }
 
@@ -43654,47 +43711,6 @@ var actions = {
   GET_SUBCATEGORIES: function () {
     var _GET_SUBCATEGORIES = _asyncToGenerator(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(context) {
-      var response, payload;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-        while (1) {
-          switch (_context4.prev = _context4.next) {
-            case 0:
-              _context4.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/wp-json/wp/v2/retirement_tool_category?per_page=100');
-
-            case 2:
-              response = _context4.sent;
-
-              if (response.status === 200) {
-                payload = response.data;
-                context.commit('MUTATE_KEY', {
-                  key: 'subCategories',
-                  value: payload
-                });
-                context.commit('MUTATE_KEY', {
-                  key: 'categoriesFetched',
-                  value: true
-                });
-              }
-
-            case 4:
-            case "end":
-              return _context4.stop();
-          }
-        }
-      }, _callee4);
-    }));
-
-    function GET_SUBCATEGORIES(_x5) {
-      return _GET_SUBCATEGORIES.apply(this, arguments);
-    }
-
-    return GET_SUBCATEGORIES;
-  }(),
-  GET_RETIREMENT_TOOL_RESULTS_SECTIONS: function () {
-    var _GET_RETIREMENT_TOOL_RESULTS_SECTIONS = _asyncToGenerator(
-    /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(context) {
       var response, payload;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
@@ -43710,11 +43726,11 @@ var actions = {
               if (response.status === 200) {
                 payload = response.data;
                 context.commit('MUTATE_KEY', {
-                  key: 'resultsSections',
+                  key: 'subCategories',
                   value: payload
                 });
                 context.commit('MUTATE_KEY', {
-                  key: 'sectionsFetched',
+                  key: 'categoriesFetched',
                   value: true
                 });
               }
@@ -43727,14 +43743,14 @@ var actions = {
       }, _callee5);
     }));
 
-    function GET_RETIREMENT_TOOL_RESULTS_SECTIONS(_x6) {
-      return _GET_RETIREMENT_TOOL_RESULTS_SECTIONS.apply(this, arguments);
+    function GET_SUBCATEGORIES(_x7) {
+      return _GET_SUBCATEGORIES.apply(this, arguments);
     }
 
-    return GET_RETIREMENT_TOOL_RESULTS_SECTIONS;
+    return GET_SUBCATEGORIES;
   }(),
-  GET_RETIREMENT_TOOL_POSTS: function () {
-    var _GET_RETIREMENT_TOOL_POSTS = _asyncToGenerator(
+  GET_RETIREMENT_TOOL_RESULTS_SECTIONS: function () {
+    var _GET_RETIREMENT_TOOL_RESULTS_SECTIONS = _asyncToGenerator(
     /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(context) {
       var response, payload;
@@ -43743,10 +43759,51 @@ var actions = {
           switch (_context6.prev = _context6.next) {
             case 0:
               _context6.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/wp-json/wp/v2/retirement_tool_post?per_page=100');
+              return axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/wp-json/wp/v2/retirement_tool_category?per_page=100');
 
             case 2:
               response = _context6.sent;
+
+              if (response.status === 200) {
+                payload = response.data;
+                context.commit('MUTATE_KEY', {
+                  key: 'resultsSections',
+                  value: payload
+                });
+                context.commit('MUTATE_KEY', {
+                  key: 'sectionsFetched',
+                  value: true
+                });
+              }
+
+            case 4:
+            case "end":
+              return _context6.stop();
+          }
+        }
+      }, _callee6);
+    }));
+
+    function GET_RETIREMENT_TOOL_RESULTS_SECTIONS(_x8) {
+      return _GET_RETIREMENT_TOOL_RESULTS_SECTIONS.apply(this, arguments);
+    }
+
+    return GET_RETIREMENT_TOOL_RESULTS_SECTIONS;
+  }(),
+  GET_RETIREMENT_TOOL_POSTS: function () {
+    var _GET_RETIREMENT_TOOL_POSTS = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(context) {
+      var response, payload;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              _context7.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/wp-json/wp/v2/retirement_tool_post?per_page=100');
+
+            case 2:
+              response = _context7.sent;
 
               if (response.status === 200) {
                 payload = response.data;
@@ -43769,13 +43826,13 @@ var actions = {
 
             case 4:
             case "end":
-              return _context6.stop();
+              return _context7.stop();
           }
         }
-      }, _callee6);
+      }, _callee7);
     }));
 
-    function GET_RETIREMENT_TOOL_POSTS(_x7) {
+    function GET_RETIREMENT_TOOL_POSTS(_x9) {
       return _GET_RETIREMENT_TOOL_POSTS.apply(this, arguments);
     }
 
@@ -43848,21 +43905,21 @@ var actions = {
   SUBMIT_FEEDBACK: function () {
     var _SUBMIT_FEEDBACK = _asyncToGenerator(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(context) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(context) {
       var post, data, response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
         while (1) {
-          switch (_context7.prev = _context7.next) {
+          switch (_context8.prev = _context8.next) {
             case 0:
               post = context.getters.FEEDBACK_NEW_POST;
               data = new FormData();
               data.append('title', moment__WEBPACK_IMPORTED_MODULE_3___default()().format('LL hh:mma'));
               data.append('content', 'Rating: ' + post.rating + '.  Feedback: ' + post.feedback);
-              _context7.next = 6;
+              _context8.next = 6;
               return WpAjaxRepository.post('feedback_post', data);
 
             case 6:
-              response = _context7.sent;
+              response = _context8.sent;
 
               if (response && response.data.data.code === 201) {
                 context.dispatch('UPDATE_FEEDBACK_FORM', false);
@@ -43872,13 +43929,13 @@ var actions = {
 
             case 8:
             case "end":
-              return _context7.stop();
+              return _context8.stop();
           }
         }
-      }, _callee7);
+      }, _callee8);
     }));
 
-    function SUBMIT_FEEDBACK(_x8) {
+    function SUBMIT_FEEDBACK(_x10) {
       return _SUBMIT_FEEDBACK.apply(this, arguments);
     }
 

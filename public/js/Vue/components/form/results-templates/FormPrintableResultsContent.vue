@@ -1,5 +1,5 @@
 <template>
-  <div class="results-timeline-tabs-content-container" :class="[(section) ? section.slug : '']" v-if="filteredPosts.length > 0">
+  <div class="results-timeline-tabs-content-container printing" :class="[(section) ? section.slug : '']" v-if="filteredPosts.length > 0">
         <div class="results-timeline-tabs-content-header-title" v-if="section">
           <span class="strong">{{section.name}}</span>&nbsp;<span class="italics" v-if="section.secondary_title.length > 0">{{section.secondary_title}} </span>
         </div>

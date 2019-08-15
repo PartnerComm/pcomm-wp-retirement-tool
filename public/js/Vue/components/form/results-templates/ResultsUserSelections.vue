@@ -47,7 +47,7 @@ export default {
     handleClick() {
        this.showSelection = !this.showSelection;
     },
-    activatePrinting() {
+    async activatePrinting() {
       this.$store.dispatch('UPDATE_PRINT_RESULTS', true);
     },
     resetForm() {

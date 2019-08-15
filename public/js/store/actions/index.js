@@ -29,9 +29,12 @@ const actions = {
     const payload = value;
     context.commit('MUTATE_FORM_RESULTS', payload);
   },
-  UPDATE_PRINT_RESULTS: (context, value) => {
+  UPDATE_PRINT_RESULTS: async (context, value) => {
     const payload = value;
-    context.commit('MUTATE_PRINT_RESULTS', payload);
+    await context.commit('MUTATE_PRINT_RESULTS', payload);
+    if (value === true) {
+      window.print();
+    }
   },
   SUBMIT_COMPLETED_FORM: async (context, value) => {
     context.dispatch('COMMIT_CURRENT_SELECTION');
