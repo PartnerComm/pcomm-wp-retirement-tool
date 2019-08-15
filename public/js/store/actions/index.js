@@ -22,7 +22,7 @@ const actions = {
     const payload = value;
     context.commit('MUTATE_FORM_QUESTIONS', payload);
     if (payload === true) {
-      window.scrollTo(0,220);
+      setTimeout(window.scrollTo(0,220), 100);
     }
   },
   UPDATE_FORM_RESULTS: (context, value) => {
@@ -60,7 +60,7 @@ const actions = {
     })
     context.commit('MUTATE_FORM_QUESTIONS', false);
     context.commit('MUTATE_FORM_RESULTS', true);
-    window.scrollTo(0,0);
+      setTimeout(window.scrollTo(0,0), 100);
   },
   NAVIGATE_STEPS: (context, value) => {
     const currentStep = context.getters.GET_FORM_STEP;
@@ -73,7 +73,7 @@ const actions = {
     }
     const payload = newStep;
     context.commit('MUTATE_FORM_STEP', payload);
-    window.scrollTo(0,220);
+    setTimeout(window.scrollTo(0,220), 100);
   },
   RESET_FORM_DEFAULTS: (context) => {
     context.commit('MUTATE_KEY', {key: 'formAnswers', value: []});

@@ -43512,7 +43512,7 @@ var actions = {
     context.commit('MUTATE_FORM_QUESTIONS', payload);
 
     if (payload === true) {
-      window.scrollTo(0, 220);
+      setTimeout(window.scrollTo(0, 220), 100);
     }
   },
   UPDATE_FORM_RESULTS: function UPDATE_FORM_RESULTS(context, value) {
@@ -43581,7 +43581,7 @@ var actions = {
               });
               context.commit('MUTATE_FORM_QUESTIONS', false);
               context.commit('MUTATE_FORM_RESULTS', true);
-              window.scrollTo(0, 0);
+              setTimeout(window.scrollTo(0, 0), 100);
 
             case 7:
             case "end":
@@ -43610,7 +43610,7 @@ var actions = {
 
     var payload = newStep;
     context.commit('MUTATE_FORM_STEP', payload);
-    window.scrollTo(0, 220);
+    setTimeout(window.scrollTo(0, 220), 100);
   },
   RESET_FORM_DEFAULTS: function RESET_FORM_DEFAULTS(context) {
     context.commit('MUTATE_KEY', {
