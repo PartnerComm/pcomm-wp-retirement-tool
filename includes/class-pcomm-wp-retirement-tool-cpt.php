@@ -17,6 +17,7 @@
          $this->retirement_post_slug = 'retirement_tool_post';
          add_action('init', [$this, 'register_retirement_cpt'], 10);
          add_action('init', [$this, 'register_feedback_cpt'], 10);
+         add_action('admin_menu', [$this, 'feedback_summary_page'], 50);
      }
 
      public function register_retirement_cpt()
@@ -81,6 +82,11 @@
                 ];
 
          register_post_type($post_type, $args);
+     }
+     public function feedback_summary_page() {
+        add_submenu_page("edit.php?post_type=retirement_feedback", "Feedback Summary",Feedback . " " . Summary, "edit_posts", "feedback-summary", function() {
+            include(realpath(__DIR__).'/../admin/partials/pcomm-wp-retirement-tool-feedback-summary.php');
+        });
      }
  }
 

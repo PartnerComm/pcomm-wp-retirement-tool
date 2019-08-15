@@ -1807,9 +1807,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     showFeedbackButton: function showFeedbackButton() {
-      if (window.localStorage.getItem("feedback") != "complete") {
-        this.$store.dispatch('UPDATE_FEEDBACK_BUTTON', true);
-      }
+      // if (window.localStorage.getItem("feedback") != "complete") {
+      this.$store.dispatch('UPDATE_FEEDBACK_BUTTON', true); // }
     },
     closeFeedback: function closeFeedback() {
       this.$store.dispatch('UPDATE_FEEDBACK_BUTTON', false);
@@ -1826,7 +1825,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {},
   mounted: function mounted() {
-    setTimeout(this.showFeedbackButton, 60000); // this.showFeedbackButton(); // Use for debug to avoid the minute wait
+    // setTimeout(this.showFeedbackButton, 60000);
+    this.showFeedbackButton(); // Use for debug to avoid the minute wait
   }
 });
 
@@ -43915,10 +43915,11 @@ var actions = {
               data = new FormData();
               data.append('title', moment__WEBPACK_IMPORTED_MODULE_3___default()().format('LL hh:mma'));
               data.append('content', 'Rating: ' + post.rating + '.  Feedback: ' + post.feedback);
-              _context8.next = 6;
+              data.append('rating', post.rating);
+              _context8.next = 7;
               return WpAjaxRepository.post('feedback_post', data);
 
-            case 6:
+            case 7:
               response = _context8.sent;
 
               if (response && response.data.data.code === 201) {
@@ -43927,7 +43928,7 @@ var actions = {
                 window.localStorage.setItem("feedback", "complete");
               }
 
-            case 8:
+            case 9:
             case "end":
               return _context8.stop();
           }

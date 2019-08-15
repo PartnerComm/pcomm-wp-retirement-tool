@@ -186,6 +186,7 @@ const actions = {
     const data = new FormData();
     data.append('title', moment().format('LL hh:mma'));
     data.append('content', 'Rating: ' + post.rating + '.  Feedback: ' + post.feedback);
+    data.append('rating', post.rating);
     const response = await WpAjaxRepository.post('feedback_post', data);
 
     if (response && response.data.data.code === 201) {
