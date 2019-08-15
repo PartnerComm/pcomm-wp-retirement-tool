@@ -19,9 +19,9 @@ export default {
   },
   methods: {
     showFeedbackButton() {
-      // if (window.localStorage.getItem("feedback") != "complete") {
+      if (window.localStorage.getItem("feedback") != "complete") {
         this.$store.dispatch('UPDATE_FEEDBACK_BUTTON', true);
-      // }
+      }
     },
     closeFeedback() {
       this.$store.dispatch('UPDATE_FEEDBACK_BUTTON', false);
@@ -40,8 +40,8 @@ export default {
 
   },
   mounted() {
-    // setTimeout(this.showFeedbackButton, 60000);
-    this.showFeedbackButton(); // Use for debug to avoid the minute wait
+    setTimeout(this.showFeedbackButton, 60000);
+    // this.showFeedbackButton(); // Use for debug to avoid the minute wait
   }
   
   }

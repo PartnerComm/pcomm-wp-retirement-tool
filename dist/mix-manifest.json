@@ -1,8 +1,8 @@
 {
-    "/admin/scripts/pcomm-wp-retirement-tool-admin.js": "/admin/scripts/pcomm-wp-retirement-tool-admin.js?id=36193a651b5c48a1e490",
-    "/admin/styles/style.css": "/admin/styles/style.css?id=d41d8cd98f00b204e980",
-    "/public/styles/style.css": "/public/styles/style.css?id=d41d8cd98f00b204e980",
-    "/admin/scripts/pcomm-wp-retirement-tool-settings.js": "/admin/scripts/pcomm-wp-retirement-tool-settings.js?id=fe0985a8946b03134018",
-    "/public/scripts/pcomm-wp-retirement-tool-public.js": "/public/scripts/pcomm-wp-retirement-tool-public.js?id=d9ea1255f3f78abecb2f",
+    "/admin/scripts/pcomm-wp-retirement-tool-admin.js": "/admin/scripts/pcomm-wp-retirement-tool-admin.js",
+    "/admin/styles/style.css": "/admin/styles/style.css",
+    "/public/styles/style.css": "/public/styles/style.css",
+    "/admin/scripts/pcomm-wp-retirement-tool-settings.js": "/admin/scripts/pcomm-wp-retirement-tool-settings.js",
+    "/public/scripts/pcomm-wp-retirement-tool-public.js": "/public/scripts/pcomm-wp-retirement-tool-public.js",
     "/scripts/scripts-public-babel.js": "/scripts/scripts-public-babel.js?id=9a2c741736123cce8e03"
 }
