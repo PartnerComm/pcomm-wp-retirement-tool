@@ -9,7 +9,7 @@
           :question="question" 
           :data="answer" 
           :active="(currentSelection.length > 0 && currentSelection.indexOf(answer) > -1) ? true : false"
-          :inactive="((currentSelection[0] && currentSelection[0].slug === 'none-of-the-above' && answer.slug != 'none-of-the-above') || (currentSelection[0] && currentSelection[0].slug !== 'none-of-the-above' && answer.slug === 'none-of-the-above')) ? true : false" />
+          :inactive="((currentSelection[0] && currentSelection[0].slug.match(/none-of-the-above/gi) && !answer.slug.match(/none-of-the-above/gi)) || (currentSelection[0] && !currentSelection[0].slug.match(/none-of-the-above/gi) && answer.slug.match(/none-of-the-above/gi))) ? true : false" />
         </div>
     </div>
   </div>

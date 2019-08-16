@@ -24662,11 +24662,13 @@ var render = function() {
                     : false,
                 inactive:
                   (_vm.currentSelection[0] &&
-                    _vm.currentSelection[0].slug === "none-of-the-above" &&
-                    answer.slug != "none-of-the-above") ||
+                    _vm.currentSelection[0].slug.match(/none-of-the-above/gi) &&
+                    !answer.slug.match(/none-of-the-above/gi)) ||
                   (_vm.currentSelection[0] &&
-                    _vm.currentSelection[0].slug !== "none-of-the-above" &&
-                    answer.slug === "none-of-the-above")
+                    !_vm.currentSelection[0].slug.match(
+                      /none-of-the-above/gi
+                    ) &&
+                    answer.slug.match(/none-of-the-above/gi))
                     ? true
                     : false
               }
