@@ -4,7 +4,7 @@
     <div class="question-subtitle">(Check all that apply)</div>
     <div class="question-description" v-if="question.description" v-html="question.description"></div> 
     <div class="answers">
-        <div class="form-option" v-for="(answer,index) in sortedAnswers" :key="index" @click="selectAnswer(answer)" :class="{'form-option-last': answer.slug === 'none-of-the-above', 'form-option-first': index === 0}">
+        <div class="form-option" v-for="(answer,index) in sortedAnswers" :key="index" @click="selectAnswer(answer)" :class="{'form-option-last': answer.slug.match(/none-of-the-above/gi), 'form-option-first': index === 0}">
           <form-answer 
           :question="question" 
           :data="answer" 
@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     selectAnswer(answer) {
-      if (answer.slug === "none-of-the-above") {
+      if (answer.slug.match(/none-of-the-above/gi)) {
         this.selectedAnswers = [];
         this.selectedAnswers.push(answer);
       } else {
@@ -40,7 +40,7 @@ export default {
         if (this.selectedAnswers.length === 0) {
         }
       } else {
-        if (this.selectedAnswers.map(e => e.slug).indexOf('none-of-the-above') > -1) {
+        if (this.selectedAnswers.map(e => e.slug).filter(elem => elem.match(/none-of-the-above/gi)).length > 0) {
           this.selectedAnswers = [];
         }
         this.selectedAnswers.push(answer);

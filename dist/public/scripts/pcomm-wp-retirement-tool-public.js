@@ -2574,7 +2574,7 @@ __webpack_require__.r(__webpack_exports__);
     selectAnswer: function selectAnswer(answer) {
       var _this = this;
 
-      if (answer.slug === "none-of-the-above") {
+      if (answer.slug.match(/none-of-the-above/gi)) {
         this.selectedAnswers = [];
         this.selectedAnswers.push(answer);
       } else {
@@ -2586,7 +2586,9 @@ __webpack_require__.r(__webpack_exports__);
         } else {
           if (this.selectedAnswers.map(function (e) {
             return e.slug;
-          }).indexOf('none-of-the-above') > -1) {
+          }).filter(function (elem) {
+            return elem.match(/none-of-the-above/gi);
+          }).length > 0) {
             this.selectedAnswers = [];
           }
 
@@ -24327,7 +24329,7 @@ var render = function() {
             key: index,
             staticClass: "form-option",
             class: {
-              "form-option-last": answer.slug === "none-of-the-above",
+              "form-option-last": answer.slug.match(/none-of-the-above/gi),
               "form-option-first": index === 0
             },
             on: {
