@@ -3,6 +3,8 @@ const axios = require('axios');
 import VueAxios from 'vue-axios'
 
 Vue.use(VueAxios, axios);
+import 'babel-polyfill'
+
 import store from '../store/store';
 
 // General Components

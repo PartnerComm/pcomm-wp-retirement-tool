@@ -21,7 +21,7 @@ mix.js('admin/js/pcomm-wp-retirement-tool-admin.js', 'admin/scripts')
    .sass('public/scss/style.scss', 'dist/public/styles')
    .setPublicPath('dist')
    .version()
-   .babel('dist/public/scripts/pcomm-wp-retirement-tool-public.js', 'dist/scripts/scripts-public-babel.js');
+   .babel('dist/public/scripts/pcomm-wp-retirement-tool-public.js', 'dist/public/scripts/scripts-public-babel.js');
 
 // Full API
 // .autoload({
