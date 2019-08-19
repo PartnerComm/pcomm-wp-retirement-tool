@@ -4741,8 +4741,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 
 
 
@@ -4797,6 +4795,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   computed: {
     userSelections: function userSelections() {
       return this.$store.getters.GET_FORM_STATUS('selectionSummary');
+    },
+    selectionText: function selectionText() {
+      return this.showSelection ? 'Hide your selections' : 'Show your selections';
     }
   },
   created: function created() {},
@@ -68184,26 +68185,22 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "results-user-selections" }, [
     _c("div", { staticClass: "results-user-selections-top" }, [
-      _c("div", { staticClass: "content" }, [
-        _c(
-          "span",
-          {
-            staticClass: "results-user-selections-header",
-            on: { click: _vm.handleClick }
-          },
-          [
-            !_vm.showSelection
-              ? _c("h1", [_vm._v("Show your selections")])
-              : _vm._e(),
-            _vm.showSelection
-              ? _c("h1", [_vm._v("Hide your selections")])
-              : _vm._e(),
-            _vm._v(" "),
-            _c("circled-plus", { attrs: { showSelection: _vm.showSelection } })
-          ],
-          1
-        )
-      ]),
+      _c(
+        "div",
+        {
+          staticClass: "results-user-selections-header",
+          on: { click: _vm.handleClick }
+        },
+        [
+          _c("h1", {
+            staticClass: "results-user-selections-heading",
+            domProps: { innerHTML: _vm._s(_vm.selectionText) }
+          }),
+          _vm._v(" "),
+          _c("circled-plus", { attrs: { showSelection: _vm.showSelection } })
+        ],
+        1
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "form-button" }, [
         _c(

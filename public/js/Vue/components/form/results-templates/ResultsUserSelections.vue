@@ -1,11 +1,9 @@
 <template>
   <div class="results-user-selections">
     <div class="results-user-selections-top">
-        <div class="content">
-            <span class="results-user-selections-header" @click="handleClick">
-              <h1 v-if="!showSelection">Show your selections</h1><h1 v-if="showSelection">Hide your selections</h1>
-              <circled-plus :showSelection="showSelection"/>
-            </span>
+        <div class="results-user-selections-header" @click="handleClick">
+          <h1 class="results-user-selections-heading" v-html="selectionText"></h1>
+          <circled-plus :showSelection="showSelection"/>
         </div>
         <div class="form-button">
             <button @click="activatePrinting" class="print-button mr-1" > <print /> Print</button>
@@ -57,6 +55,9 @@ export default {
   computed: {
     userSelections() {
       return this.$store.getters.GET_FORM_STATUS('selectionSummary');
+    },
+    selectionText() {
+      return (this.showSelection) ? 'Hide your selections'  : 'Show your selections';
     }
   },
   created() {
