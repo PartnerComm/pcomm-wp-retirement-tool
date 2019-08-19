@@ -3420,6 +3420,17 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return '#00A69A';
+    },
+    filteredAnswer: function filteredAnswer() {
+      var answer = this.data.name;
+
+      if (answer.includes('`')) {
+        var rx = answer.match(/`(.*)`/)[1];
+        var re = answer.match(/`(.*)`/)[0];
+        answer = answer.replace(re, "<span>" + rx + "</span>");
+      }
+
+      return answer;
     }
   },
   created: function created() {},
@@ -66839,9 +66850,10 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("span", { staticClass: "form-answer-text" }, [
-        _vm._v(_vm._s(_vm.data.name))
-      ]),
+      _c("span", {
+        staticClass: "form-answer-text",
+        domProps: { innerHTML: _vm._s(_vm.filteredAnswer) }
+      }),
       _vm._v(" "),
       _vm.data.description
         ? _c(
