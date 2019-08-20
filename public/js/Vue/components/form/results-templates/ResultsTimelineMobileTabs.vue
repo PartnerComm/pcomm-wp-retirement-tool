@@ -17,7 +17,7 @@
                     </div>
                   </span>
                   <div class="results-timeline-tabs-nav-expand">
-                    <div class="results-timeline-tabs-nav-expand-icon" :class="{expanded: tab.slug === currentTab.slug}"></div>
+                    <div class="results-timeline-tabs-nav-expand-icon" :class="{expanded: tab.slug === currentTab.slug || currentTab === false}"></div>
                     <div class="results-timeline-tabs-nav-expand-text" v-html="(tab.slug !== currentTab.slug) ? 'Show' : 'Hide'"></div>
                   </div>
                 </div>
@@ -50,7 +50,11 @@ export default {
   },
   methods: {
     selectTab(tab) {
-        this.$store.dispatch('SET_CURRENT_TAB', tab);
+        if (tab === this.currentTab){
+          this.$store.dispatch('SET_CURRENT_TAB', false);
+        } else {
+          this.$store.dispatch('SET_CURRENT_TAB', tab);
+        }
         window.scrollTo(0, 1025);
     },
     

@@ -4171,7 +4171,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     selectTab: function selectTab(tab) {
-      this.$store.dispatch('SET_CURRENT_TAB', tab);
+      if (tab === this.currentTab) {
+        this.$store.dispatch('SET_CURRENT_TAB', false);
+      } else {
+        this.$store.dispatch('SET_CURRENT_TAB', tab);
+      }
+
       window.scrollTo(0, 1025);
     }
   },
@@ -67648,7 +67653,11 @@ var render = function() {
                       [
                         _c("div", {
                           staticClass: "results-timeline-tabs-nav-expand-icon",
-                          class: { expanded: tab.slug === _vm.currentTab.slug }
+                          class: {
+                            expanded:
+                              tab.slug === _vm.currentTab.slug ||
+                              _vm.currentTab === false
+                          }
                         }),
                         _vm._v(" "),
                         _c("div", {
@@ -68246,7 +68255,11 @@ var render = function() {
               { staticClass: "results-user-selections-item" },
               [
                 _c("check-no-circle"),
-                _vm._v("\n            " + _vm._s(selection) + "\n          ")
+                _vm._v(
+                  "\n            " +
+                    _vm._s(selection.replace(/`/g, "")) +
+                    "\n          "
+                )
               ],
               1
             )

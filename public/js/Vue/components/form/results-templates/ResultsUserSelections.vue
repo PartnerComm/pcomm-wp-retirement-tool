@@ -13,7 +13,7 @@
     <div v-if="showSelection" class="results-user-selections-bottom">
             <div class="results-user-selections-item" v-for="(selection, index) in userSelections">
               <check-no-circle />
-              {{selection}}
+              {{selection.replace(/`/g, '')}}
             </div>
     </div>
   </div>
