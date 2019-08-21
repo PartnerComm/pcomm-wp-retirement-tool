@@ -2703,9 +2703,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     showFeedbackButton: function showFeedbackButton() {
-      if (window.localStorage.getItem("feedback") != "complete") {
-        this.$store.dispatch('UPDATE_FEEDBACK_BUTTON', true);
-      }
+      // if (window.localStorage.getItem("feedback") != "complete") {
+      this.$store.dispatch('UPDATE_FEEDBACK_BUTTON', true); // }
     },
     closeFeedback: function closeFeedback() {
       this.$store.dispatch('UPDATE_FEEDBACK_BUTTON', false);
@@ -2722,7 +2721,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {},
   mounted: function mounted() {
-    setTimeout(this.showFeedbackButton, 60000); // this.showFeedbackButton(); // Use for debug to avoid the minute wait
+    // setTimeout(this.showFeedbackButton, 60000);
+    this.showFeedbackButton(); // Use for debug to avoid the minute wait
   }
 });
 
@@ -67653,11 +67653,7 @@ var render = function() {
                       [
                         _c("div", {
                           staticClass: "results-timeline-tabs-nav-expand-icon",
-                          class: {
-                            expanded:
-                              tab.slug === _vm.currentTab.slug ||
-                              _vm.currentTab === false
-                          }
+                          class: { expanded: tab.slug === _vm.currentTab.slug }
                         }),
                         _vm._v(" "),
                         _c("div", {

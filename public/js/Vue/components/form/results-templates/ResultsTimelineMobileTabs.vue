@@ -17,7 +17,7 @@
                     </div>
                   </span>
                   <div class="results-timeline-tabs-nav-expand">
-                    <div class="results-timeline-tabs-nav-expand-icon" :class="{expanded: tab.slug === currentTab.slug || currentTab === false}"></div>
+                    <div class="results-timeline-tabs-nav-expand-icon" :class="{expanded: tab.slug === currentTab.slug }"></div>
                     <div class="results-timeline-tabs-nav-expand-text" v-html="(tab.slug !== currentTab.slug) ? 'Show' : 'Hide'"></div>
                   </div>
                 </div>
