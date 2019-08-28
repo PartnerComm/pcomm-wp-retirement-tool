@@ -7,7 +7,9 @@ export default {
   },
   GET_ANSWERS: (state, getters) => {
     const listOfParents = getters.GET_KEY('answerChoices').filter(e => e.parent === 0).map(elem => elem.id);
-    console.log(listOfParents);
     return getters.GET_KEY('answerChoices').filter(e => getters.GET_KEY('answerChoices').filter(elem => elem.parent === e.id || listOfParents.indexOf(e.parent) > -1 ).length === 0);
+  },
+  TOP_LEVEL_QUESTIONS: (state, getters) => {
+    return getters.GET_KEY('answerChoices').filter(e => e.parent === 0);
   }
 }

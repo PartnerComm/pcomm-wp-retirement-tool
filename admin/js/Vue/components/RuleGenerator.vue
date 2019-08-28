@@ -14,9 +14,16 @@
         <div class="answers">
           <span :class="{active: expand === index}" @click="expandAnswers(index)">Answers ({{rules[index].answers.length}} selected)</span>
           <div class="answers-checkboxes" v-show="expand === index">
-            <div class="answers-choice" v-for="answer in answerChoices">
+            <!-- <div class="answers-choice" v-for="answer in answerChoices">
               <input :id="answer.slug+index" :value="answer.slug" type="checkbox" v-model="rules[index].answers" />
               <label for="answer.slug">{{answer.name}}</label>
+            </div> -->
+            <div class="answers-question-label" v-for="(question, index) in allQuestions" v-if="question.questions && question.questions.length > 0">
+              <div class="answers-question-label-title">{{question.name}}</div>
+              <div class="answers-choice" v-for="answer in question.questions" v-if="question.id != answer.parent">
+                <input :id="answer.slug+index" :value="answer.slug" type="checkbox" v-model="rules[index].answers" />
+                <label for="answer.slug">{{answer.name}}</label>
+              </div>
             </div>
           </div>
         </div>
@@ -84,6 +91,9 @@ export default {
     },
     answerChoices() {
       return this.$store.getters.GET_ANSWERS;
+    },
+    allQuestions() {
+      return this.$store.getters.TOP_LEVEL_QUESTIONS;
     }
   },
   created() {
@@ -173,8 +183,12 @@ button:focus {
         transform: rotate(180deg);
         transition: transform .5s ease;
       }
+      
     }
-    
+    &-question-label-title {
+        font-weight: 700;
+        margin-bottom: .5rem;
+      }
     &-checkboxes {
       background-color: #FFFFFF;
       box-shadow: 0 3px 9px 0 rgba(0,0,0,.12);

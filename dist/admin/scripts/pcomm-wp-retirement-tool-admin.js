@@ -442,11 +442,15 @@ __webpack_require__.r(__webpack_exports__);
     }).map(function (elem) {
       return elem.id;
     });
-    console.log(listOfParents);
     return getters.GET_KEY('answerChoices').filter(function (e) {
       return getters.GET_KEY('answerChoices').filter(function (elem) {
         return elem.parent === e.id || listOfParents.indexOf(e.parent) > -1;
       }).length === 0;
+    });
+  },
+  TOP_LEVEL_QUESTIONS: function TOP_LEVEL_QUESTIONS(state, getters) {
+    return getters.GET_KEY('answerChoices').filter(function (e) {
+      return e.parent === 0;
     });
   }
 });
@@ -2187,6 +2191,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     ruleset: {
@@ -2237,6 +2248,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     answerChoices: function answerChoices() {
       return this.$store.getters.GET_ANSWERS;
+    },
+    allQuestions: function allQuestions() {
+      return this.$store.getters.TOP_LEVEL_QUESTIONS;
     }
   },
   created: function created() {},
@@ -2259,7 +2273,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".retirement-tool-rule-generator[data-v-5719158f] {\n  padding: 0.5rem 0;\n}\n.add-rule-button[data-v-5719158f] {\n  margin-bottom: 1rem;\n  background-color: #49b2fc;\n  color: #FFFFFF;\n  border: none;\n  padding: 0.25rem 2rem;\n  font-size: 18px;\n  font-weight: 700;\n  border: 2px solid #49b2fc;\n  border-radius: 5px;\n}\n.add-rule-button[data-v-5719158f]:hover {\n  cursor: pointer;\n  background-color: #000000;\n  color: #49b2fc;\n}\n.delete-button[data-v-5719158f] {\n  background-color: #5a5859;\n  color: #FFFFFF;\n  font-weight: 700;\n  border: 2px solid #5a5859;\n}\n.delete-button[data-v-5719158f]:hover {\n  cursor: pointer;\n  background-color: #FFFFFF;\n  color: #5a5859;\n}\nbutton[data-v-5719158f]:focus {\n  outline: none;\n}\n.input-row[data-v-5719158f] {\n  display: flex;\n  align-items: center;\n  flex-wrap: wrap;\n  font-size: 18px;\n  margin-bottom: 0.25rem;\n}\n.input-row select[data-v-5719158f] {\n  font-size: 18px;\n  margin-bottom: 0.25rem;\n}\n.input-row select[data-v-5719158f]:hover, .input-row .answers[data-v-5719158f]:hover {\n  cursor: pointer;\n}\n.input-row select[data-v-5719158f], .input-row div[data-v-5719158f], .input-row button[data-v-5719158f] {\n  margin-left: 1rem;\n}\n.input-row .answers[data-v-5719158f] {\n  position: relative;\n}\n.input-row .answers span[data-v-5719158f] {\n  border: 1px solid #ddd;\n  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.07);\n  background-color: #fff;\n  color: #32373c;\n  padding: 0.15rem 4rem 0.15rem 0.75rem;\n  border-radius: 5px;\n  position: relative;\n}\n.input-row .answers span[data-v-5719158f]:after {\n  position: absolute;\n  content: \"\";\n  width: 0;\n  height: 0;\n  top: 10px;\n  right: 20px;\n  border-left: 6px solid transparent;\n  border-right: 6px solid transparent;\n  border-top: 6px solid #000;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.input-row .answers span.active[data-v-5719158f]:after {\n  -webkit-transform: rotate(180deg);\n          transform: rotate(180deg);\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.input-row .answers-checkboxes[data-v-5719158f] {\n  background-color: #FFFFFF;\n  box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.12);\n  position: absolute;\n  top: 2rem;\n  left: -1rem;\n  min-width: 300px;\n  padding: 0.5rem 2rem 0.5rem 0;\n  z-index: 2000;\n}\n.input-row .answers-choice[data-v-5719158f] {\n  display: flex;\n  margin-bottom: 0.25rem;\n  align-items: center;\n}\n.list-enter-active[data-v-5719158f], .list-leave-active[data-v-5719158f] {\n  transition: all 1s;\n}\n.list-enter[data-v-5719158f], .list-leave-to[data-v-5719158f] {\n  opacity: 0;\n  -webkit-transform: translateY(30px);\n          transform: translateY(30px);\n}", ""]);
+exports.push([module.i, ".retirement-tool-rule-generator[data-v-5719158f] {\n  padding: 0.5rem 0;\n}\n.add-rule-button[data-v-5719158f] {\n  margin-bottom: 1rem;\n  background-color: #49b2fc;\n  color: #FFFFFF;\n  border: none;\n  padding: 0.25rem 2rem;\n  font-size: 18px;\n  font-weight: 700;\n  border: 2px solid #49b2fc;\n  border-radius: 5px;\n}\n.add-rule-button[data-v-5719158f]:hover {\n  cursor: pointer;\n  background-color: #000000;\n  color: #49b2fc;\n}\n.delete-button[data-v-5719158f] {\n  background-color: #5a5859;\n  color: #FFFFFF;\n  font-weight: 700;\n  border: 2px solid #5a5859;\n}\n.delete-button[data-v-5719158f]:hover {\n  cursor: pointer;\n  background-color: #FFFFFF;\n  color: #5a5859;\n}\nbutton[data-v-5719158f]:focus {\n  outline: none;\n}\n.input-row[data-v-5719158f] {\n  display: flex;\n  align-items: center;\n  flex-wrap: wrap;\n  font-size: 18px;\n  margin-bottom: 0.25rem;\n}\n.input-row select[data-v-5719158f] {\n  font-size: 18px;\n  margin-bottom: 0.25rem;\n}\n.input-row select[data-v-5719158f]:hover, .input-row .answers[data-v-5719158f]:hover {\n  cursor: pointer;\n}\n.input-row select[data-v-5719158f], .input-row div[data-v-5719158f], .input-row button[data-v-5719158f] {\n  margin-left: 1rem;\n}\n.input-row .answers[data-v-5719158f] {\n  position: relative;\n}\n.input-row .answers span[data-v-5719158f] {\n  border: 1px solid #ddd;\n  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.07);\n  background-color: #fff;\n  color: #32373c;\n  padding: 0.15rem 4rem 0.15rem 0.75rem;\n  border-radius: 5px;\n  position: relative;\n}\n.input-row .answers span[data-v-5719158f]:after {\n  position: absolute;\n  content: \"\";\n  width: 0;\n  height: 0;\n  top: 10px;\n  right: 20px;\n  border-left: 6px solid transparent;\n  border-right: 6px solid transparent;\n  border-top: 6px solid #000;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.input-row .answers span.active[data-v-5719158f]:after {\n  -webkit-transform: rotate(180deg);\n          transform: rotate(180deg);\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.input-row .answers-question-label-title[data-v-5719158f] {\n  font-weight: 700;\n  margin-bottom: 0.5rem;\n}\n.input-row .answers-checkboxes[data-v-5719158f] {\n  background-color: #FFFFFF;\n  box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.12);\n  position: absolute;\n  top: 2rem;\n  left: -1rem;\n  min-width: 300px;\n  padding: 0.5rem 2rem 0.5rem 0;\n  z-index: 2000;\n}\n.input-row .answers-choice[data-v-5719158f] {\n  display: flex;\n  margin-bottom: 0.25rem;\n  align-items: center;\n}\n.list-enter-active[data-v-5719158f], .list-leave-active[data-v-5719158f] {\n  transition: all 1s;\n}\n.list-enter[data-v-5719158f], .list-leave-to[data-v-5719158f] {\n  opacity: 0;\n  -webkit-transform: translateY(30px);\n          transform: translateY(30px);\n}", ""]);
 
 // exports
 
@@ -4257,58 +4271,93 @@ var render = function() {
                   ],
                   staticClass: "answers-checkboxes"
                 },
-                _vm._l(_vm.answerChoices, function(answer) {
-                  return _c("div", { staticClass: "answers-choice" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.rules[index].answers,
-                          expression: "rules[index].answers"
-                        }
-                      ],
-                      attrs: { id: answer.slug + index, type: "checkbox" },
-                      domProps: {
-                        value: answer.slug,
-                        checked: Array.isArray(_vm.rules[index].answers)
-                          ? _vm._i(_vm.rules[index].answers, answer.slug) > -1
-                          : _vm.rules[index].answers
-                      },
-                      on: {
-                        change: function($event) {
-                          var $$a = _vm.rules[index].answers,
-                            $$el = $event.target,
-                            $$c = $$el.checked ? true : false
-                          if (Array.isArray($$a)) {
-                            var $$v = answer.slug,
-                              $$i = _vm._i($$a, $$v)
-                            if ($$el.checked) {
-                              $$i < 0 &&
-                                _vm.$set(
-                                  _vm.rules[index],
-                                  "answers",
-                                  $$a.concat([$$v])
-                                )
-                            } else {
-                              $$i > -1 &&
-                                _vm.$set(
-                                  _vm.rules[index],
-                                  "answers",
-                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                                )
-                            }
-                          } else {
-                            _vm.$set(_vm.rules[index], "answers", $$c)
-                          }
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("label", { attrs: { for: "answer.slug" } }, [
-                      _vm._v(_vm._s(answer.name))
-                    ])
-                  ])
+                _vm._l(_vm.allQuestions, function(question, index) {
+                  return question.questions && question.questions.length > 0
+                    ? _c(
+                        "div",
+                        { staticClass: "answers-question-label" },
+                        [
+                          _c(
+                            "div",
+                            { staticClass: "answers-question-label-title" },
+                            [_vm._v(_vm._s(question.name))]
+                          ),
+                          _vm._v(" "),
+                          _vm._l(question.questions, function(answer) {
+                            return question.id != answer.parent
+                              ? _c("div", { staticClass: "answers-choice" }, [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.rules[index].answers,
+                                        expression: "rules[index].answers"
+                                      }
+                                    ],
+                                    attrs: {
+                                      id: answer.slug + index,
+                                      type: "checkbox"
+                                    },
+                                    domProps: {
+                                      value: answer.slug,
+                                      checked: Array.isArray(
+                                        _vm.rules[index].answers
+                                      )
+                                        ? _vm._i(
+                                            _vm.rules[index].answers,
+                                            answer.slug
+                                          ) > -1
+                                        : _vm.rules[index].answers
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        var $$a = _vm.rules[index].answers,
+                                          $$el = $event.target,
+                                          $$c = $$el.checked ? true : false
+                                        if (Array.isArray($$a)) {
+                                          var $$v = answer.slug,
+                                            $$i = _vm._i($$a, $$v)
+                                          if ($$el.checked) {
+                                            $$i < 0 &&
+                                              _vm.$set(
+                                                _vm.rules[index],
+                                                "answers",
+                                                $$a.concat([$$v])
+                                              )
+                                          } else {
+                                            $$i > -1 &&
+                                              _vm.$set(
+                                                _vm.rules[index],
+                                                "answers",
+                                                $$a
+                                                  .slice(0, $$i)
+                                                  .concat($$a.slice($$i + 1))
+                                              )
+                                          }
+                                        } else {
+                                          _vm.$set(
+                                            _vm.rules[index],
+                                            "answers",
+                                            $$c
+                                          )
+                                        }
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "label",
+                                    { attrs: { for: "answer.slug" } },
+                                    [_vm._v(_vm._s(answer.name))]
+                                  )
+                                ])
+                              : _vm._e()
+                          })
+                        ],
+                        2
+                      )
+                    : _vm._e()
                 }),
                 0
               )
