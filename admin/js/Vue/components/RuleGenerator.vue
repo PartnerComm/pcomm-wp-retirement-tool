@@ -18,9 +18,9 @@
               <input :id="answer.slug+index" :value="answer.slug" type="checkbox" v-model="rules[index].answers" />
               <label for="answer.slug">{{answer.name}}</label>
             </div> -->
-            <div class="answers-question-label" v-for="(question, index) in allQuestions" v-if="question.questions && question.questions.length > 0">
+            <div class="answers-question-label" v-for="question in allQuestions" v-if="question.questions && question.questions.length > 0">
               <div class="answers-question-label-title">{{question.name}}</div>
-              <div class="answers-choice" v-for="answer in question.questions" v-if="question.id != answer.parent && rules[index].answers">
+              <div class="answers-choice" v-for="answer in question.questions" v-if="question.id != answer.parent">
                 <input :id="answer.slug+index" :value="answer.slug" type="checkbox" v-model="rules[index].answers" />
                 <label for="answer.slug">{{answer.name}}</label>
               </div>

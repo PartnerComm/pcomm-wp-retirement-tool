@@ -4271,7 +4271,7 @@ var render = function() {
                   ],
                   staticClass: "answers-checkboxes"
                 },
-                _vm._l(_vm.allQuestions, function(question, index) {
+                _vm._l(_vm.allQuestions, function(question) {
                   return question.questions && question.questions.length > 0
                     ? _c(
                         "div",
@@ -4284,8 +4284,7 @@ var render = function() {
                           ),
                           _vm._v(" "),
                           _vm._l(question.questions, function(answer) {
-                            return question.id != answer.parent &&
-                              _vm.rules[index].answers
+                            return question.id != answer.parent
                               ? _c("div", { staticClass: "answers-choice" }, [
                                   _c("input", {
                                     directives: [
