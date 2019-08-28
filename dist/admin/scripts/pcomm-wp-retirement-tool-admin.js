@@ -4284,7 +4284,7 @@ var render = function() {
                           ),
                           _vm._v(" "),
                           _vm._l(question.questions, function(answer) {
-                            return question.id != answer.parent
+                            return question.id != answer.parent && _vm.rules
                               ? _c("div", { staticClass: "answers-choice" }, [
                                   _c("input", {
                                     directives: [
