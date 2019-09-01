@@ -67734,6 +67734,7 @@ var render = function() {
                 "div",
                 {
                   key: index,
+                  staticClass: "results-timeline-tabs-nav-tab",
                   attrs: { value: tab.id },
                   on: {
                     click: function($event) {
