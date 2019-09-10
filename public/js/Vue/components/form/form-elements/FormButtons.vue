@@ -34,6 +34,7 @@ export default {
     navigateBackward() {
       this.$store.dispatch('SET_CURRENT_SELECTION', this.formAnswers[this.formAnswers.length-1] )
       this.$store.dispatch('REMOVE_LAST_SELECTION');
+      window.pcommAnalytics.trackAnalyticsEvent({category: 'RP Tool',action: 'Button',label: 'back'});
       if (this.formStep === 0) {
         this.$store.dispatch('UPDATE_FORM_QUESTIONS', false);
         this.$store.dispatch('UPDATE_FORM_INTRO', true);
@@ -41,6 +42,7 @@ export default {
       } else {
         this.$store.dispatch('NAVIGATE_STEPS', 'minus');
       }
+
     },
     submitForm() {
       this.$store.dispatch('SUBMIT_COMPLETED_FORM');

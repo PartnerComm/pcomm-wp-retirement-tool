@@ -43,12 +43,18 @@ export default {
   },
   methods: {
     handleClick() {
+      if (!this.showSelection) {
+        window.pcommAnalytics.trackAnalyticsEvent({category: 'RP Tool',action: 'Button',label: 'show your selections'});
+      }
        this.showSelection = !this.showSelection;
     },
     async activatePrinting() {
       this.$store.dispatch('UPDATE_PRINT_RESULTS', true);
+      window.pcommAnalytics.trackAnalyticsEvent({category: 'RP Tool',action: 'Button',label: 'print'});
+
     },
     resetForm() {
+      window.pcommAnalytics.trackAnalyticsEvent({category: 'RP Tool',action: 'Button',label: 'start over'});
       this.$store.dispatch('RESET_FORM');
     }
   },

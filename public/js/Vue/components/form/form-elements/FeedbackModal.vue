@@ -65,6 +65,8 @@ export default {
     },
     submitFeedback() {
       this.$store.dispatch('SUBMIT_FEEDBACK');
+      window.pcommAnalytics.trackAnalyticsEvent({category: 'RP Tool',action: 'Button',label: 'feedback submit'});
+
     }
   },
   computed: {

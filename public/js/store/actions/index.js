@@ -50,14 +50,19 @@ const actions = {
       else if (Object.prototype.toString.call(el) == '[object Array]') {
         el.forEach((arrayEl) => {
           context.commit('ADD_SUMMARY_ANSWER', arrayEl.name);
+          context.commit('ADD_ANALYTICS_ANSWER', arrayEl.name);
           context.commit('ADD_FILTER_ANSWER', arrayEl.slug);
         })
       }
       else {
         context.commit('ADD_SUMMARY_ANSWER', el.name);
+        context.commit('ADD_ANALYTICS_ANSWER', el.name);
         context.commit('ADD_FILTER_ANSWER', el.slug);
       }
     })
+    window.pcommAnalytics.trackAnalyticsEvent({category: 'RP Tool',action: 'Button',label: 'submit'});
+    window.pcommAnalytics.trackAnalyticsEvent({category: 'RP Tool',action: 'Responses',label: context.getters.GET_FORM_STATUS('analyticsAnswers').join(',')});
+
     context.commit('MUTATE_FORM_QUESTIONS', false);
     context.commit('MUTATE_FORM_RESULTS', true);
       setTimeout(window.scrollTo(0,0), 100);
@@ -67,8 +72,10 @@ const actions = {
     let newStep = ''
     if (value === 'plus') {
       newStep = parseInt(currentStep) + 1;
+      window.pcommAnalytics.trackAnalyticsEvent({category: 'RP Tool',action: 'Button',label: 'next ' + parseInt(currentStep+2)});
     } else {
       newStep = parseInt(currentStep) - 1;
+
       context.commit('MUTATE_ANSWER_VALID', true);
     }
     const payload = newStep;
@@ -150,6 +157,20 @@ const actions = {
   },
   COMMIT_CURRENT_SELECTION: (context) => {
     const payload = context.getters.GET_FORM_STATUS('currentSelection');
+    const questions = context.getters.GET_FORM_STATUS('formQuestions');
+    const formStep = context.getters.GET_FORM_STATUS('formStep');
+    const activeQuestion = context.getters.ACTIVE_QUESTIONS[formStep];
+    if (questions && activeQuestion) {
+      if (activeQuestion.question_type === 'date') {
+        window.pcommAnalytics.trackAnalyticsEvent({category: 'RP Tool',action: activeQuestion.name ,label: payload});
+      }
+      if (activeQuestion.question_type === 'select-one') {
+        window.pcommAnalytics.trackAnalyticsEvent({category: 'RP Tool',action: activeQuestion.name ,label: payload.name});
+      }
+      if (activeQuestion.question_type === 'select-many') {
+        window.pcommAnalytics.trackAnalyticsEvent({category: 'RP Tool',action: activeQuestion.name ,label: payload.map(e => e.name).join(',')});
+      }
+    }
     if (context.getters.GET_FORM_STATUS('currentExclusions') != '') {
       const payload2 = context.getters.GET_FORM_STATUS('currentExclusions');
       context.commit('COMMIT_EXCLUSIONS', payload2);
@@ -167,6 +188,7 @@ const actions = {
   },
   SET_CURRENT_TAB: (context, value) => {
     const payload = {key: 'currentTab', value: value};
+    window.pcommAnalytics.trackAnalyticsEvent({category: 'RP Tool',action: 'Retirement Timeline',label: value.slug});
     context.commit('MUTATE_KEY', payload);
   },
   UPDATE_FEEDBACK_BUTTON: (context, value) => {

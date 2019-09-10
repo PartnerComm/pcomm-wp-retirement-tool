@@ -50,10 +50,13 @@ export default {
     setActivePath() {
       this.$store.dispatch('SET_ACTIVE_PATH', this.currentSelection);
       this.$store.dispatch('UPDATE_FORM_INTRO', false);
+      window.pcommAnalytics.trackAnalyticsEvent({category: 'RP Tool',action: this.title,label: this.currentSelection.name});
       if (this.activeQuestions.length>0) {
         this.$store.dispatch('COMMIT_CURRENT_SELECTION');
         this.$store.dispatch('SET_CURRENT_SELECTION', '');
         this.$store.dispatch('UPDATE_FORM_QUESTIONS', true);
+        window.pcommAnalytics.trackAnalyticsEvent({category: 'RP Tool',action: 'Button',label: 'next 1'});
+
       } else {
         this.$store.dispatch('SUBMIT_COMPLETED_FORM');
       }

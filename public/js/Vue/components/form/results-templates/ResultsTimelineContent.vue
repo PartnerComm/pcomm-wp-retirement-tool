@@ -57,7 +57,9 @@ export default {
 
   },
   mounted() {
-
+    if (this.retirementDate) {
+        window.pcommAnalytics.trackAnalyticsEvent({category: 'RP Tool',action: 'Retirement Timeline',label: this.monthsLeft + ' to retirement'});
+    }
   }
 
   }

@@ -2,6 +2,7 @@
 export default {
   activePath: '',
   allPosts: [],
+  analyticsAnswers: [],
   answerValid: false,
   categoriesFetched: false,
   currentTab: {},

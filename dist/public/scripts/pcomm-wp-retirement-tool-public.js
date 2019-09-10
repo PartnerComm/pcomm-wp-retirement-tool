@@ -2711,6 +2711,11 @@ __webpack_require__.r(__webpack_exports__);
       this.$store.dispatch('UPDATE_FEEDBACK_BUTTON', false);
     },
     showForm: function showForm() {
+      window.pcommAnalytics.trackAnalyticsEvent({
+        category: 'RP Tool',
+        action: 'Button',
+        label: 'feedback'
+      });
       this.$store.dispatch('UPDATE_FEEDBACK_BUTTON', false);
       this.$store.dispatch('UPDATE_FEEDBACK_FORM', true);
     }
@@ -2811,6 +2816,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     submitFeedback: function submitFeedback() {
       this.$store.dispatch('SUBMIT_FEEDBACK');
+      window.pcommAnalytics.trackAnalyticsEvent({
+        category: 'RP Tool',
+        action: 'Button',
+        label: 'feedback submit'
+      });
     }
   },
   computed: {
@@ -2917,6 +2927,11 @@ __webpack_require__.r(__webpack_exports__);
     navigateBackward: function navigateBackward() {
       this.$store.dispatch('SET_CURRENT_SELECTION', this.formAnswers[this.formAnswers.length - 1]);
       this.$store.dispatch('REMOVE_LAST_SELECTION');
+      window.pcommAnalytics.trackAnalyticsEvent({
+        category: 'RP Tool',
+        action: 'Button',
+        label: 'back'
+      });
 
       if (this.formStep === 0) {
         this.$store.dispatch('UPDATE_FORM_QUESTIONS', false);
@@ -3091,11 +3106,21 @@ __webpack_require__.r(__webpack_exports__);
     setActivePath: function setActivePath() {
       this.$store.dispatch('SET_ACTIVE_PATH', this.currentSelection);
       this.$store.dispatch('UPDATE_FORM_INTRO', false);
+      window.pcommAnalytics.trackAnalyticsEvent({
+        category: 'RP Tool',
+        action: this.title,
+        label: this.currentSelection.name
+      });
 
       if (this.activeQuestions.length > 0) {
         this.$store.dispatch('COMMIT_CURRENT_SELECTION');
         this.$store.dispatch('SET_CURRENT_SELECTION', '');
         this.$store.dispatch('UPDATE_FORM_QUESTIONS', true);
+        window.pcommAnalytics.trackAnalyticsEvent({
+          category: 'RP Tool',
+          action: 'Button',
+          label: 'next 1'
+        });
       } else {
         this.$store.dispatch('SUBMIT_COMPLETED_FORM');
       }
@@ -4107,7 +4132,15 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {},
-  mounted: function mounted() {}
+  mounted: function mounted() {
+    if (this.retirementDate) {
+      window.pcommAnalytics.trackAnalyticsEvent({
+        category: 'RP Tool',
+        action: 'Retirement Timeline',
+        label: this.monthsLeft + ' to retirement'
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -4778,6 +4811,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     handleClick: function handleClick() {
+      if (!this.showSelection) {
+        window.pcommAnalytics.trackAnalyticsEvent({
+          category: 'RP Tool',
+          action: 'Button',
+          label: 'show your selections'
+        });
+      }
+
       this.showSelection = !this.showSelection;
     },
     activatePrinting: function () {
@@ -4789,8 +4830,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 this.$store.dispatch('UPDATE_PRINT_RESULTS', true);
+                window.pcommAnalytics.trackAnalyticsEvent({
+                  category: 'RP Tool',
+                  action: 'Button',
+                  label: 'print'
+                });
 
-              case 1:
+              case 2:
               case "end":
                 return _context.stop();
             }
@@ -4805,6 +4851,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return activatePrinting;
     }(),
     resetForm: function resetForm() {
+      window.pcommAnalytics.trackAnalyticsEvent({
+        category: 'RP Tool',
+        action: 'Button',
+        label: 'start over'
+      });
       this.$store.dispatch('RESET_FORM');
     }
   },
@@ -86898,18 +86949,30 @@ var actions = {
                 } else if (Object.prototype.toString.call(el) == '[object Array]') {
                   el.forEach(function (arrayEl) {
                     context.commit('ADD_SUMMARY_ANSWER', arrayEl.name);
+                    context.commit('ADD_ANALYTICS_ANSWER', arrayEl.name);
                     context.commit('ADD_FILTER_ANSWER', arrayEl.slug);
                   });
                 } else {
                   context.commit('ADD_SUMMARY_ANSWER', el.name);
+                  context.commit('ADD_ANALYTICS_ANSWER', el.name);
                   context.commit('ADD_FILTER_ANSWER', el.slug);
                 }
+              });
+              window.pcommAnalytics.trackAnalyticsEvent({
+                category: 'RP Tool',
+                action: 'Button',
+                label: 'submit'
+              });
+              window.pcommAnalytics.trackAnalyticsEvent({
+                category: 'RP Tool',
+                action: 'Responses',
+                label: context.getters.GET_FORM_STATUS('analyticsAnswers').join(',')
               });
               context.commit('MUTATE_FORM_QUESTIONS', false);
               context.commit('MUTATE_FORM_RESULTS', true);
               setTimeout(window.scrollTo(0, 0), 100);
 
-            case 7:
+            case 9:
             case "end":
               return _context2.stop();
           }
@@ -86929,6 +86992,11 @@ var actions = {
 
     if (value === 'plus') {
       newStep = parseInt(currentStep) + 1;
+      window.pcommAnalytics.trackAnalyticsEvent({
+        category: 'RP Tool',
+        action: 'Button',
+        label: 'next ' + parseInt(currentStep + 2)
+      });
     } else {
       newStep = parseInt(currentStep) - 1;
       context.commit('MUTATE_ANSWER_VALID', true);
@@ -87180,6 +87248,37 @@ var actions = {
   },
   COMMIT_CURRENT_SELECTION: function COMMIT_CURRENT_SELECTION(context) {
     var payload = context.getters.GET_FORM_STATUS('currentSelection');
+    var questions = context.getters.GET_FORM_STATUS('formQuestions');
+    var formStep = context.getters.GET_FORM_STATUS('formStep');
+    var activeQuestion = context.getters.ACTIVE_QUESTIONS[formStep];
+
+    if (questions && activeQuestion) {
+      if (activeQuestion.question_type === 'date') {
+        window.pcommAnalytics.trackAnalyticsEvent({
+          category: 'RP Tool',
+          action: activeQuestion.name,
+          label: payload
+        });
+      }
+
+      if (activeQuestion.question_type === 'select-one') {
+        window.pcommAnalytics.trackAnalyticsEvent({
+          category: 'RP Tool',
+          action: activeQuestion.name,
+          label: payload.name
+        });
+      }
+
+      if (activeQuestion.question_type === 'select-many') {
+        window.pcommAnalytics.trackAnalyticsEvent({
+          category: 'RP Tool',
+          action: activeQuestion.name,
+          label: payload.map(function (e) {
+            return e.name;
+          }).join(',')
+        });
+      }
+    }
 
     if (context.getters.GET_FORM_STATUS('currentExclusions') != '') {
       var payload2 = context.getters.GET_FORM_STATUS('currentExclusions');
@@ -87205,6 +87304,11 @@ var actions = {
       key: 'currentTab',
       value: value
     };
+    window.pcommAnalytics.trackAnalyticsEvent({
+      category: 'RP Tool',
+      action: 'Retirement Timeline',
+      label: value.slug
+    });
     context.commit('MUTATE_KEY', payload);
   },
   UPDATE_FEEDBACK_BUTTON: function UPDATE_FEEDBACK_BUTTON(context, value) {
@@ -87620,6 +87724,10 @@ __webpack_require__.r(__webpack_exports__);
     var payload = value;
     state.selectionSummary.push(payload);
   },
+  ADD_ANALYTICS_ANSWER: function ADD_ANALYTICS_ANSWER(state, value) {
+    var payload = value;
+    state.analyticsAnswers.push(payload);
+  },
   ADD_FILTER_ANSWER: function ADD_FILTER_ANSWER(state, value) {
     var payload = value;
     state.filterAnswers.push(payload);
@@ -87659,6 +87767,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   activePath: '',
   allPosts: [],
+  analyticsAnswers: [],
   answerValid: false,
   categoriesFetched: false,
   currentTab: {},

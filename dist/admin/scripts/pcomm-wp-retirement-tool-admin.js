@@ -248,7 +248,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Vue_app_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Vue/app.js */ "./admin/js/Vue/app.js");
+/* harmony import */ var _Vue_app_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Vue/app.js */ "./admin/js/Vue/app.js");
 
 
 /***/ }),

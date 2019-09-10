@@ -27,6 +27,7 @@ export default {
       this.$store.dispatch('UPDATE_FEEDBACK_BUTTON', false);
     },
     showForm() {
+      window.pcommAnalytics.trackAnalyticsEvent({category: 'RP Tool',action: 'Button',label: 'feedback'});
       this.$store.dispatch('UPDATE_FEEDBACK_BUTTON', false);
       this.$store.dispatch('UPDATE_FEEDBACK_FORM', true);
     },
