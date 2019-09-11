@@ -85,6 +85,7 @@ For the other questions, a `tip` description may be added by filling in the `des
 
 
 ## Changelog
+1.0.0 - Ready for production
 0.9.13 - Complete rule selector logic and UI
 0.9.10 - Add basic test UI for rule selector
 0.9.7 - Undo 0.9.6
