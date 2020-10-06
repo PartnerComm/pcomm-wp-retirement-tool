@@ -9,7 +9,7 @@
  * that starts the plugin.
  *
  * @link              www.partnercomm.net
- * @since             1.0.0
+ * @since             1.0.1
  * @package           Pcomm_Wp_Retirement_Tool
  *
  * @wordpress-plugin

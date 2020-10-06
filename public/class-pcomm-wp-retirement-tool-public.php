@@ -106,14 +106,16 @@ class Pcomm_Wp_Retirement_Tool_Public
          * class.
          */
 
-        if ($this->pcomm_loa_tool_detect_ie()) {
-            wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . '../dist/public/scripts/scripts-public-babel.js', array( ), $this->version, true);
-        } else {
-            wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . '../dist/public/scripts/pcomm-wp-retirement-tool-public.js', array( ), $this->version, true);
+        if (is_page('retirement-tool')) {
+            if ($this->pcomm_loa_tool_detect_ie()) {
+                wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . '../dist/public/scripts/scripts-public-babel.js', array( ), $this->version, true);
+            } else {
+                wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . '../dist/public/scripts/pcomm-wp-retirement-tool-public.js', array( ), $this->version, true);
+            }
+            wp_localize_script( $this->plugin_name, 'wpApiSettings', array(
+                'nonce' => wp_create_nonce( 'wp_rest' ),
+                'ajaxurl' => admin_url( 'admin-ajax.php' )
+            ));
         }
-        wp_localize_script( $this->plugin_name, 'wpApiSettings', array(
-            'nonce' => wp_create_nonce( 'wp_rest' ),
-            'ajaxurl' => admin_url( 'admin-ajax.php' )
-        ));
     }
 }
